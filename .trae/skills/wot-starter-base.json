@@ -1,15 +1,5 @@
 {
-  "name": "Wot-Starter 基础开发能力",
-  "description": "基于 Wot-Starter 脚手架开发微信小程序，熟练使用其内置的 Vite 配置、UnoCSS、Woto UI、自动导入、路由封装等特性，代码符合脚手架目录结构和语法规范",
-  "keywords": [
-    "wot-starter",
-    "uni-app",
-    "vite",
-    "unocss",
-    "wot-design-uni",
-    "vue3",
-    "typescript",
-    "pages.config.ts",
-    "微信小程序"
-  ]
+  "name": "Wot-Starter 开发规范",
+  "description": "基于 Wot-Starter + Vue3 + TS + UnoCSS + Woto UI + 自动引入 + 路由封装",
+  "keywords": ["wot-starter", "uni-app", "vue3", "typescript", "unocss", "wot-design-uni", "自动引入", "pages.config.ts"]
 }
