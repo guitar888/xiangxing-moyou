@@ -1,0 +1,13 @@
+{
+  "name": "微信小程序适配能力",
+  "description": "针对微信小程序优化代码，适配安全区域、分包加载（基于 Wot-Starter 的 subPackages）、微信小程序专属 API（uni.xxx），规避合规风险，禁止使用敏感 API",
+  "keywords": [
+    "微信小程序",
+    "安全区域",
+    "分包加载",
+    "uni API",
+    "合规",
+    "敏感API禁用",
+    "mp-weixin"
+  ]
+}

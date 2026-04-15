@@ -1,0 +1,29 @@
+:root {
+  --wot-color-theme: #2ED573;
+  --wot-color-theme-light: #4FE085;
+  --wot-color-theme-dark: #27C468;
+  --wot-color-theme-rgb: 46, 213, 115;
+
+  --wot-color-bg-base: #121212;
+  --wot-color-bg-card: #1E1E1E;
+  --wot-color-bg-hover: #272727;
+
+  --wot-color-text-white: #FFFFFF;
+  --wot-color-text-gray: #8D99AE;
+  --wot-color-text-muted: #CCCCCC;
+
+  --wot-color-border: #333333;
+  --wot-color-border-light: #444444;
+
+  --wot-color-warning: #FF7A00;
+  --wot-color-danger: #FF4757;
+  --wot-color-success: #2ED573;
+
+  --shadow-card: 0 4rpx 16rpx rgba(0, 0, 0, 0.2);
+  --shadow-glow: 0 0 20rpx rgba(46, 213, 115, 0.3);
+  --shadow-inset: inset 0 1rpx 0 rgba(255, 255, 255, 0.05);
+
+  --radius-sm: 8rpx;
+  --radius-md: 12rpx;
+  --radius-lg: 16rpx;
+}
