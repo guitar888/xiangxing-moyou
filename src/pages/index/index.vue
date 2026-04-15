@@ -57,12 +57,53 @@ const bannerList = ref<BannerData[]>([
 ])
 
 const quickEntries = ref<QuickEntry[]>([
-  { id: 'map', name: '骑行地图', subname: '襄阳本地路线', icon: 'map', highlight: true, path: '/pages/map/map', isTab: true },
-  { id: 'data', name: '骑行数据', subname: '我的骑行轨迹', icon: 'chart', highlight: true, path: '/pages/data/data', isTab: true },
-  { id: 'activity', name: '活动接龙', subname: '本地活动报名', icon: 'calendar', path: '/pages/activity/activity', isTab: true },
-  { id: 'weather', name: '天气查询', subname: '出行天气参考', icon: 'weather', path: '/pages/weather/weather' },
-  { id: 'traffic', name: '禁摩限行', subname: '安全出行指南', icon: 'warning', path: '/pages/traffic/traffic' },
-  { id: 'shop', name: '口碑店铺', subname: '摩友推荐商家', icon: 'shop', path: '/pages/shop/shop' },
+  {
+    id: 'map',
+    name: '骑行地图',
+    subname: '襄阳本地路线',
+    icon: 'carbon:map', // 标记：carbon 前缀
+    highlight: true,
+    path: '/pages/map/map',
+    isTab: true,
+  },
+  {
+    id: 'data',
+    name: '骑行数据',
+    subname: '我的骑行轨迹',
+    icon: 'chart', // 内置
+    highlight: true,
+    path: '/pages/data/data',
+    isTab: true,
+  },
+  {
+    id: 'activity',
+    name: '活动接龙',
+    subname: '本地活动报名',
+    icon: 'calendar', // 内置
+    path: '/pages/activity/activity',
+    isTab: true,
+  },
+  {
+    id: 'weather',
+    name: '天气查询',
+    subname: '出行天气参考',
+    icon: 'carbon:cloud', // 标记：carbon 前缀
+    path: '/pages/weather/weather',
+  },
+  {
+    id: 'traffic',
+    name: '禁摩限行',
+    subname: '安全出行指南',
+    icon: 'warning', // 内置
+    path: '/pages/traffic/traffic',
+  },
+  {
+    id: 'shop',
+    name: '口碑店铺',
+    subname: '摩友推荐商家',
+    icon: 'shop', // 内置
+    path: '/pages/shop/shop',
+  },
 ])
 
 const rideData = ref<RideData>({
@@ -120,8 +161,6 @@ const activityList = ref<ActivityItem[]>([
   },
 ])
 
-const isLoadingMore = ref(false)
-const hasMore = ref(true)
 const showBadge = ref(false)
 
 function getSystemInfo() {
@@ -208,16 +247,6 @@ function loadRideData() {
   animateNumber(rideData.value.totalRoutes, displayRoutes)
 }
 
-function handleLoadMore() {
-  if (isLoadingMore.value || !hasMore.value)
-    return
-  isLoadingMore.value = true
-  setTimeout(() => {
-    isLoadingMore.value = false
-    hasMore.value = false
-  }, 1500)
-}
-
 function loadPage() {
   try {
     loading.value = true
@@ -264,8 +293,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <view class="from-base relative min-h-screen overflow-hidden via-[var(--wot-color-bg-hover)] to-[var(--wot-color-bg-card)] bg-gradient-to-br pb-[120rpx]">
-    <view class="pointer-events-none absolute inset-x-0 top-0 z-0 h-[240rpx] animate-[breathe_3s_ease-in-out_infinite]" :style="{ background: 'radial-gradient(circle at top, rgba(var(--wot-color-theme-rgb),0.18), transparent 55%)' }" />
+  <view class="relative min-h-screen overflow-hidden from-base via-[var(--wot-color-bg-hover)] to-[var(--wot-color-bg-card)] bg-gradient-to-br">
+    <view class="animate-breathe pointer-events-none absolute inset-x-0 top-0 z-0 h-[240rpx]" :style="{ background: 'radial-gradient(circle at top, rgba(var(--wot-color-theme-rgb),0.18), transparent 55%)' }" />
     <view class="pointer-events-none absolute inset-0 z-0 opacity-5" :style="{ background: `repeating-linear-gradient(45deg, transparent, transparent 40rpx, var(--wot-color-theme) 40rpx, var(--wot-color-theme) 80rpx), repeating-linear-gradient(-45deg, transparent, transparent 40rpx, var(--wot-color-theme) 40rpx, var(--wot-color-theme) 80rpx)` }" />
 
     <GlobalStatusLoading :visible="loading" :progress="loadingProgress" text="加载中..." />
@@ -291,11 +320,8 @@ onUnmounted(() => {
 
       <home-ActivityList
         :activity-list="activityList"
-        :is-loading-more="isLoadingMore"
-        :has-more="hasMore"
         @activity-click="handleActivityClick"
         @go-to-activity="handleGoToActivity"
-        @load-more="handleLoadMore"
       />
 
       <common-PageFooter @compliance-info="showComplianceInfo" />

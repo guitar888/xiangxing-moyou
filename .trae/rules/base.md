@@ -8,6 +8,7 @@
 ## 二、自动引入规则（禁止手动 import）
 - Vue API（ref/reactive/computed/watch）
 - 生命周期（onMounted/onShow/onLoad等）
-- Pinia / UniApp 工具函数
+- Pinia（createPinia/useStore/persistPlugin）
+- UniApp 工具函数
 - Woto UI 组件（wd-*）
 - src/components/ 下业务组件

@@ -9,6 +9,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     BannerBanner: typeof import('./components/Banner/Banner.vue')['default']
     CommonPageFooter: typeof import('./components/common/PageFooter.vue')['default']
+    CommonPageFooterGlass: typeof import('./components/common/PageFooterGlass.vue')['default']
+    CommonPageFooterMetal: typeof import('./components/common/PageFooterMetal.vue')['default']
     DemoBlock: typeof import('./components/DemoBlock.vue')['default']
     GlobalLoading: typeof import('./components/GlobalLoading.vue')['default']
     GlobalMessage: typeof import('./components/GlobalMessage.vue')['default']

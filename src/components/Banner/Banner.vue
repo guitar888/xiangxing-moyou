@@ -31,7 +31,7 @@ export default {
 </script>
 
 <template>
-  <view class="relative z-1 px-[24rpx] pt-[20rpx]">
+  <view class="relative z-1 animate-float-slow animate-scale-in px-[24rpx] pt-[20rpx]">
     <swiper
       class="h-[320rpx] overflow-hidden rounded-[16rpx]"
       :indicator-dots="false"
@@ -55,11 +55,11 @@ export default {
             <text class="text-[36rpx] text-white font-700 text-shadow">
               {{ banner.title }}
             </text>
-            <text class="text-muted text-[24rpx] text-shadow-sm">
+            <text class="text-[24rpx] text-muted text-shadow-sm">
               {{ banner.desc }}
             </text>
           </view>
-          <view v-if="banner.tag" class="from-primary absolute right-[20rpx] top-[20rpx] z-2 rounded-[8rpx] to-[var(--wot-color-theme-dark)] bg-gradient-to-r px-[16rpx] py-[6rpx] text-[20rpx] text-base font-600 shadow-[0_2rpx_8rpx_rgba(46,213,115,0.3)]">
+          <view v-if="banner.tag" class="absolute right-[20rpx] top-[20rpx] z-2 rounded-[8rpx] from-primary to-[var(--wot-color-theme-dark)] bg-gradient-to-r px-[16rpx] py-[6rpx] text-[20rpx] text-base font-600 shadow-[0_2rpx_8rpx_rgba(46,213,115,0.3)]">
             <text v-if="banner.tag === '热门'" class="mr-[4rpx]">
               🔥
             </text>

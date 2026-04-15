@@ -133,21 +133,7 @@ function getIconBg(color: string) {
 </template>
 
 <style scoped>
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in-up {
-  opacity: 0; /* meaningful for delay */
-  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
+/* .animate-fade-in-up 已由 UnoCSS 统一配置 */
 
 /* Utilities */
 .line-clamp-2 {

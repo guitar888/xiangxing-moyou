@@ -2,6 +2,8 @@ import { createSSRApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import 'uno.css'
+import './styles/variables.css'
+import './styles/global.css'
 
 const pinia = createPinia()
 pinia.use(persistPlugin)

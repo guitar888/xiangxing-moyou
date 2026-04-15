@@ -1,0 +1,17 @@
+
+/* 禁用网络阻塞 fallback 警告 */
+body {
+  /* 确保字体加载不阻塞渲染 */
+  font-display: swap;
+}
+
+/* 为 wot-design-uni 组件添加字体显示策略 */
+:root {
+  /* 字体显示策略 */
+  --font-display: swap;
+}
+
+/* 全局字体设置 */
+* {
+  font-display: swap !important;
+}

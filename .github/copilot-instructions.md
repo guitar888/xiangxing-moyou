@@ -27,6 +27,13 @@ applyTo: "**/*.{vue,ts,js,scss,css}"
 - 组件大驼峰命名，自动引入，禁止手动 import
 - 仅使用 Woto UI 组件 `wd-*`
 - Vue 文件结构固定：template → script setup → style scoped
+- 自动引入规则（禁止手动 import）：
+  - Vue API（ref/reactive/computed/watch）
+  - 生命周期（onMounted/onShow/onLoad等）
+  - Pinia（createPinia/useStore/persistPlugin）
+  - UniApp 工具函数
+  - Woto UI 组件（wd-*）
+  - src/components/ 下业务组件
 
 ## 五、目录与路由
 - 页面只能放在 `pages/`
