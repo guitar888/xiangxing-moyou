@@ -1,7 +1,5 @@
 import bmob from '@/utils/bmob'
-import type { BannerData } from '@/types/banner'
-import type { QuickEntry, RideData } from '@/types/rideData'
-import type { ActivityItem } from '@/types/activity'
+import type { BannerData, QuickEntry, RideData, ActivityItem } from '@/types'
 
 // 首页数据 API 服务
 export class HomeService {
@@ -11,7 +9,7 @@ export class HomeService {
       // 实际项目中使用 Bmob API
       // const result = await bmob.request<BannerData[]>('/classes/Banner')
       // return result.results
-      
+
       // 模拟数据
       return [
         {
@@ -56,7 +54,7 @@ export class HomeService {
       // 实际项目中使用 Bmob API
       // const result = await bmob.request<QuickEntry[]>('/classes/QuickEntry')
       // return result.results
-      
+
       // 模拟数据
       return [
         {
@@ -90,21 +88,21 @@ export class HomeService {
           name: '天气查询',
           subname: '出行天气参考',
           icon: 'i-carbon:cloud',
-          path: '/pages/weather/weather',
+          path: '/subPages/weather/weather',
         },
         {
           id: 'traffic',
           name: '禁摩限行',
           subname: '安全出行指南',
           icon: 'warning',
-          path: '/pages/traffic/traffic',
+          path: '/subPages/traffic/traffic',
         },
         {
           id: 'shop',
           name: '口碑店铺',
           subname: '摩友推荐商家',
           icon: 'shop',
-          path: '/pages/shop/shop',
+          path: '/subPages/shop/shop',
         },
       ]
     } catch (error) {
@@ -119,7 +117,7 @@ export class HomeService {
       // 实际项目中使用 Bmob API
       // const result = await bmob.request<RideData>('/classes/RideData')
       // return result
-      
+
       // 模拟数据
       return {
         totalDistance: 1286,
@@ -143,7 +141,7 @@ export class HomeService {
       // 实际项目中使用 Bmob API
       // const result = await bmob.request<ActivityItem[]>('/classes/Activity')
       // return result.results
-      
+
       // 模拟数据
       return [
         {

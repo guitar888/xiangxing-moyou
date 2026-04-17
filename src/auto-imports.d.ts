@@ -158,6 +158,8 @@ declare global {
   const unrefElement: typeof import('@vueuse/core')['unrefElement']
   const until: typeof import('@vueuse/core')['until']
   const useActiveElement: typeof import('@vueuse/core')['useActiveElement']
+  const useActivityData: typeof import('./composables/useActivityData')['useActivityData']
+  const useAdminContact: typeof import('./composables/useAdminContact')['useAdminContact']
   const useAnimate: typeof import('@vueuse/core')['useAnimate']
   const useAnimateNumber: typeof import('./composables/useAnimateNumber')['useAnimateNumber']
   const useArrayDifference: typeof import('@vueuse/core')['useArrayDifference']
@@ -239,10 +241,13 @@ declare global {
   const useKeyModifier: typeof import('@vueuse/core')['useKeyModifier']
   const useLastChanged: typeof import('@vueuse/core')['useLastChanged']
   const useLocalStorage: typeof import('@vueuse/core')['useLocalStorage']
+  const useLocation: typeof import('./composables/useLocation')['useLocation']
   const useMagicKeys: typeof import('@vueuse/core')['useMagicKeys']
   const useManualRefHistory: typeof import('@vueuse/core')['useManualRefHistory']
   const useManualTheme: typeof import('./composables/useManualTheme')['useManualTheme']
   const useManualThemeStore: typeof import('./store/manualThemeStore')['useManualThemeStore']
+  const useMapData: typeof import('./composables/useMapData')['useMapData']
+  const useMapNavigation: typeof import('./composables/useMapNavigation')['useMapNavigation']
   const useMediaControls: typeof import('@vueuse/core')['useMediaControls']
   const useMediaQuery: typeof import('@vueuse/core')['useMediaQuery']
   const useMemoize: typeof import('@vueuse/core')['useMemoize']
@@ -254,6 +259,7 @@ declare global {
   const useMouseInElement: typeof import('@vueuse/core')['useMouseInElement']
   const useMousePressed: typeof import('@vueuse/core')['useMousePressed']
   const useMutationObserver: typeof import('@vueuse/core')['useMutationObserver']
+  const useNavigation: typeof import('./composables/useNavigation')['useNavigation']
   const useNavigatorLanguage: typeof import('@vueuse/core')['useNavigatorLanguage']
   const useNetwork: typeof import('@vueuse/core')['useNetwork']
   const useNotify: typeof import('wot-design-uni')['useNotify']
@@ -271,6 +277,7 @@ declare global {
   const usePointer: typeof import('@vueuse/core')['usePointer']
   const usePointerLock: typeof import('@vueuse/core')['usePointerLock']
   const usePointerSwipe: typeof import('@vueuse/core')['usePointerSwipe']
+  const usePoster: typeof import('./composables/usePoster')['usePoster']
   const usePreferredColorScheme: typeof import('@vueuse/core')['usePreferredColorScheme']
   const usePreferredContrast: typeof import('@vueuse/core')['usePreferredContrast']
   const usePreferredDark: typeof import('@vueuse/core')['usePreferredDark']
@@ -281,6 +288,8 @@ declare global {
   const useRefHistory: typeof import('@vueuse/core')['useRefHistory']
   const useRequest: typeof import('alova/client')['useRequest']
   const useResizeObserver: typeof import('@vueuse/core')['useResizeObserver']
+  const useRideRecord: typeof import('./composables/useRideRecord')['useRideRecord']
+  const useRideStats: typeof import('./composables/useRideStats')['useRideStats']
   const useRoute: typeof import('@wot-ui/router')['useRoute']
   const useRouter: typeof import('@wot-ui/router')['useRouter']
   const useScreenOrientation: typeof import('@vueuse/core')['useScreenOrientation']
@@ -517,6 +526,8 @@ declare module 'vue' {
     readonly unrefElement: UnwrapRef<typeof import('@vueuse/core')['unrefElement']>
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
     readonly useActiveElement: UnwrapRef<typeof import('@vueuse/core')['useActiveElement']>
+    readonly useActivityData: UnwrapRef<typeof import('./composables/useActivityData')['useActivityData']>
+    readonly useAdminContact: UnwrapRef<typeof import('./composables/useAdminContact')['useAdminContact']>
     readonly useAnimate: UnwrapRef<typeof import('@vueuse/core')['useAnimate']>
     readonly useAnimateNumber: UnwrapRef<typeof import('./composables/useAnimateNumber')['useAnimateNumber']>
     readonly useArrayDifference: UnwrapRef<typeof import('@vueuse/core')['useArrayDifference']>
@@ -597,10 +608,13 @@ declare module 'vue' {
     readonly useKeyModifier: UnwrapRef<typeof import('@vueuse/core')['useKeyModifier']>
     readonly useLastChanged: UnwrapRef<typeof import('@vueuse/core')['useLastChanged']>
     readonly useLocalStorage: UnwrapRef<typeof import('@vueuse/core')['useLocalStorage']>
+    readonly useLocation: UnwrapRef<typeof import('./composables/useLocation')['useLocation']>
     readonly useMagicKeys: UnwrapRef<typeof import('@vueuse/core')['useMagicKeys']>
     readonly useManualRefHistory: UnwrapRef<typeof import('@vueuse/core')['useManualRefHistory']>
     readonly useManualTheme: UnwrapRef<typeof import('./composables/useManualTheme')['useManualTheme']>
     readonly useManualThemeStore: UnwrapRef<typeof import('./store/manualThemeStore')['useManualThemeStore']>
+    readonly useMapData: UnwrapRef<typeof import('./composables/useMapData')['useMapData']>
+    readonly useMapNavigation: UnwrapRef<typeof import('./composables/useMapNavigation')['useMapNavigation']>
     readonly useMediaControls: UnwrapRef<typeof import('@vueuse/core')['useMediaControls']>
     readonly useMediaQuery: UnwrapRef<typeof import('@vueuse/core')['useMediaQuery']>
     readonly useMemoize: UnwrapRef<typeof import('@vueuse/core')['useMemoize']>
@@ -611,6 +625,7 @@ declare module 'vue' {
     readonly useMouseInElement: UnwrapRef<typeof import('@vueuse/core')['useMouseInElement']>
     readonly useMousePressed: UnwrapRef<typeof import('@vueuse/core')['useMousePressed']>
     readonly useMutationObserver: UnwrapRef<typeof import('@vueuse/core')['useMutationObserver']>
+    readonly useNavigation: UnwrapRef<typeof import('./composables/useNavigation')['useNavigation']>
     readonly useNavigatorLanguage: UnwrapRef<typeof import('@vueuse/core')['useNavigatorLanguage']>
     readonly useNetwork: UnwrapRef<typeof import('@vueuse/core')['useNetwork']>
     readonly useNotify: UnwrapRef<typeof import('wot-design-uni')['useNotify']>
@@ -628,6 +643,7 @@ declare module 'vue' {
     readonly usePointer: UnwrapRef<typeof import('@vueuse/core')['usePointer']>
     readonly usePointerLock: UnwrapRef<typeof import('@vueuse/core')['usePointerLock']>
     readonly usePointerSwipe: UnwrapRef<typeof import('@vueuse/core')['usePointerSwipe']>
+    readonly usePoster: UnwrapRef<typeof import('./composables/usePoster')['usePoster']>
     readonly usePreferredColorScheme: UnwrapRef<typeof import('@vueuse/core')['usePreferredColorScheme']>
     readonly usePreferredContrast: UnwrapRef<typeof import('@vueuse/core')['usePreferredContrast']>
     readonly usePreferredDark: UnwrapRef<typeof import('@vueuse/core')['usePreferredDark']>
@@ -638,6 +654,8 @@ declare module 'vue' {
     readonly useRefHistory: UnwrapRef<typeof import('@vueuse/core')['useRefHistory']>
     readonly useRequest: UnwrapRef<typeof import('alova/client')['useRequest']>
     readonly useResizeObserver: UnwrapRef<typeof import('@vueuse/core')['useResizeObserver']>
+    readonly useRideRecord: UnwrapRef<typeof import('./composables/useRideRecord')['useRideRecord']>
+    readonly useRideStats: UnwrapRef<typeof import('./composables/useRideStats')['useRideStats']>
     readonly useRoute: UnwrapRef<typeof import('@wot-ui/router')['useRoute']>
     readonly useRouter: UnwrapRef<typeof import('@wot-ui/router')['useRouter']>
     readonly useScreenOrientation: UnwrapRef<typeof import('@vueuse/core')['useScreenOrientation']>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { QuickEntry } from '@/types/rideData'
+import type { QuickEntry } from '@/types'
 
 defineOptions({
   options: {
@@ -84,7 +84,7 @@ function handleEntryClick(entry: QuickEntry) {
           <wd-icon v-if="entry.icon && !entry.icon.startsWith('i-')" :name="entry.icon" size="48rpx" :color="entry.highlight ? '#2ED573' : '#FF7A00'" />
           <!-- 小程序端Carbon图标：静态class用view包裹 -->
           <text v-else-if="entry.icon.includes('map')" class="i-carbon:map text-[40rpx] leading-[40rpx] flex items-center justify-center" :class="entry.highlight ? 'mini-icon-theme' : 'mini-icon-warning'"></text>
-          <text v-else-if="entry.icon.includes('cloud')" class="i-carbon:cloud text-[40rpx] leading-[40rpx] flex items-center justify-center" :class="entry.highlight ? 'mini-icon-theme' : 'mini-icon-warning'"></text> 
+          <text v-else-if="entry.icon.includes('cloud')" class="i-carbon:cloud text-[40rpx] leading-[40rpx] flex items-center justify-center" :class="entry.highlight ? 'mini-icon-theme' : 'mini-icon-warning'"></text>
           <view v-else-if="entry.icon" class="mini-icon-wrap" :class="[entry.icon, entry.highlight ? 'mini-icon-theme' : 'mini-icon-warning']" />
         </view>
         <text class="mb-[4rpx] text-[24rpx] text-white font-500">

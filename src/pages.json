@@ -49,8 +49,7 @@
       "layout": "tabbar",
       "style": {
         "navigationBarTitleText": "骑行地图",
-        "navigationBarBackgroundColor": "#121212",
-        "navigationBarTextStyle": "white"
+        "navigationStyle": "custom"
       }
     },
     {
@@ -70,7 +69,7 @@
       "name": "activity",
       "layout": "tabbar",
       "style": {
-        "navigationBarTitleText": "活动接龙",
+        "navigationBarTitleText": "活动公告",
         "navigationBarBackgroundColor": "#121212",
         "navigationBarTextStyle": "white"
       }
@@ -347,6 +346,9 @@
       },
       {
         "pagePath": "pages/mine/mine"
+      },
+      {
+        "pagePath": "pages/activity/activity"
       }
     ]
   }

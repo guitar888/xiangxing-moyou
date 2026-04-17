@@ -1,4 +1,10 @@
 <script setup lang="ts">
+/**
+ * 骑行数据页面
+ * 展示骑行统计、记录，支持海报分享
+ */
+import type { RecordFilter } from '@/types'
+
 definePage({
   name: 'data',
   layout: 'tabbar',
@@ -9,186 +15,145 @@ definePage({
   },
 })
 
-import { ref, onMounted } from 'vue'
+// ================================================
+// 统计数据
+// ================================================
 
-// 骑行统计数据
-const rideStats = ref({
-  totalDistance: 1286, // 总骑行距离（公里）
-  totalDays: 45, // 总骑行天数
-  totalRoutes: 12, // 总骑行路线
-  averageSpeed: 32, // 平均速度（km/h）
-  totalCalories: 8500, // 总消耗卡路里
-  longestRide: 85, // 最长单次骑行（公里）
-})
+const {
+  stats,
+  records,
+  currentFilter,
+  loading,
+  loadRecords,
+  setFilter,
+  formatDuration,
+  formatDate,
+  formatFullDate,
+} = useRideStats()
 
-// 月度骑行数据
-const monthlyData = ref({
-  labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
-  distances: [120, 180, 210, 250, 280, 246],
-  days: [5, 8, 10, 12, 15, 10],
-})
-
-// 骑行类型分布
-const rideTypeData = ref({
-  labels: ['休闲骑', '通勤', '长途摩旅', '夜骑', '晨骑'],
-  data: [45, 25, 15, 10, 5],
-  colors: ['#2ED573', '#FF7A00', '#FF4757', '#3742FA', '#70A1FF'],
-})
-
+// ================================================
 // 骑行记录
-const rideRecords = ref([
-  {
-    id: '1',
-    date: '2026-04-15',
-    distance: 45,
-    duration: 120,
-    route: '古城环线',
-    averageSpeed: 22.5,
-    calories: 320,
-  },
-  {
-    id: '2',
-    date: '2026-04-10',
-    distance: 32,
-    duration: 85,
-    route: '汉江沿岸',
-    averageSpeed: 22.6,
-    calories: 240,
-  },
-  {
-    id: '3',
-    date: '2026-04-05',
-    distance: 28,
-    duration: 70,
-    route: '隆中景区',
-    averageSpeed: 24.0,
-    calories: 200,
-  },
-  {
-    id: '4',
-    date: '2026-03-28',
-    distance: 56,
-    duration: 150,
-    route: '襄阳至武当山',
-    averageSpeed: 22.4,
-    calories: 420,
-  },
-  {
-    id: '5',
-    date: '2026-03-20',
-    distance: 35,
-    duration: 95,
-    route: '古城环线',
-    averageSpeed: 22.1,
-    calories: 260,
-  },
-])
+// ================================================
 
-// 初始化图表
-function initCharts() {
-  // 这里将在后续集成ECharts时实现
-  console.log('初始化图表')
+const {
+  isRiding,
+  formattedDuration,
+  removeRecord,
+} = useRideRecord()
+
+// ================================================
+// 海报
+// ================================================
+
+const showPoster = ref(false)
+const selectedRecord = ref<any>(null)
+
+function handleShare(record: any) {
+  selectedRecord.value = record
+  showPoster.value = true
 }
 
+function handleDelete(id: string) {
+  removeRecord(id)
+  uni.showToast({
+    title: '已删除',
+    icon: 'success',
+  })
+}
+
+function handleClosePoster() {
+  showPoster.value = false
+  selectedRecord.value = null
+}
+
+// ================================================
+// 筛选
+// ================================================
+
+const filters: { key: RecordFilter; label: string }[] = [
+  { key: 'week', label: '本周' },
+  { key: 'month', label: '本月' },
+  { key: 'all', label: '全部' },
+]
+
+// ================================================
+// 生命周期
+// ================================================
+
 onMounted(() => {
-  initCharts()
+  loadRecords()
 })
 </script>
 
 <template>
-  <view class="min-h-screen bg-base">
+  <view class="min-h-screen bg-base pb-[120rpx]">
+    <!-- 骑行中提示 -->
+    <view v-if="isRiding" class="bg-primary/20 px-[24rpx] py-[16rpx] mx-[24rpx] mt-[16rpx] rounded-[12rpx]">
+      <view class="flex items-center justify-between">
+        <view class="flex items-center gap-[12rpx]">
+          <view class="w-[16rpx] h-[16rpx] bg-primary rounded-full animate-pulse" />
+          <text class="text-[26rpx] text-primary font-600">骑行中</text>
+          <text class="text-[26rpx] text-white font-600">{{ formattedDuration }}</text>
+        </view>
+        <text class="text-[22rpx] text-gray">去结束骑行</text>
+      </view>
+    </view>
+
     <!-- 统计卡片 -->
-    <view class="p-[24rpx] space-y-[16rpx]">
-      <text class="text-[32rpx] font-700 text-white">骑行统计</text>
-      
-      <view class="grid grid-cols-2 gap-[16rpx]">
-        <view class="bg-card rounded-[12rpx] p-[20rpx] shadow-lg">
-          <text class="text-[20rpx] text-gray">总骑行距离</text>
-          <text class="text-[36rpx] font-700 text-white mt-[8rpx] block">{{ rideStats.totalDistance }} km</text>
-          <text class="text-[18rpx] text-success mt-[8rpx] block">+12% 较上月</text>
-        </view>
-        
-        <view class="bg-card rounded-[12rpx] p-[20rpx] shadow-lg">
-          <text class="text-[20rpx] text-gray">总骑行天数</text>
-          <text class="text-[36rpx] font-700 text-white mt-[8rpx] block">{{ rideStats.totalDays }} 天</text>
-          <text class="text-[18rpx] text-success mt-[8rpx] block">+8% 较上月</text>
-        </view>
-        
-        <view class="bg-card rounded-[12rpx] p-[20rpx] shadow-lg">
-          <text class="text-[20rpx] text-gray">总骑行路线</text>
-          <text class="text-[36rpx] font-700 text-white mt-[8rpx] block">{{ rideStats.totalRoutes }} 条</text>
-          <text class="text-[18rpx] text-success mt-[8rpx] block">+5% 较上月</text>
-        </view>
-        
-        <view class="bg-card rounded-[12rpx] p-[20rpx] shadow-lg">
-          <text class="text-[20rpx] text-gray">平均速度</text>
-          <text class="text-[36rpx] font-700 text-white mt-[8rpx] block">{{ rideStats.averageSpeed }} km/h</text>
-          <text class="text-[18rpx] text-warning mt-[8rpx] block">+2% 较上月</text>
-        </view>
-      </view>
-    </view>
-    
-    <!-- 图表区域 -->
-    <view class="p-[24rpx] space-y-[24rpx]">
-      <!-- 月度骑行趋势 -->
-      <view class="bg-card rounded-[12rpx] p-[20rpx] shadow-card">
-        <text class="text-[24rpx] font-600 text-white mb-[20rpx] block">月度骑行趋势</text>
-        <view class="h-[300rpx] bg-bg-base rounded-[8rpx] flex items-center justify-center">
-          <text class="text-gray">月度骑行数据图表</text>
-        </view>
-      </view>
-      
-      <!-- 骑行类型分布 -->
-      <view class="bg-card rounded-[12rpx] p-[20rpx] shadow-card">
-        <text class="text-[24rpx] font-600 text-white mb-[20rpx] block">骑行类型分布</text>
-        <view class="h-[300rpx] bg-bg-base rounded-[8rpx] flex items-center justify-center">
-          <text class="text-gray">骑行类型分布图表</text>
-        </view>
-      </view>
-    </view>
-    
-    <!-- 骑行记录 -->
     <view class="p-[24rpx]">
-      <text class="text-[32rpx] font-700 text-white mb-[20rpx] block">骑行记录</text>
-      
-      <view class="space-y-[16rpx]">
-        <view
-          v-for="record in rideRecords"
-          :key="record.id"
-          class="bg-card rounded-[12rpx] p-[20rpx] shadow-card transition-all duration-100 active:scale-95"
+      <ride-StatsCard :stats="stats" />
+    </view>
+
+    <!-- 筛选 -->
+    <view class="px-[24rpx] mb-[16rpx]">
+      <view class="flex gap-[12rpx]">
+        <button
+          v-for="f in filters"
+          :key="f.key"
+          class="px-[24rpx] py-[10rpx] rounded-[28rpx] text-[22rpx] font-500 transition-all"
+          :class="currentFilter === f.key ? 'bg-primary text-white' : 'bg-card text-gray'"
+          @click="setFilter(f.key)"
         >
-          <view class="flex justify-between items-start">
-            <text class="text-[24rpx] font-600 text-white">{{ record.route }}</text>
-            <text class="text-[20rpx] text-gray">{{ record.date }}</text>
-          </view>
-          
-          <view class="flex items-center gap-[24rpx] mt-[12rpx]">
-            <view class="flex items-center gap-[4rpx]">
-              <wd-icon name="distance" size="20rpx" color="#8D99AE" />
-              <text class="text-[20rpx] text-gray">{{ record.distance }}公里</text>
-            </view>
-            <view class="flex items-center gap-[4rpx]">
-              <wd-icon name="time" size="20rpx" color="#8D99AE" />
-              <text class="text-[20rpx] text-gray">{{ record.duration }}分钟</text>
-            </view>
-            <view class="flex items-center gap-[4rpx]">
-              <wd-icon name="speedometer" size="20rpx" color="#8D99AE" />
-              <text class="text-[20rpx] text-gray">{{ record.averageSpeed }}km/h</text>
-            </view>
-          </view>
-        </view>
+          {{ f.label }}
+        </button>
       </view>
     </view>
-    
-    <!-- 底部导出按钮 -->
-    <view class="fixed bottom-[20rpx] left-[24rpx] right-[24rpx]">
-      <button
-        class="w-full bg-primary text-white rounded-[12rpx] py-[20rpx] text-[24rpx] font-600"
-      >
-        导出骑行数据
-      </button>
+
+    <!-- 骑行记录列表 -->
+    <view class="px-[24rpx]">
+      <view class="flex justify-between items-center mb-[16rpx]">
+        <text class="text-[28rpx] font-600 text-white">骑行记录</text>
+        <text class="text-[22rpx] text-gray">{{ records.length }} 条</text>
+      </view>
+
+      <view class="space-y-[16rpx]">
+        <ride-RideRecordCard
+          v-for="record in records"
+          :key="record.id"
+          :record="record"
+          @delete="handleDelete"
+          @share="handleShare"
+        />
+      </view>
+
+      <!-- 空状态 -->
+      <view v-if="records.length === 0 && !loading" class="flex flex-col items-center justify-center py-[80rpx]">
+        <text class="i-carbon:bicycle text-[80rpx] text-gray mb-[16rpx]" />
+        <text class="text-[26rpx] text-gray">暂无骑行记录</text>
+        <text class="text-[22rpx] text-gray mt-[8rpx]">去地图页面开始骑行吧</text>
+      </view>
+
+      <!-- Loading -->
+      <view v-if="loading" class="flex items-center justify-center py-[60rpx]">
+        <wd-loading type="ring" />
+      </view>
     </view>
+
+    <!-- 海报弹窗 -->
+    <ride-RidePoster
+      :visible="showPoster"
+      :record="selectedRecord"
+      @close="handleClosePoster"
+    />
   </view>
 </template>
-
-

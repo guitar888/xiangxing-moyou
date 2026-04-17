@@ -1,6 +1,4 @@
-import type { ActivityItem } from '@/types/activity'
-import type { BannerData } from '@/types/banner'
-import type { QuickEntry, RideData } from '@/types/rideData'
+import type { ActivityItem, QuickEntry, RideData, BannerData } from '@/types'
 import HomeService from '@/api/services/homeService'
 
 /**

@@ -7,7 +7,9 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ActivityActivityCard: typeof import('./components/activity/ActivityCard.vue')['default']
     BannerBanner: typeof import('./components/Banner/Banner.vue')['default']
+    CommonContactAdminModal: typeof import('./components/common/ContactAdminModal.vue')['default']
     CommonPageFooter: typeof import('./components/common/PageFooter.vue')['default']
     DemoBlock: typeof import('./components/DemoBlock.vue')['default']
     GlobalLoading: typeof import('./components/GlobalLoading.vue')['default']
@@ -21,7 +23,13 @@ declare module 'vue' {
     HomeHeaderHome: typeof import('./components/home/HeaderHome.vue')['default']
     HomeQuickEntry: typeof import('./components/home/QuickEntry.vue')['default']
     HomeRideDataCard: typeof import('./components/home/RideDataCard.vue')['default']
+    MapRouteCard: typeof import('./components/map/RouteCard.vue')['default']
+    MapSpotCard: typeof import('./components/map/SpotCard.vue')['default']
+    MapSpotSheet: typeof import('./components/map/SpotSheet.vue')['default']
     PrivacyPopup: typeof import('./components/PrivacyPopup.vue')['default']
+    RideRidePoster: typeof import('./components/ride/RidePoster.vue')['default']
+    RideRideRecordCard: typeof import('./components/ride/RideRecordCard.vue')['default']
+    RideRideStatsCard: typeof import('./components/ride/RideStatsCard.vue')['default']
     UniEcharts: typeof import('uni-echarts')['default']
     WdButton: typeof import('wot-design-uni/components/wd-button/wd-button.vue')['default']
     WdCell: typeof import('wot-design-uni/components/wd-cell/wd-cell.vue')['default']
@@ -30,6 +38,7 @@ declare module 'vue' {
     WdGap: typeof import('wot-design-uni/components/wd-gap/wd-gap.vue')['default']
     WdIcon: typeof import('wot-design-uni/components/wd-icon/wd-icon.vue')['default']
     WdInput: typeof import('wot-design-uni/components/wd-input/wd-input.vue')['default']
+    WdLoading: typeof import('wot-design-uni/components/wd-loading/wd-loading.vue')['default']
     WdMessageBox: typeof import('wot-design-uni/components/wd-message-box/wd-message-box.vue')['default']
     WdNotify: typeof import('wot-design-uni/components/wd-notify/wd-notify.vue')['default']
     WdPopup: typeof import('wot-design-uni/components/wd-popup/wd-popup.vue')['default']

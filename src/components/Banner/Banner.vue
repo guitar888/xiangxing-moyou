@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BannerData } from '@/types/banner'
+import type { BannerData } from '@/types'
 
 defineOptions({
   options: {

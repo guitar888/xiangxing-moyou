@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { RideData } from '@/types/rideData'
+import type { RideData } from '@/types'
 
 defineProps<{
   rideData: RideData

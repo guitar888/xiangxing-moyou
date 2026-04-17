@@ -44,6 +44,9 @@ export default defineUniPages({
         pagePath: 'pages/data/data',
       },
       {
+        pagePath: 'pages/activity/activity',
+      },
+      {
         pagePath: 'pages/mine/mine',
       },
     ],
