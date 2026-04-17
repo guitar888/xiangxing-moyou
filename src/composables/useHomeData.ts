@@ -32,17 +32,17 @@ export function useHomeData() {
   const activityList = ref<ActivityItem[]>([])
 
   // ================================================
-  // 展示用的动画数值
+  // 数字动画（自动处理 H5/小程序平台差异）
   // ================================================
 
-  /** 展示用累计里程（动画滚动到目标值） */
-  const displayDistance = ref(0)
+  /** 展示用累计里程 */
+  const displayDistance = useAnimateNumber(rideData.value.totalDistance)
 
-  /** 展示用累计天数（动画滚动到目标值） */
-  const displayDays = ref(0)
+  /** 展示用累计天数 */
+  const displayDays = useAnimateNumber(rideData.value.totalDays)
 
-  /** 展示用累计路线数（动画滚动到目标值） */
-  const displayRoutes = ref(0)
+  /** 展示用累计路线数 */
+  const displayRoutes = useAnimateNumber(rideData.value.totalRoutes)
 
   /** 是否显示徽章（数据加载完成后显示） */
   const showBadge = ref(false)
@@ -53,51 +53,6 @@ export function useHomeData() {
 
   /** 数据是否加载中（仅用于判断页面内容显示，不控制全局loading） */
   const isLoaded = ref(false)
-
-  // ================================================
-  // 内部计时器引用（用于组件卸载时清理）
-  // ================================================
-
-  let animFrameId: number | null = null
-
-  // ================================================
-  // 数字滚动动画
-  // ================================================
-
-  /**
-   * 数字滚动动画
-   * @param target - 目标数值
-   * @param display - 用于展示的响应式变量
-   */
-  function animateNumber(target: number, display: Ref<number>) {
-    const duration = 1500 // 动画持续时间 ms
-    const start = Date.now() // 动画开始时间
-
-    function animate() {
-      const elapsed = Date.now() - start // 已流逝时间
-      const progress = Math.min(elapsed / duration, 1) // 计算进度（0-1）
-      display.value = Math.floor(target * progress) // 设置数值（取整）
-
-      // 进度未完成，继续下一帧
-      if (progress < 1) {
-        animFrameId = requestAnimationFrame(animate)
-      }
-    }
-
-    animate()
-  }
-
-  /**
-   * 启动数字动画
-   */
-  function startNumberAnimation() {
-    animateNumber(rideData.value.totalDistance, displayDistance)
-    animateNumber(rideData.value.totalDays, displayDays)
-    animateNumber(rideData.value.totalRoutes, displayRoutes)
-
-    // 动画完成 300ms 后显示徽章
-    setTimeout(() => { showBadge.value = true }, 300)
-  }
 
   // ================================================
   // 数据加载
@@ -131,7 +86,13 @@ export function useHomeData() {
       pageStatus.finishLoading()
 
       // 启动数字动画
-      startNumberAnimation()
+      displayDistance.animate(rideData.value.totalDistance)
+      displayDays.animate(rideData.value.totalDays)
+      displayRoutes.animate(rideData.value.totalRoutes)
+
+      // 动画完成 300ms 后显示徽章
+      setTimeout(() => { showBadge.value = true }, 300)
+
       isLoaded.value = true
     } catch (err) {
       // 请求失败，显示错误页面，传入重试回调
@@ -169,14 +130,6 @@ export function useHomeData() {
     loadHomeData()
   })
 
-  onUnmounted(() => {
-    // 清理动画帧，防止内存泄漏
-    if (animFrameId) {
-      cancelAnimationFrame(animFrameId)
-      animFrameId = null
-    }
-  })
-
   // ================================================
   // 导出
   // ================================================
@@ -190,10 +143,10 @@ export function useHomeData() {
     quickEntries,
     rideData,
     activityList,
-    // 展示值
-    displayDistance,
-    displayDays,
-    displayRoutes,
+    // 展示值（使用 .display 获取数字值）
+    displayDistance: displayDistance.display,
+    displayDays: displayDays.display,
+    displayRoutes: displayRoutes.display,
     showBadge,
     // 方法
     handleCityChange,

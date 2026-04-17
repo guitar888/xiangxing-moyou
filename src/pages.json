@@ -345,11 +345,6 @@
       {
         "pagePath": "pages/data/data"
       },
-      // #ifdef H5
-      {
-        "pagePath": "pages/activity/activity"
-      },
-      // #endif
       {
         "pagePath": "pages/mine/mine"
       }
