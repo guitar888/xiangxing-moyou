@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onBeforeMount, ref } from 'vue'
+
 
 interface Props {
   title?: string // 标题
@@ -164,7 +164,7 @@ export default {
     justify-content: space-between;
     padding-bottom: 36rpx;
 
-    button {
+    .wd-button {
       border: none;
       outline: none;
     }

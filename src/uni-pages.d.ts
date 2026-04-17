@@ -6,12 +6,19 @@
 type _LocationUrl =
   "/pages/index/index" |
   "/pages/about/index" |
+  "/pages/activity/activity" |
+  "/pages/data/data" |
+  "/pages/map/map" |
+  "/pages/mine/mine" |
+  "/subPages/activity/detail" |
   "/subPages/ci/index" |
   "/subPages/create-uni/index" |
   "/subPages/feedback/index" |
+  "/subPages/help/help" |
   "/subPages/icon/index" |
   "/subPages/pinia/index" |
   "/subPages/request/index" |
+  "/subPages/route/route" |
   "/subPages/router/demo-aftereach" |
   "/subPages/router/demo-guard" |
   "/subPages/router/demo-object" |
@@ -20,9 +27,14 @@ type _LocationUrl =
   "/subPages/router/demo-query" |
   "/subPages/router/demo-string" |
   "/subPages/router/index" |
+  "/subPages/safety/safety" |
+  "/subPages/shop/shop" |
   "/subPages/skills/index" |
   "/subPages/styles/index" |
+  "/subPages/tools/tools" |
+  "/subPages/traffic/traffic" |
   "/subPages/uni-ku-root/index" |
+  "/subPages/weather/weather" |
   "/subEcharts/echarts/index" |
   "/subAsyncEcharts/asyncEcharts/index";
 
@@ -32,7 +44,7 @@ interface NavigateToOptions {
 interface RedirectToOptions extends NavigateToOptions {}
 
 interface SwitchTabOptions {
-  url: "/pages/index/index" | "/pages/about/index"
+  url: "/pages/index/index" | "/pages/map/map" | "/pages/data/data" | "/pages/mine/mine"
 }
 
 type ReLaunchOptions = NavigateToOptions | SwitchTabOptions;

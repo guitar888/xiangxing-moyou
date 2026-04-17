@@ -15,6 +15,10 @@ declare global {
   const apiDefinitions: typeof import('./api/apiDefinitions')['default']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
+  const bmob: typeof import('./utils/bmob')['default']
+  const bmobCloudFunction: typeof import('./utils/bmob')['bmobCloudFunction']
+  const bmobRequest: typeof import('./utils/bmob')['bmobRequest']
+  const bmobUploadFile: typeof import('./utils/bmob')['bmobUploadFile']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
   const computedEager: typeof import('@vueuse/core')['computedEager']
@@ -223,6 +227,7 @@ declare global {
   const useGlobalLoading: typeof import('./composables/useGlobalLoading')['useGlobalLoading']
   const useGlobalMessage: typeof import('./composables/useGlobalMessage')['useGlobalMessage']
   const useGlobalToast: typeof import('./composables/useGlobalToast')['useGlobalToast']
+  const useHomeData: typeof import('./composables/useHomeData')['useHomeData']
   const useId: typeof import('vue')['useId']
   const useIdle: typeof import('@vueuse/core')['useIdle']
   const useImage: typeof import('@vueuse/core')['useImage']
@@ -256,6 +261,7 @@ declare global {
   const useOffsetPagination: typeof import('@vueuse/core')['useOffsetPagination']
   const useOnline: typeof import('@vueuse/core')['useOnline']
   const usePageLeave: typeof import('@vueuse/core')['usePageLeave']
+  const usePageStatus: typeof import('./composables/usePageStatus')['usePageStatus']
   const usePagination: typeof import('alova/client')['usePagination']
   const useParallax: typeof import('@vueuse/core')['useParallax']
   const useParentElement: typeof import('@vueuse/core')['useParentElement']
@@ -293,6 +299,7 @@ declare global {
   const useStyleTag: typeof import('@vueuse/core')['useStyleTag']
   const useSupported: typeof import('@vueuse/core')['useSupported']
   const useSwipe: typeof import('@vueuse/core')['useSwipe']
+  const useSystemInfo: typeof import('./composables/useSystemInfo')['useSystemInfo']
   const useTabbar: typeof import('./composables/useTabbar')['useTabbar']
   const useTemplateRef: typeof import('vue')['useTemplateRef']
   const useTemplateRefsList: typeof import('@vueuse/core')['useTemplateRefsList']
@@ -368,6 +375,10 @@ declare module 'vue' {
     readonly apiDefinitions: UnwrapRef<typeof import('./api/apiDefinitions')['default']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
+    readonly bmob: UnwrapRef<typeof import('./utils/bmob')['default']>
+    readonly bmobCloudFunction: UnwrapRef<typeof import('./utils/bmob')['bmobCloudFunction']>
+    readonly bmobRequest: UnwrapRef<typeof import('./utils/bmob')['bmobRequest']>
+    readonly bmobUploadFile: UnwrapRef<typeof import('./utils/bmob')['bmobUploadFile']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>
@@ -574,6 +585,7 @@ declare module 'vue' {
     readonly useGlobalLoading: UnwrapRef<typeof import('./composables/useGlobalLoading')['useGlobalLoading']>
     readonly useGlobalMessage: UnwrapRef<typeof import('./composables/useGlobalMessage')['useGlobalMessage']>
     readonly useGlobalToast: UnwrapRef<typeof import('./composables/useGlobalToast')['useGlobalToast']>
+    readonly useHomeData: UnwrapRef<typeof import('./composables/useHomeData')['useHomeData']>
     readonly useIdle: UnwrapRef<typeof import('@vueuse/core')['useIdle']>
     readonly useImage: UnwrapRef<typeof import('@vueuse/core')['useImage']>
     readonly useInfiniteScroll: UnwrapRef<typeof import('@vueuse/core')['useInfiniteScroll']>
@@ -605,6 +617,7 @@ declare module 'vue' {
     readonly useOffsetPagination: UnwrapRef<typeof import('@vueuse/core')['useOffsetPagination']>
     readonly useOnline: UnwrapRef<typeof import('@vueuse/core')['useOnline']>
     readonly usePageLeave: UnwrapRef<typeof import('@vueuse/core')['usePageLeave']>
+    readonly usePageStatus: UnwrapRef<typeof import('./composables/usePageStatus')['usePageStatus']>
     readonly usePagination: UnwrapRef<typeof import('alova/client')['usePagination']>
     readonly useParallax: UnwrapRef<typeof import('@vueuse/core')['useParallax']>
     readonly useParentElement: UnwrapRef<typeof import('@vueuse/core')['useParentElement']>
@@ -642,6 +655,7 @@ declare module 'vue' {
     readonly useStyleTag: UnwrapRef<typeof import('@vueuse/core')['useStyleTag']>
     readonly useSupported: UnwrapRef<typeof import('@vueuse/core')['useSupported']>
     readonly useSwipe: UnwrapRef<typeof import('@vueuse/core')['useSwipe']>
+    readonly useSystemInfo: UnwrapRef<typeof import('./composables/useSystemInfo')['useSystemInfo']>
     readonly useTabbar: UnwrapRef<typeof import('./composables/useTabbar')['useTabbar']>
     readonly useTemplateRefsList: UnwrapRef<typeof import('@vueuse/core')['useTemplateRefsList']>
     readonly useTextDirection: UnwrapRef<typeof import('@vueuse/core')['useTextDirection']>

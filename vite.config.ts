@@ -49,12 +49,20 @@ export default defineConfig({
     UniKuRoot(),
     // https://uni-echarts.xiaohe.ink
     UniEcharts(),
+    // https://github.com/antfu/unocss
+    // see unocss.config.ts for config
+    UnoCSS(),
     // https://uni-helper.cn/plugin-uni
     Uni(),
     // https://github.com/uni-ku/bundle-optimizer
     Optimization({
       enable: isMpWeixin,
       logger: false,
+      // 样式压缩优化
+      minify: {
+        css: true,
+        js: true,
+      },
     }),
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
@@ -72,8 +80,5 @@ export default defineConfig({
       dirs: ['src/composables', 'src/store', 'src/utils', 'src/api'],
       vueTemplate: true,
     }),
-    // https://github.com/antfu/unocss
-    // see unocss.config.ts for config
-    UnoCSS(),
   ],
 })

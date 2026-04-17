@@ -9,11 +9,11 @@ declare module 'vue' {
   export interface GlobalComponents {
     BannerBanner: typeof import('./components/Banner/Banner.vue')['default']
     CommonPageFooter: typeof import('./components/common/PageFooter.vue')['default']
-    CommonPageFooterGlass: typeof import('./components/common/PageFooterGlass.vue')['default']
-    CommonPageFooterMetal: typeof import('./components/common/PageFooterMetal.vue')['default']
     DemoBlock: typeof import('./components/DemoBlock.vue')['default']
     GlobalLoading: typeof import('./components/GlobalLoading.vue')['default']
     GlobalMessage: typeof import('./components/GlobalMessage.vue')['default']
+    GlobalPageStatus: typeof import('./components/GlobalPageStatus.vue')['default']
+    GlobalStatusEmptyPage: typeof import('./components/GlobalStatus/EmptyPage.vue')['default']
     GlobalStatusError: typeof import('./components/GlobalStatus/Error.vue')['default']
     GlobalStatusLoading: typeof import('./components/GlobalStatus/Loading.vue')['default']
     GlobalToast: typeof import('./components/GlobalToast.vue')['default']

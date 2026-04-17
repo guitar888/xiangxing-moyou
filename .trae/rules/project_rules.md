@@ -65,3 +65,58 @@ src/
 - 不收集手机号/身份证/真实姓名
 - 用户上传内容必须管理员审核
 - 地图仅用腾讯地图官方SDK
+
+## 八、小程序 UnoCSS Carbon 图标规范（重要）
+**问题**：小程序中 `entry.icon === 'i-carbon:map'` 精确匹配经常失败，导致图标不显示。
+
+**正确写法**：
+```vue
+<!-- 用 includes 模糊匹配，不要精确匹配 === -->
+<text v-else-if="entry.icon.includes('map')" class="i-carbon:map text-[40rpx] leading-[40rpx] flex items-center justify-center" :class="entry.highlight ? 'mini-icon-theme' : 'mini-icon-warning'"></text>
+<text v-else-if="entry.icon.includes('cloud')" class="i-carbon:cloud text-[40rpx] leading-[40rpx] flex items-center justify-center" :class="entry.highlight ? 'mini-icon-theme' : 'mini-icon-warning'"></text>
+```
+
+**要点**：
+1. 判断条件用 `.includes('关键词')` 模糊匹配，不用 `===` 精确匹配
+2. 图标 class 静态写死（如 `class="i-carbon:map"`），不动态绑定
+3. UnoCSS 的 `text-[40rpx]` 响应式语法在小程序中可用
+
+## 九、平台兼容性优化
+
+### 8.1 动画优化
+- **H5 平台**：可以使用 `requestAnimationFrame` 和复杂动画效果
+- **小程序平台**：建议使用简单动画或无动画，避免使用 `setInterval` 影响性能
+- **实现方式**：使用条件编译 `#ifdef H5` 和 `#ifndef H5` 为不同平台提供不同实现
+
+### 8.2 毛玻璃效果（backdrop-filter）
+- **H5 平台**：可以使用 `backdrop-blur-xl` 等 UnoCSS 类
+- **小程序平台**：
+  - 不支持 `backdrop-filter` 属性
+  - 可以使用半透明背景模拟效果，如 `bg-white/20`
+  - 或直接使用实色背景
+
+### 8.3 渐变效果
+- **H5 平台**：支持 `radial-gradient` 和 `linear-gradient`
+- **小程序平台**：
+  - 建议使用 `linear-gradient`，对 `radial-gradient` 支持有限
+  - 不支持 CSS 变量在渐变中使用，需要使用具体颜色值
+  - 示例：`linear-gradient(to bottom, rgba(46, 213, 115, 0.3) 0%, rgba(46, 213, 115, 0.1) 100%)`
+
+### 8.4 CSS 变量使用
+- **H5 平台**：可以正常使用 CSS 变量
+- **小程序平台**：
+  - 部分场景下 CSS 变量可能不生效（如在渐变中）
+  - 建议在关键样式中使用具体颜色值作为 fallback
+  - 颜色值参考 `src/styles/variables.css` 中的定义
+
+### 8.5 SVG 使用
+- 小程序仅支持作为静态图片资源使用 SVG
+- 不支持在 SVG 中使用 `<filter>` 等滤镜标签
+- 不支持 SVG 的 `<style>` 样式表定义
+- 不支持通过 `url()` 方式引用外部 SVG 滤镜文件
+
+### 8.6 条件编译最佳实践
+- 使用 `#ifdef H5` 为 H5 平台提供高级效果
+- 使用 `#ifndef H5` 为小程序平台提供兼容性实现
+- 保持两个平台的视觉效果尽可能一致
+- 优先保证小程序平台的稳定性和性能

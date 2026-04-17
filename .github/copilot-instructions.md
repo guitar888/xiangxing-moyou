@@ -52,3 +52,18 @@ applyTo: "**/*.{vue,ts,js,scss,css}"
 - 变量/函数：小驼峰
 - 类型/接口：大驼峰
 - 注释简洁，必要时标注业务含义
+
+## 八、小程序 UnoCSS Carbon 图标规范（重要）
+**问题**：小程序中 `entry.icon === 'i-carbon:map'` 精确匹配经常失败，导致图标不显示。
+
+**正确写法**：
+```vue
+<!-- 用 includes 模糊匹配，不要精确匹配 === -->
+<text v-else-if="entry.icon.includes('map')" class="i-carbon:map text-[40rpx] leading-[40rpx] flex items-center justify-center" :class="entry.highlight ? 'mini-icon-theme' : 'mini-icon-warning'"></text>
+<text v-else-if="entry.icon.includes('cloud')" class="i-carbon:cloud text-[40rpx] leading-[40rpx] flex items-center justify-center" :class="entry.highlight ? 'mini-icon-theme' : 'mini-icon-warning'"></text>
+```
+
+**要点**：
+1. 判断条件用 `.includes('关键词')` 模糊匹配，不用 `===` 精确匹配
+2. 图标 class 静态写死（如 `class="i-carbon:map"`），不动态绑定
+3. UnoCSS 的 `text-[40rpx]` 响应式语法在小程序中可用

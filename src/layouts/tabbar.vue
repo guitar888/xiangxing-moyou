@@ -1,3 +1,11 @@
+代码变更
+
+
+
+tabbar.vue
+/Users/winter/Desktop/tech/襄阳摩友助手/2.0version/moyou2.0/xiangxingmoyou/src/layouts
++79
+-9
 <script lang="ts" setup>
 const router = useRouter()
 
@@ -38,6 +46,7 @@ export default {
   <wd-tabbar
     :model-value="activeTabbar.name" bordered safe-area-inset-bottom fixed
     @change="handleTabbarChange"
+    inactive-color="#A0AEC0"
   >
     <wd-tabbar-item
       v-for="(item, index) in tabbarList" :key="index" :name="item.name"

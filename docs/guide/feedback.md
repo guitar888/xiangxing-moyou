@@ -379,3 +379,215 @@ message.close()
 
 1. **字符串参数**：直接传入标题文本
 2. **选项对象**：传入完整的 GlobalMessageOptions 配置
+
+## 全局页面状态
+
+### 概述
+
+GlobalPageStatus 是全局页面级别的 Loading 和 Error 状态组件，通过 `usePageStatus` composable 实现全局调用。与 GlobalLoading（toast类）不同，GlobalPageStatus 用于**整页数据加载**场景。
+
+### 组件特性
+
+- 全局单例，任何页面都可以调用
+- 支持 Loading 进度条展示
+- 支持 Error 状态和重试回调
+- H5 平台支持毛玻璃背景效果
+- 小程序平台使用实色背景
+
+### 使用
+
+```typescript
+import { usePageStatus } from '@/composables/usePageStatus'
+
+const pageStatus = usePageStatus()
+```
+
+### API 文档
+
+#### 基础用法
+
+```typescript
+// 开始 Loading
+pageStatus.startLoading()
+
+// 设置 Loading 进度（0-100）
+pageStatus.setLoadingProgress(50)
+
+// 完成 Loading
+pageStatus.finishLoading()
+
+// 立即隐藏 Loading
+pageStatus.hideLoading()
+
+// 显示 Error
+pageStatus.showError({
+  title: '加载失败',
+  buttonText: '重新加载',
+  onRetry: () => loadData()
+})
+
+// 隐藏 Error
+pageStatus.hideError()
+```
+
+#### 高级用法：包装异步请求
+
+```typescript
+// 自动处理 loading 和 error
+const result = await pageStatus.wrapRequest(async () => {
+  return await HomeService.getBanners()
+})
+```
+
+### 方法说明
+
+#### startLoading(initialProgress?: number)
+开始 Loading 状态，带进度条动画
+
+```typescript
+// 从 0 开始
+pageStatus.startLoading()
+
+// 从指定进度开始（如已知预估进度）
+pageStatus.startLoading(30)
+```
+
+**默认配置：**
+- 初始进度：0
+- 自动增长：每 100ms 增加随机进度
+
+#### setLoadingProgress(progress: number)
+设置 Loading 进度（用于真实进度展示）
+
+```typescript
+pageStatus.setLoadingProgress(50)
+```
+
+#### finishLoading()
+完成 Loading（进度达到 100% 后自动隐藏）
+
+```typescript
+pageStatus.finishLoading()
+```
+
+#### hideLoading()
+立即隐藏 Loading（不等待进度）
+
+```typescript
+pageStatus.hideLoading()
+```
+
+#### showError(options?)
+显示 Error 页面
+
+```typescript
+// 简单用法
+pageStatus.showError()
+
+// 完整配置
+pageStatus.showError({
+  title: '网络错误',           // 错误标题
+  buttonText: '重试',          // 重试按钮文字
+  onRetry: () => fetchData()  // 重试回调
+})
+```
+
+#### hideError()
+隐藏 Error 页面
+
+```typescript
+pageStatus.hideError()
+```
+
+#### wrapRequest(asyncFn)
+包装异步请求，自动处理 Loading 和 Error
+
+```typescript
+async function loadHomeData() {
+  const pageStatus = usePageStatus()
+
+  // 方式1：自动处理
+  const data = await pageStatus.wrapRequest(
+    () => HomeService.getBanners()
+  )
+
+  // 方式2：手动控制
+  pageStatus.startLoading()
+  try {
+    const data = await HomeService.getBanners()
+    pageStatus.finishLoading()
+    return data
+  } catch {
+    pageStatus.showError({ onRetry: loadHomeData })
+  }
+}
+```
+
+### 状态说明
+
+以下状态可双向绑定到组件：
+
+| 状态 | 类型 | 说明 |
+|------|------|------|
+| loading | Ref\<boolean\> | Loading 状态 |
+| loadingProgress | Ref\<number\> | 进度值（0-100） |
+| error | Ref\<boolean\> | Error 状态 |
+| errorTitle | Ref\<string\> | 错误标题 |
+| errorButtonText | Ref\<string\> | 重试按钮文字 |
+
+### 组件内部机制
+
+```
+usePageStatus() ← 全局 composable（基于响应式）
+       ↓
+GlobalPageStatus.vue ← 全局组件（自动监听状态）
+       ↓
+App.ku.vue 注册 <global-page-status />
+```
+
+### 示例：首页数据加载
+
+```typescript
+// useHomeData.ts
+async function loadHomeData() {
+  const pageStatus = usePageStatus()
+  pageStatus.startLoading()
+
+  try {
+    const [banners, entries, rideInfo] = await Promise.all([
+      HomeService.getBanners(),
+      HomeService.getQuickEntries(),
+      HomeService.getRideData(),
+    ])
+
+    bannerList.value = banners
+    quickEntries.value = entries
+    rideData.value = rideInfo
+
+    pageStatus.finishLoading()
+  } catch (err) {
+    pageStatus.showError({
+      title: '加载失败',
+      onRetry: loadHomeData,
+    })
+  }
+}
+```
+
+### 示例：其他页面使用
+
+```typescript
+// pages/data/index.vue
+const pageStatus = usePageStatus()
+
+async function fetchData() {
+  pageStatus.startLoading()
+  try {
+    const res = await fetch('/api/data')
+    pageStatus.finishLoading()
+    return res
+  } catch {
+    pageStatus.showError({ onRetry: fetchData })
+  }
+}
+```

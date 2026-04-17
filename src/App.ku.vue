@@ -11,6 +11,7 @@ const { themeVars, theme } = useManualTheme()
     <global-loading />
     <global-toast />
     <global-message />
+    <global-page-status />
     <!-- #ifdef MP-WEIXIN -->
     <privacy-popup />
     <!-- #endif -->

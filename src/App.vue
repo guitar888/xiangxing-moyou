@@ -7,14 +7,6 @@ themeStore.initSystemTheme()
 onLaunch(() => {})
 </script>
 
-<script lang="ts">
-export default {
-  options: {
-    styleIsolation: 'shared',
-  },
-}
-</script>
-
 <template>
   <wd-config-provider :theme-vars="themeStore.themeVars">
     <view class="page-wraper w-full min-h-screen bg-[var(--darkBackground)]">
