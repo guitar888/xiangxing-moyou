@@ -71,7 +71,7 @@ const difficultyConfig = computed(() => {
         @click="handleNavigate"
       >
         <view class="flex items-center justify-center gap-[4rpx]">
-          <text class="i-carbon:navigation text-[26rpx]" />
+          <text class="i-carbon:direction-straight-right text-[26rpx]" />
           <text class="text-[26rpx]">导航</text>
         </view>
       </wd-button>

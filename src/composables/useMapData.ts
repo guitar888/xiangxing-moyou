@@ -3,7 +3,7 @@
  * 职责：管理骑行地图全部业务逻辑
  * 包含：路线管理、定位导航、骑行记录、筛选、导航控制
  */
-import type { RideRoute, CheckInSpot, RouteFilter, SpotType, MapMarker, Coordinate, RideRecord, ActiveRide } from '@/types'
+import type { RideRoute, CheckInSpot, RouteFilter, SpotType, Coordinate, RideRecord, ActiveRide, MapMarker } from '@/types'
 import { getRoutes, getRouteById } from '@/api/services/mapService'
 
 export function useMapData() {
@@ -18,6 +18,7 @@ export function useMapData() {
   const error = ref(false)
   const selectedSpotTypes = ref<SpotType[]>([])
   const selectedDifficulty = ref<string>('')
+  const selectedRegion = ref<string>('')
 
   // ================================================
   // 定位状态
@@ -84,6 +85,14 @@ export function useMapData() {
     return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
   })
 
+  // 热门路线（取前4条）
+  const hotRoutes = computed(() => {
+    return routes.value.slice(0, 4)
+  })
+
+  // 智能分类（包含露营）
+  const spotTypes: SpotType[] = ['scenic', 'food', 'coffee', 'photo', 'drone', 'camp']
+
   // ================================================
   // 定位方法
   // ================================================
@@ -93,6 +102,7 @@ export function useMapData() {
       locationLoading.value = true
       locationError.value = ''
 
+      // #ifdef MP-WEIXIN
       uni.getLocation({
         type: 'gcj02',
         success: (res) => {
@@ -116,6 +126,12 @@ export function useMapData() {
           resolve(currentLocation.value)
         },
       })
+      // #endif
+      // #ifndef MP-WEIXIN
+      locationLoading.value = false
+      isAuthorized.value = true
+      resolve(currentLocation.value)
+      // #endif
     })
   }
 
@@ -179,9 +195,19 @@ export function useMapData() {
     loadRoutes()
   }
 
+  function setRegion(region: string) {
+    if (selectedRegion.value === region) {
+      selectedRegion.value = ''
+    } else {
+      selectedRegion.value = region
+    }
+    loadRoutes()
+  }
+
   function clearFilters() {
     selectedSpotTypes.value = []
     selectedDifficulty.value = ''
+    selectedRegion.value = ''
     loadRoutes()
   }
 
@@ -201,6 +227,9 @@ export function useMapData() {
       }
       if (selectedDifficulty.value) {
         filter.difficulty = selectedDifficulty.value as RouteFilter['difficulty']
+      }
+      if (selectedRegion.value) {
+        filter.region = selectedRegion.value
       }
 
       routes.value = await getRoutes(filter)
@@ -229,17 +258,42 @@ export function useMapData() {
   // ================================================
 
   function loadActiveRideFromStorage() {
-    const stored = uni.getStorageSync(ACTIVE_RIDE_KEY)
-    if (stored) {
-      activeRide.value = JSON.parse(stored)
-      if (activeRide.value.status === 'recording') {
-        startRideTimer()
+    try {
+      const stored = uni.getStorageSync(ACTIVE_RIDE_KEY)
+      if (stored) {
+        activeRide.value = JSON.parse(stored)
+        if (activeRide.value.status === 'recording') {
+          startRideTimer()
+        }
       }
+    } catch (err) {
+      console.error('加载骑行记录失败:', err)
+      activeRide.value = {
+        status: 'idle',
+        startTime: 0,
+        duration: 0,
+      }
+      saveActiveRideToStorage()
     }
   }
 
   function saveActiveRideToStorage() {
     uni.setStorageSync(ACTIVE_RIDE_KEY, JSON.stringify(activeRide.value))
+  }
+
+  function saveRideRecord(record: RideRecord) {
+    try {
+      const storedRecords = uni.getStorageSync(STORAGE_KEY)
+      const records: RideRecord[] = storedRecords ? JSON.parse(storedRecords) : []
+      records.unshift(record) // 新记录放在最前面
+      // 只保留最近100条记录
+      if (records.length > 100) {
+        records.splice(100)
+      }
+      uni.setStorageSync(STORAGE_KEY, JSON.stringify(records))
+    } catch (err) {
+      console.error('保存骑行记录失败:', err)
+    }
   }
 
   // ================================================
@@ -288,14 +342,16 @@ export function useMapData() {
 
     const now = Date.now()
     const duration = Math.round((now - activeRide.value.startTime) / 60000)
+    const distance = currentRoute.value?.distance || 0
+    const avgSpeed = distance > 0 && duration > 0 ? Math.round((distance / (duration / 60)) * 10) / 10 : 0
 
     const record: RideRecord = {
       id: `ride_${now}`,
       startTime: activeRide.value.startTime,
       endTime: now,
       duration,
-      distance: 0,
-      avgSpeed: 0,
+      distance,
+      avgSpeed,
       maxSpeed: 0,
       routeId: activeRide.value.routeId,
       routeName: activeRide.value.routeName,
@@ -311,6 +367,7 @@ export function useMapData() {
     }
 
     saveActiveRideToStorage()
+    saveRideRecord(record)
 
     return record
   }
@@ -329,12 +386,12 @@ export function useMapData() {
   // 对话框操作
   // ================================================
 
-  function confirmStartRide(routeId?: string, routeName?: string) {
+  function confirmStartRide() {
     if (isRiding.value) return
 
     uni.showModal({
       title: '开始骑行记录',
-      content: `${routeName || '当前位置'}出发，开始记录骑行？`,
+      content: `${currentRoute.value?.name || '当前位置'}出发，开始记录骑行？`,
       confirmText: '开始',
       success: (res) => {
         if (res.confirm) {
@@ -406,7 +463,48 @@ export function useMapData() {
 
 
   function handleSpotClose() {
-    selectSpot(null as unknown as CheckInSpot)
+    currentSpot.value = null
+  }
+
+  // ================================================
+  // 地图标记（小程序map组件用）
+  // ================================================
+
+  const markers = computed(() => {
+    const allMarkers: MapMarker[] = []
+    routes.value.forEach((route) => {
+      route.spots?.forEach((spot) => {
+        allMarkers.push({
+          id: allMarkers.length,
+          latitude: spot.coordinates.latitude,
+          longitude: spot.coordinates.longitude,
+          iconPath: '/static/logo.png',
+          width: 32,
+          height: 32,
+        })
+      })
+    })
+    return allMarkers
+  })
+
+  function handleMapMarkertap(markerId: number) {
+    let targetSpot: CheckInSpot | null = null
+    let currentIndex = 0
+
+    for (const route of routes.value) {
+      for (const spot of route.spots || []) {
+        if (currentIndex === markerId) {
+          targetSpot = spot
+          break
+        }
+        currentIndex++
+      }
+      if (targetSpot) break
+    }
+
+    if (targetSpot) {
+      currentSpot.value = targetSpot
+    }
   }
 
   // ================================================
@@ -422,8 +520,6 @@ export function useMapData() {
     showPoster.value = false
     completedRecord.value = null
   }
-
-
 
   // ================================================
   // 生命周期
@@ -452,6 +548,7 @@ export function useMapData() {
     error,
     selectedSpotTypes,
     selectedDifficulty,
+    selectedRegion,
     // 状态 - 定位
     currentLocation,
     locationLoading,
@@ -468,6 +565,10 @@ export function useMapData() {
     // 状态 - 视图
     mapViewHeight,
     listHeight,
+    // 热门路线
+    hotRoutes,
+    // 地图标记
+    markers,
     // 定位方法
     getLocation,
     checkAndRequestLocation,
@@ -476,6 +577,7 @@ export function useMapData() {
     loadRouteDetail,
     toggleSpotType,
     setDifficulty,
+    setRegion,
     clearFilters,
     selectRoute,
     selectSpot,
@@ -490,6 +592,7 @@ export function useMapData() {
     handleCancelRide,
     handleRouteSelect,
     handleSpotClose,
+    handleMapMarkertap,
     // 对话框
     confirmStartRide,
     confirmEndRide,

@@ -173,5 +173,14 @@ export default defineConfig({
     'tabbar-bg': 'bg-[#1E1E1E]',
     'tabbar-divider': 'h-1 bg-gradient-to-r from-transparent via-[rgba(46,213,115,0.3)] to-transparent',
   },
-  safelist: ['i-carbon:map', 'i-carbon:cloud'],
+  safelist: [
+    'i-carbon:map', 'i-carbon:cloud', 'i-carbon:users', 'i-carbon:distance', 'i-carbon:speedometer',
+    'i-carbon:calendar', 'i-carbon:location', 'i-carbon:share', 'i-carbon:trash-can', 'i-carbon:time',
+    'i-carbon:delta', 'i-carbon:star', 'i-carbon:star-filled', 'i-carbon:store', 'i-carbon:bicycle',
+    'i-carbon:palm-tree', 'i-carbon:restaurant', 'i-carbon:cafe', 'i-carbon:camera', 'i-carbon:drone',
+    'i-carbon:military-camp', 'i-carbon:car', 'i-carbon:direction-straight-right', 'i-carbon:warning',
+    'i-carbon:information', 'i-carbon:fire', 'i-carbon:tag', 'i-carbon:list', 'i-carbon:close',
+    'i-carbon:checkmark', 'i-carbon:search',
+  ],
+
 })

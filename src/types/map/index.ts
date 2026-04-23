@@ -13,7 +13,7 @@ export interface Coordinate {
 /**
  * 打卡点类型
  */
-export type SpotType = 'scenic' | 'food' | 'coffee' | 'photo' | 'drone'
+export type SpotType = 'scenic' | 'food' | 'coffee' | 'photo' | 'drone' | 'camp'
 
 /**
  * 路线难度
@@ -38,7 +38,13 @@ export interface MapMarker {
 export interface RouteFilter {
   spotTypes?: SpotType[]
   difficulty?: RouteDifficulty
+  region?: string
 }
+
+/**
+ * 区域类型
+ */
+export type RegionType = 'all' | 'xiangcheng' | 'fancheng' | 'guangcheng' | 'yicheng' | 'nanzhang' | 'baokang' | 'gucheng' | 'laohekou' | 'zaoyang'
 
 /**
  * 打卡点
@@ -49,8 +55,9 @@ export interface CheckInSpot {
   type: SpotType
   description: string
   coordinates: Coordinate
-  address: string
+  address?: string
   images?: string[]
+  tags?: string[]
 }
 
 /**
@@ -78,6 +85,7 @@ export const SPOT_TYPE_CONFIG: Record<SpotType, { label: string; color: string; 
   coffee: { label: '咖啡', color: '#8D99AE', bgColor: 'rgba(141, 153, 174, 0.15)' },
   photo: { label: '摄影', color: '#3385FF', bgColor: 'rgba(51, 133, 255, 0.15)' },
   drone: { label: '航拍', color: '#9945FF', bgColor: 'rgba(153, 69, 255, 0.15)' },
+  camp: { label: '露营', color: '#F9CA24', bgColor: 'rgba(249, 202, 36, 0.15)' },
 }
 
 /**
@@ -99,3 +107,19 @@ export const ROUTE_FEATURES = [
   { key: 'short', label: '距离短', icon: 'i-carbon:time' },
   { key: 'cool', label: '很酷', icon: 'i-carbon:stars' },
 ]
+
+/**
+ * 区域配置
+ */
+export const REGION_CONFIG: Record<RegionType, { label: string }> = {
+  all: { label: '全部区域' },
+  xiangcheng: { label: '襄城区' },
+  fancheng: { label: '樊城区' },
+  guangcheng: { label: '襄州区' },
+  yicheng: { label: '宜城市' },
+  nanzhang: { label: '南漳县' },
+  baokang: { label: '保康县' },
+  gucheng: { label: '谷城县' },
+  laohekou: { label: '老河口市' },
+  zaoyang: { label: '枣阳市' },
+}
