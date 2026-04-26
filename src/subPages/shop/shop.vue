@@ -22,6 +22,9 @@ definePage({
 const shops = ref<Shop[]>([])
 const loading = ref(false)
 const currentFilter = ref<ShopType | 'all'>('all')
+const viewMode = ref<'list' | 'map'>('list')
+const mapCenter = ref({ latitude: 32.0082, longitude: 112.1226 })
+const mapScale = ref(11)
 
 // ================================================
 // 筛选
@@ -40,6 +43,33 @@ const filters: { key: ShopType | 'all'; label: string }[] = [
 const filteredShops = computed(() => {
   if (currentFilter.value === 'all') return shops.value
   return shops.value.filter(s => s.type === currentFilter.value)
+})
+
+// 地图标记
+const markers = computed(() => {
+  return filteredShops.value.map((shop, index) => {
+    const config = SHOP_TYPE_CONFIG[shop.type]
+    return {
+      id: shop.id,
+      latitude: 32.0082 + (Math.random() - 0.5) * 0.1,
+      longitude: 112.1226 + (Math.random() - 0.5) * 0.1,
+      title: shop.name,
+      iconPath: '',
+      width: 40,
+      height: 40,
+      callout: {
+        content: shop.name,
+        color: '#fff',
+        fontSize: 12,
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: config.color,
+        bgColor: config.color,
+        padding: 8,
+        display: 'BYCLICK'
+      }
+    }
+  })
 })
 
 // ================================================
@@ -150,12 +180,25 @@ function setFilter(key: ShopType | 'all') {
   currentFilter.value = key
 }
 
+function toggleViewMode() {
+  viewMode.value = viewMode.value === 'list' ? 'map' : 'list'
+}
+
 function getShopIcon(type: ShopType) {
   return SHOP_TYPE_CONFIG[type]?.icon || 'i-carbon:store'
 }
 
 function getShopColor(type: ShopType) {
   return SHOP_TYPE_CONFIG[type]?.color || '#999'
+}
+
+// 处理地图标记点击
+function onMapMarkerTap(e: any) {
+  const markerId = e.detail?.markerId
+  if (markerId) {
+    // 可以添加点击标记后的逻辑
+    console.log('Marker tapped:', markerId)
+  }
 }
 
 onMounted(() => {
@@ -180,8 +223,22 @@ onMounted(() => {
       </scroll-view>
     </view>
 
-    <!-- 店铺列表 -->
-    <view class="px-[24rpx]">
+    <!-- 视图切换 -->
+    <view class="px-[24rpx] mb-[20rpx]">
+      <button
+        class="w-full flex items-center justify-center gap-[12rpx] px-[24rpx] py-[12rpx] rounded-[16rpx] bg-card/50 border border-white/10 transition-all"
+        @click="toggleViewMode"
+      >
+        <text :class="viewMode === 'list' ? 'i-carbon:list text-primary' : 'i-carbon:list text-gray'" class="text-[24rpx]" />
+        <text :class="viewMode === 'list' ? 'text-primary' : 'text-gray'" class="text-[22rpx] font-500">列表</text>
+        <text class="text-[20rpx] text-gray/50">|</text>
+        <text :class="viewMode === 'map' ? 'i-carbon:map text-primary' : 'i-carbon:map text-gray'" class="text-[24rpx]" />
+        <text :class="viewMode === 'map' ? 'text-primary' : 'text-gray'" class="text-[22rpx] font-500">地图</text>
+      </button>
+    </view>
+
+    <!-- 列表模式 -->
+    <view v-if="viewMode === 'list'" class="px-[24rpx]">
       <view class="space-y-[20rpx]">
         <view
           v-for="shop in filteredShops"
@@ -235,23 +292,11 @@ onMounted(() => {
                 </text>
               </view>
 
-              <!-- 描述 -->
-              <text class="text-[22rpx] text-gray line-clamp-2">{{ shop.description }}</text>
-            </view>
-          </view>
-
-          <!-- 底部 -->
-          <view class="flex items-center justify-between mt-[16rpx] pt-[16rpx]" style="border-top: 1rpx solid var(--wot-color-border)">
-            <!-- 地址 -->
-            <view class="flex items-center gap-[6rpx] flex-1 min-w-0">
-              <text class="i-carbon:location text-[22rpx] text-gray flex-shrink-0" />
-              <text class="text-[22rpx] text-gray truncate">{{ shop.address }}</text>
-            </view>
-
-            <!-- 距离 -->
-            <view v-if="shop.distance" class="flex items-center gap-[4rpx] ml-[16rpx]">
-              <text class="i-carbon:distance text-[22rpx] text-gray" />
-              <text class="text-[22rpx] text-gray">{{ shop.distance }}km</text>
+              <!-- 地址 -->
+              <view class="flex items-center gap-[6rpx] flex-1 min-w-0">
+                <text class="i-carbon:location text-[22rpx] text-gray flex-shrink-0" />
+                <text class="text-[22rpx] text-gray truncate">{{ shop.address }}</text>
+              </view>
             </view>
           </view>
         </view>
@@ -269,10 +314,93 @@ onMounted(() => {
       </view>
     </view>
 
+    <!-- 地图模式 -->
+    <view v-else class="px-[24rpx]">
+      <!-- 微信小程序地图 -->
+      <!-- #ifdef MP-WEIXIN -->
+      <view class="rounded-[20rpx] overflow-hidden border border-white/10 shadow-lg">
+        <map
+          class="w-full"
+          :style="{ height: '600rpx' }"
+          :latitude="mapCenter.latitude"
+          :longitude="mapCenter.longitude"
+          :scale="mapScale"
+          :markers="markers"
+          :show-location="true"
+          @markertap="onMapMarkerTap"
+        />
+        <view class="bg-[var(--wot-color-bg-card)] px-[16rpx] py-[10rpx] flex items-center justify-between">
+          <view class="flex items-center gap-[8rpx]">
+            <text class="i-carbon:location text-[22rpx] text-primary" />
+            <text class="text-[20rpx] text-white/80">点击标记查看详情</text>
+          </view>
+          <view class="flex items-center gap-[6rpx]">
+            <text class="i-carbon:store text-[20rpx] text-gray" />
+            <text class="text-[18rpx] text-gray">{{ markers.length }}个店铺</text>
+          </view>
+        </view>
+      </view>
+      <!-- #endif -->
+      <!-- #ifndef MP-WEIXIN -->
+      <!-- H5端地图占位 -->
+      <view class="rounded-[20rpx] overflow-hidden border border-white/10 shadow-lg bg-[var(--wot-color-bg-card)]">
+        <view class="flex flex-col items-center justify-center" :style="{ height: '400rpx' }">
+          <text class="i-carbon:map text-[80rpx] text-primary/50 mb-[12rpx]" />
+          <text class="text-[24rpx] text-white/60 font-500">地图预览</text>
+          <text class="text-[20rpx] text-gray/60 mt-[8rpx]">小程序内可查看完整地图</text>
+        </view>
+        <view class="bg-[var(--wot-color-bg-card)] px-[16rpx] py-[10rpx] flex items-center justify-between border-t border-white/5">
+          <view class="flex items-center gap-[8rpx]">
+            <text class="i-carbon:information text-[22rpx] text-primary" />
+            <text class="text-[20rpx] text-white/80">请在微信小程序中查看地图</text>
+          </view>
+        </view>
+      </view>
+      <!-- #endif -->
+
+      <!-- 地图模式下的店铺列表 -->
+      <view class="mt-[20rpx]">
+        <view class="space-y-[12rpx]">
+          <view
+            v-for="shop in filteredShops"
+            :key="shop.id"
+            class="bg-card rounded-[16rpx] p-[20rpx]"
+          >
+            <view class="flex items-start gap-[12rpx]">
+              <view
+                class="w-[60rpx] h-[60rpx] rounded-[12rpx] flex items-center justify-center flex-shrink-0"
+                :style="{ backgroundColor: getShopColor(shop.type) + '20' }"
+              >
+                <text :class="getShopIcon(shop.type) + ' text-[32rpx]'" :style="{ color: getShopColor(shop.type) }" />
+              </view>
+              <view class="flex-1 min-w-0">
+                <text class="text-[24rpx] font-600 text-white truncate">{{ shop.name }}</text>
+                <view class="flex items-center gap-[8rpx] mt-[4rpx]">
+                  <view class="flex items-center">
+                    <text
+                      v-for="i in 5"
+                      :key="i"
+                      :class="i <= Math.floor(shop.rating) ? 'i-carbon:star-filled text-[16rpx]' : 'i-carbon:star text-[16rpx]'"
+                      :style="{ color: i <= Math.floor(shop.rating) ? '#FFB800' : '#666' }"
+                    />
+                  </view>
+                  <text class="text-[20rpx] text-warning">{{ shop.rating }}</text>
+                </view>
+                <view class="flex items-center gap-[6rpx] mt-[4rpx]">
+                  <text class="i-carbon:location text-[18rpx] text-gray flex-shrink-0" />
+                  <text class="text-[20rpx] text-gray truncate">{{ shop.address }}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
     <!-- 合规提示 -->
     <view class="px-[24rpx] mt-[40rpx] text-center">
       <text class="text-[20rpx] text-gray">
-        更多商家信息请联系管理员获取
+        更多商家信息请联系管理员获取 · 信息仅供参考
       </text>
     </view>
   </view>

@@ -478,7 +478,6 @@ export function useMapData() {
           id: allMarkers.length,
           latitude: spot.coordinates.latitude,
           longitude: spot.coordinates.longitude,
-          iconPath: '/static/logo.png',
           width: 32,
           height: 32,
         })

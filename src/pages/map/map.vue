@@ -7,13 +7,32 @@
 import type { SpotType, RideRoute, CheckInSpot, Coordinate } from '@/types'
 import { SPOT_TYPE_CONFIG, DIFFICULTY_CONFIG, REGION_CONFIG } from '@/types'
 
-// 合规提示状态
-const showComplianceTip = ref(true)
-
-// 关闭合规提示
-function closeComplianceTip() {
-  showComplianceTip.value = false
+// 辅助函数：获取打卡点类型配置
+function getSpotTypeConfigForHot(type: SpotType) {
+  return SPOT_TYPE_CONFIG[type] || { label: type, icon: 'i-carbon:location', color: '#8D99AE', bgColor: 'rgba(141, 153, 174, 0.15)' }
 }
+
+// 热门卡片统计打卡点类型
+function getHotSpotTypeStats(route: RideRoute) {
+  const stats: Record<SpotType, number> = {} as Record<SpotType, number>
+  route.spots?.forEach((spot) => {
+    const type = spot.type as SpotType
+    stats[type] = (stats[type] || 0) + 1
+  })
+  return Object.entries(stats).map(([type, count]) => ({
+    type: type as SpotType,
+    count,
+    ...getSpotTypeConfigForHot(type as SpotType),
+  })).slice(0, 4)
+}
+
+// 热门卡片获取区域标签
+function getHotRegionLabel(region?: string) {
+  if (!region) return ''
+  return REGION_CONFIG[region as keyof typeof REGION_CONFIG]?.label || ''
+}
+
+
 
 definePage({
   name: 'map',
@@ -55,6 +74,7 @@ const {
   closePoster,
   markers,
   handleMapMarkertap,
+  loadRoutes,
 } = useMapData()
 
 // ================================================
@@ -82,52 +102,6 @@ function handleNavigateToSpot(spot: CheckInSpot | null) {
     name: spot.name,
     address: spot.name,
   })
-}
-
-// ================================================
-// 筛选数据
-// ================================================
-
-const spotTypes: SpotType[] = ['scenic', 'food', 'coffee', 'photo', 'drone', 'camp']
-
-const activeSpotTypes = computed(() => selectedSpotTypes.value)
-
-// 襄阳各区县
-const regions = computed(() => {
-  return Object.entries(REGION_CONFIG).map(([key, config]) => ({
-    key,
-    ...config,
-  }))
-})
-
-// ================================================
-// 分类图标配置
-// ================================================
-
-const SPOT_TYPE_ICONS: Record<SpotType, string> = {
-  scenic: 'i-carbon:palm-tree',
-  food: 'i-carbon:restaurant',
-  coffee: 'i-carbon:cafe',
-  photo: 'i-carbon:camera',
-  drone: 'i-carbon:drone',
-  camp: 'i-carbon:military-camp',
-}
-
-// ================================================
-// 区域图标配置
-// ================================================
-
-const REGION_ICONS: Record<string, string> = {
-  all: 'i-carbon:location',
-  xiangcheng: 'i-carbon:location',
-  fancheng: 'i-carbon:location',
-  guangcheng: 'i-carbon:location',
-  yicheng: 'i-carbon:location',
-  nanzhang: 'i-carbon:location',
-  baokang: 'i-carbon:location',
-  gucheng: 'i-carbon:location',
-  laohekou: 'i-carbon:location',
-  zaoyang: 'i-carbon:location',
 }
 
 // ================================================
@@ -160,6 +134,24 @@ function confirmTypeFilter() {
 // 确认区域筛选
 function confirmRegionFilter() {
   showRegionFilter.value = false
+}
+
+// 更新类型筛选值
+function updateTypeFilterValues(values: string[]) {
+  selectedSpotTypes.value.splice(0, selectedSpotTypes.value.length, ...values as SpotType[])
+  loadRoutes()
+}
+
+// 实时更新类型筛选
+function changeTypeFilter(values: string[]) {
+  selectedSpotTypes.value.splice(0, selectedSpotTypes.value.length, ...values as SpotType[])
+  loadRoutes()
+}
+
+// 更新区域筛选值
+function updateRegionFilterValues(values: string[]) {
+  selectedRegion.value = values[0] || 'all'
+  loadRoutes()
 }
 
 // ================================================
@@ -199,10 +191,14 @@ function onMapMarkerTap(e: any) {
     <!-- 页面内容 -->
     <view class="relative z-10 flex flex-col">
       <!-- 自定义Header头部 -->
-      <!-- #ifdef H5 -->
       <view
-        class="relative z-50 flex items-center justify-between border-b border-white/10 px-[24rpx] pb-[12rpx]"
-        :style="{ paddingTop: `${statusBarHeight + 12}px`, background: 'linear-gradient(to bottom, rgba(46, 213, 115, 0.12) 0%, transparent 100%)' }"
+        class="relative z-50 flex items-center justify-between border-b border-white/10 pb-[12rpx]"
+        :style="{
+          paddingTop: `${statusBarHeight + 12}px`,
+          paddingLeft: '24rpx',
+          paddingRight: '32rpx',
+          background: 'linear-gradient(to bottom, rgba(46, 213, 115, 0.15) 0%, transparent 100%)',
+        }"
       >
         <view class="flex items-center gap-[12rpx]">
           <text class="i-carbon:map text-[36rpx] text-primary" />
@@ -213,66 +209,31 @@ function onMapMarkerTap(e: any) {
           <text class="text-[22rpx] text-white/80 font-500">安全骑行</text>
         </view>
       </view>
-      <!-- #endif -->
-      <!-- #ifdef MP-WEIXIN -->
-      <view
-        class="relative z-50 flex items-center justify-between border-b border-white/10 px-[32rpx] pb-[12rpx]"
-        :style="{ paddingTop: `${statusBarHeight + 12}px`, background: 'linear-gradient(to bottom, rgba(46, 213, 115, 0.15) 0%, transparent 100%)' }"
-      >
-        <view class="flex items-center gap-[12rpx]">
-          <text class="i-carbon:map text-[36rpx] text-primary" />
-          <text class="text-[32rpx] font-700 tracking-[1px]" :style="{ color: '#2ED573' }">骑行地图</text>
-        </view>
-        <view class="flex items-center gap-[8rpx] rounded-[10rpx] bg-card/50 px-[16rpx] py-[10rpx]">
-          <text class="i-carbon:information text-[24rpx] text-primary" />
-          <text class="text-[22rpx] text-white/80 font-500">安全骑行</text>
-        </view>
-      </view>
-      <!-- #endif -->
 
-      <!-- 安全温馨提示横幅 -->
-      <view v-if="showComplianceTip" class="mx-[24rpx] mt-[12rpx]">
-        <view class="bg-warning/10 border border-warning/30 rounded-[16rpx] px-[20rpx] py-[12rpx] flex items-start gap-[12rpx] shadow-sm">
-          <text class="i-carbon:warning text-[26rpx] text-primary flex-shrink-0 mt-[2rpx]" />
-          <view class="flex-1">
-            <text class="text-[20rpx] text-white/90 leading-[1.4]">温馨提示：路线信息由摩友分享，出行请遵守交通规则</text>
-          </view>
-          <text class="i-carbon:close text-[24rpx] text-gray flex-shrink-0 mt-[2rpx]" @click="closeComplianceTip" />
-        </view>
-      </view>
+
 
       <!-- 骑行中横幅 -->
       <view v-if="isRiding" class="mx-[24rpx] mt-[12rpx] bg-gradient-to-r from-primary/25 to-primary/10 px-[24rpx] py-[14rpx] rounded-[20rpx] border border-primary/20 shadow-lg">
         <view class="flex items-center justify-between">
           <view class="flex items-center gap-[12rpx]">
-            <!-- #ifdef H5 -->
-            <view class="w-[14rpx] h-[14rpx] bg-primary rounded-full animate-pulse" />
-            <!-- #endif -->
-            <!-- #ifdef MP-WEIXIN -->
             <view class="w-[14rpx] h-[14rpx] bg-primary rounded-full" />
-            <!-- #endif -->
-            <!-- #ifdef H5 -->
-            <text class="text-[24rpx] text-primary font-600 animate-pulse flex items-center gap-[6rpx]">
-              <text class="i-carbon:car text-[24rpx]" />
-              骑行中
-            </text>
-            <!-- #endif -->
-            <!-- #ifdef MP-WEIXIN -->
             <text class="text-[24rpx] text-primary font-600 flex items-center gap-[6rpx]">
-              <text class="i-carbon:car text-[24rpx]" />
+              <text class="i-fluent:vehicle-motorcycle-28-filled text-[24rpx]" />
               骑行中
             </text>
-            <!-- #endif -->
             <text class="text-[24rpx] text-white font-600 ml-[8rpx]">{{ formattedDuration }}</text>
           </view>
           <wd-button type="primary" size="small" custom-class="rounded-[24rpx] font-600" @click="confirmEndRide">
             <view class="flex items-center gap-[4rpx]">
-              <text class="i-carbon:car text-[20rpx]" />
+              <text class="i-fluent:vehicle-motorcycle-28-filled text-[20rpx]" />
               <text class="text-[20rpx]">结束骑行</text>
             </view>
           </wd-button>
         </view>
       </view>
+
+      <!-- 合规提示横幅 -->
+      <common-ComplianceBanner />
 
       <!-- ================================================ -->
       <!-- 微信小程序地图模块（免费无Key） -->
@@ -289,7 +250,7 @@ function onMapMarkerTap(e: any) {
           :show-location="true"
           @markertap="onMapMarkerTap"
         />
-        <view class="bg-[var(--wot-color-bg-card)] px-[16rpx] py-[10rpx] flex items-center justify-between">
+        <view class="bg-[#1E1E1E] px-[16rpx] py-[10rpx] flex items-center justify-between">
           <view class="flex items-center gap-[8rpx]">
             <text class="i-carbon:location text-[22rpx] text-primary" />
             <text class="text-[20rpx] text-white/80">点击标记跳转导航</text>
@@ -303,13 +264,13 @@ function onMapMarkerTap(e: any) {
       <!-- #endif -->
       <!-- #ifndef MP-WEIXIN -->
       <!-- H5端地图占位 -->
-      <view class="mx-[24rpx] mt-[12rpx] rounded-[20rpx] overflow-hidden border border-white/10 shadow-lg bg-[var(--wot-color-bg-card)]">
+      <view class="mx-[24rpx] mt-[12rpx] rounded-[20rpx] overflow-hidden border border-white/10 shadow-lg bg-[#1E1E1E]">
         <view class="flex flex-col items-center justify-center" :style="{ height: '280rpx' }">
           <text class="i-carbon:map text-[80rpx] text-primary/50 mb-[12rpx]" />
           <text class="text-[24rpx] text-white/60 font-500">地图预览</text>
           <text class="text-[20rpx] text-gray/60 mt-[8rpx]">小程序内可查看完整地图</text>
         </view>
-        <view class="bg-[var(--wot-color-bg-card)] px-[16rpx] py-[10rpx] flex items-center justify-between border-t border-white/5">
+        <view class="bg-[#1E1E1E] px-[16rpx] py-[10rpx] flex items-center justify-between border-t border-white/5">
           <view class="flex items-center gap-[8rpx]">
             <text class="i-carbon:information text-[22rpx] text-primary" />
             <text class="text-[20rpx] text-white/80">请在微信小程序中查看地图</text>
@@ -334,7 +295,7 @@ function onMapMarkerTap(e: any) {
             class="inline-block w-[280rpx] mr-[16rpx] bg-[var(--wot-color-bg-card)] rounded-[20rpx] p-[16rpx] shadow-lg border border-white/5 align-top overflow-hidden"
             @click="handleRouteSelect(route)"
           >
-            <view class="flex items-start justify-between mb-[8rpx]">
+            <view class="flex items-start justify-between mb-[6rpx]">
               <text class="text-[26rpx] font-600 text-white flex-1 line-clamp-1">{{ route.name }}</text>
               <view
                 class="px-[10rpx] py-[4rpx] rounded-[8rpx] text-[16rpx] font-500 flex-shrink-0 ml-[8rpx]"
@@ -343,38 +304,40 @@ function onMapMarkerTap(e: any) {
                 {{ DIFFICULTY_CONFIG[route.difficulty]?.label }}
               </view>
             </view>
-            <view class="flex items-center gap-[8rpx] mb-[10rpx]">
-              <text class="i-carbon:distance text-[16rpx] text-gray" />
-              <text class="text-[18rpx] text-gray">{{ route.distance }}km</text>
-              <text class="text-[18rpx] text-gray/50">|</text>
+            <view v-if="getHotRegionLabel(route.region)" class="flex items-center gap-[4rpx] mb-[8rpx]">
               <text class="i-carbon:location text-[16rpx] text-gray" />
-              <text class="text-[18rpx] text-gray">{{ route.spots?.length || 0 }}点</text>
+              <text class="text-[16rpx] text-gray">{{ getHotRegionLabel(route.region) }}</text>
             </view>
-            <view class="w-full h-[48rpx]">
+            <view class="flex flex-wrap gap-[6rpx] mb-[10rpx]">
+              <view
+                v-for="stat in getHotSpotTypeStats(route)"
+                :key="stat.type"
+                class="flex items-center gap-[2rpx] px-[8rpx] py-[3rpx] rounded-[6rpx]"
+                :style="{ backgroundColor: stat.bgColor }"
+              >
+                <text :class="stat.icon" class="text-[14rpx]" :style="{ color: stat.color }" />
+              </view>
+            </view>
+            <view class="w-full flex justify-center">
               <wd-button
                 type="primary"
                 size="small"
-                custom-class="w-full rounded-[18rpx] font-600"
+                custom-class="w-[160rpx] rounded-[18rpx] font-600"
                 @click.stop="handleNavigateToRoute(route)"
-              >
-                <view class="flex items-center justify-center gap-[6rpx]">
-                  <text class="i-carbon:direction-straight-right text-[20rpx]" />
-                  <text class="text-[22rpx]">导航</text>
-                </view>
-              </wd-button>
+              >导航</wd-button>
             </view>
           </view>
         </view>
         <!-- #endif -->
         <!-- #ifndef H5 -->
-        <scroll-view scroll-x enable-flex page-scroll-y="false"  class="flex gap-[16rpx] pb-[4rpx] whitespace-nowrap h-[80rpx]">
+        <view class="flex gap-[16rpx] overflow-x-auto whitespace-nowrap pb-[4rpx] min-h-[200rpx]">
           <view
             v-for="route in hotRoutes"
             :key="route.id"
-            class="flex-shrink-0 w-[280rpx] bg-[var(--wot-color-bg-card)] rounded-[20rpx] p-[16rpx] shadow-lg border border-white/5 overflow-hidden"
+            class="flex-shrink-0 w-[280rpx] bg-[#1E1E1E] rounded-[20rpx] p-[16rpx] shadow-lg border border-white/5 overflow-hidden"
             @click="handleRouteSelect(route)"
           >
-            <view class="flex items-start justify-between mb-[8rpx]">
+            <view class="flex items-start justify-between mb-[6rpx]">
               <text class="text-[26rpx] font-600 text-white flex-1 line-clamp-1">{{ route.name }}</text>
               <view
                 class="px-[10rpx] py-[4rpx] rounded-[8rpx] text-[16rpx] font-500 flex-shrink-0 ml-[8rpx]"
@@ -383,28 +346,30 @@ function onMapMarkerTap(e: any) {
                 {{ DIFFICULTY_CONFIG[route.difficulty]?.label }}
               </view>
             </view>
-            <view class="flex items-center gap-[8rpx] mb-[10rpx]">
-              <text class="i-carbon:distance text-[16rpx] text-gray" />
-              <text class="text-[18rpx] text-gray">{{ route.distance }}km</text>
-              <text class="text-[18rpx] text-gray/50">|</text>
+            <view v-if="getHotRegionLabel(route.region)" class="flex items-center gap-[4rpx] mb-[8rpx]">
               <text class="i-carbon:location text-[16rpx] text-gray" />
-              <text class="text-[18rpx] text-gray">{{ route.spots?.length || 0 }}点</text>
+              <text class="text-[16rpx] text-gray">{{ getHotRegionLabel(route.region) }}</text>
             </view>
-            <view class="w-full">
+            <view class="flex flex-wrap gap-[6rpx] mb-[10rpx]">
+              <view
+                v-for="stat in getHotSpotTypeStats(route)"
+                :key="stat.type"
+                class="flex items-center gap-[2rpx] px-[8rpx] py-[3rpx] rounded-[6rpx]"
+                :style="{ backgroundColor: stat.bgColor }"
+              >
+                <text :class="stat.icon" class="text-[14rpx]" :style="{ color: stat.color }" />
+              </view>
+            </view>
+            <view class="w-full flex justify-center">
               <wd-button
                 type="primary"
                 size="small"
-                custom-class="w-full rounded-[18rpx] font-600"
+                custom-class="w-[160rpx] rounded-[18rpx] font-600"
                 @click.stop="handleNavigateToRoute(route)"
-              >
-                <view class="flex items-center justify-center gap-[6rpx]">
-                  <text class="i-carbon:direction-straight-right text-[20rpx]" />
-                  <text class="text-[22rpx]">导航</text>
-                </view>
-              </wd-button>
+              >导航</wd-button>
             </view>
           </view>
-        </scroll-view>
+        </view>
         <!-- #endif -->
       </view>
 
@@ -453,99 +418,25 @@ function onMapMarkerTap(e: any) {
       </view>
 
       <!-- 类型筛选弹窗 -->
-      <wd-popup
-      lazy-render
+      <common-FilterPopup
         v-model="showTypeFilter"
-        position="bottom"
-        custom-class="rounded-t-[32rpx] overflow-hidden"
-        :close-on-click-modal="true"
-      >
-        <view class="bg-[var(--wot-color-bg-card)] px-[32rpx] py-[24rpx]">
-          <!-- 弹窗标题 -->
-          <view class="flex items-center justify-between mb-[24rpx]">
-            <text class="text-[32rpx] font-700 text-white">选择类型</text>
-            <view class="flex items-center gap-[16rpx]">
-              <text
-                v-if="hasTypeFilter"
-                class="text-[24rpx] text-gray"
-                @click="clearFilters"
-              >
-                一键清空
-              </text>
-              <text class="i-carbon:close text-[32rpx] text-gray" @click="showTypeFilter = false" />
-            </view>
-          </view>
-          <!-- 类型选项 -->
-          <view class="flex flex-wrap gap-[16rpx]">
-            <wd-button
-              v-for="type in spotTypes"
-              :key="type"
-              :type="activeSpotTypes.includes(type) ? 'primary' : 'info'"
-              size="medium"
-              custom-class="rounded-[24rpx] font-500 px-[24rpx] py-[16rpx]"
-              @click="toggleSpotType(type)"
-            >
-              <view class="flex items-center gap-[8rpx]">
-                <text :class="SPOT_TYPE_ICONS[type]" class="text-[24rpx]" />
-                <text class="text-[24rpx]">{{ SPOT_TYPE_CONFIG[type as SpotType]?.label }}</text>
-              </view>
-            </wd-button>
-          </view>
-          <!-- 确认按钮 -->
-          <view class="mt-[32rpx]">
-            <wd-button
-              type="primary"
-              size="large"
-              custom-class="w-full rounded-[24rpx] font-600"
-              @click="confirmTypeFilter"
-            >
-              <text class="text-[28rpx]">确定</text>
-            </wd-button>
-          </view>
-        </view>
-      </wd-popup>
+        type="type"
+        :active-values="selectedSpotTypes"
+        @change="changeTypeFilter"
+        @clear="clearFilters"
+        @confirm="confirmTypeFilter"
+      />
 
       <!-- 区域筛选弹窗 -->
-      <wd-popup
-      lazy-render
+      <common-FilterPopup
         v-model="showRegionFilter"
-        position="bottom"
-        custom-class="rounded-t-[32rpx] overflow-hidden"
-        :close-on-click-modal="true"
-      >
-        <view class="bg-[var(--wot-color-bg-card)] px-[32rpx] py-[24rpx]">
-          <!-- 弹窗标题 -->
-          <view class="flex items-center justify-between mb-[24rpx]">
-            <text class="text-[32rpx] font-700 text-white">选择区域</text>
-            <view class="flex items-center gap-[16rpx]">
-              <text
-                v-if="hasRegionFilter"
-                class="text-[24rpx] text-gray"
-                @click="clearFilters"
-              >
-                一键清空
-              </text>
-              <text class="i-carbon:close text-[32rpx] text-gray" @click="showRegionFilter = false" />
-            </view>
-          </view>
-          <!-- 区域选项 -->
-          <view class="flex flex-wrap gap-[16rpx]">
-            <wd-button
-              v-for="region in regions"
-              :key="region.key"
-              :type="selectedRegion === region.key ? 'warning' : 'info'"
-              size="medium"
-              custom-class="rounded-[24rpx] font-500 px-[24rpx] py-[16rpx]"
-              @click="setRegion(region.key); confirmRegionFilter()"
-            >
-              <view class="flex items-center gap-[8rpx]">
-                <text :class="REGION_ICONS[region.key] || 'i-carbon:location'" class="text-[24rpx]" />
-                <text class="text-[24rpx]">{{ region.label }}</text>
-              </view>
-            </wd-button>
-          </view>
-        </view>
-      </wd-popup>
+        type="region"
+        :active-values="[selectedRegion]"
+        single
+        @confirm="confirmRegionFilter"
+        @clear="clearFilters"
+        @confirm-values="updateRegionFilterValues"
+      />
 
       <!-- 路线列表 -->
       <view class="mt-[14rpx] flex-1 px-[24rpx] pb-[20rpx]">
@@ -567,7 +458,7 @@ function onMapMarkerTap(e: any) {
             </view>
           </wd-button>
         </view>
-        <view class="space-y-[12rpx]">
+        <view class="flex flex-col gap-[12rpx]">
           <map-RouteCard
             v-for="route in routes"
             :key="route.id"

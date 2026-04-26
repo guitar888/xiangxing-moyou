@@ -10,6 +10,8 @@ type _LocationUrl =
   "/pages/data/data" |
   "/pages/map/map" |
   "/pages/mine/mine" |
+  "/pages/shop/shop" |
+  "/pages/webview/webview" |
   "/subPages/activity/detail" |
   "/subPages/ci/index" |
   "/subPages/create-uni/index" |

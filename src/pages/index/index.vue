@@ -27,6 +27,8 @@ const {
   isLoaded,
   activityList,
 } = useHomeData()
+
+
 </script>
 
 <template>

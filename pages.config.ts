@@ -10,6 +10,16 @@
 import { defineUniPages } from '@uni-helper/vite-plugin-uni-pages'
 
 export default defineUniPages({
+  pages: [
+    {
+      path: 'pages/webview/webview',
+      style: {
+        navigationBarTitleText: '打开地图',
+        navigationBarBackgroundColor: '#121212',
+        navigationBarTextStyle: 'white',
+      },
+    },
+  ],
   globalStyle: {
     // 导航栏配置
     navigationBarBackgroundColor: '#121212',

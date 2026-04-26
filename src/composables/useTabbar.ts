@@ -10,6 +10,7 @@ const tabbarItems = ref<TabbarItem[]>([
   { name: 'home', value: null, active: true, title: '首页', icon: 'home' },
   { name: 'map', value: null, active: false, title: '地图', icon: 'location' },
   { name: 'data', value: null, active: false, title: '数据', icon: 'chart' },
+  { name: 'shop', value: null, active: false, title: '店铺', icon: 'shop' },
   { name: 'activity', value: null, active: false, title: '活动', icon: 'calendar' },
   { name: 'mine', value: null, active: false, title: '我的', icon: 'user' },
 ])

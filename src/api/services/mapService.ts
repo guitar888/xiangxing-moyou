@@ -27,10 +27,8 @@ export async function getRoutes(filter?: RouteFilter): Promise<RideRoute[]> {
           r.spots.some(s => filter.spotTypes!.includes(s.type))
         )
       }
-      if (filter?.features?.length) {
-        routes = routes.filter(r =>
-          filter.features!.every(f => r.features.includes(f))
-        )
+      if (filter?.region && filter.region !== 'all') {
+        routes = routes.filter(r => r.region === filter.region)
       }
 
       resolve(routes)

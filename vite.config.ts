@@ -58,11 +58,6 @@ export default defineConfig({
     Optimization({
       enable: isMpWeixin,
       logger: false,
-      // 样式压缩优化
-      minify: {
-        css: true,
-        js: true,
-      },
     }),
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({

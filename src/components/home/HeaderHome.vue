@@ -36,7 +36,7 @@ function handleCityChangeAction() {
   <view class="relative z-50 flex items-center justify-between border-b border-border bg-base px-[32rpx] pb-[16rpx] shadow-[0_4rpx_16rpx_rgba(46,213,115,0.08)]" :style="{ paddingTop: `${statusBarHeight + 16}px`, background: 'linear-gradient(to bottom, rgba(46, 213, 115, 0.18) 0%, #121212 100%)' }">
   <!-- #endif -->
     <view class="relative z-10 w-[120rpx] flex items-center">
-      <image class="h-[64rpx] w-[64rpx] rounded-[14rpx]" src="/static/logo.png" mode="aspectFit" />
+      <image class="h-[64rpx] w-[64rpx] rounded-[14rpx]" src="/static/logo.webp" mode="aspectFit" />
     </view>
     <view class="relative z-10 flex flex-1 flex-col items-center">
       <text class="text-[36rpx] font-700 tracking-[1px]" :style="{ color: '#2ED573' }">

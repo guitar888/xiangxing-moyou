@@ -38,8 +38,7 @@
       "layout": "tabbar",
       "style": {
         "navigationBarTitleText": "骑行数据",
-        "navigationBarBackgroundColor": "#121212",
-        "navigationBarTextStyle": "white"
+        "navigationStyle": "custom"
       }
     },
     {
@@ -59,8 +58,7 @@
       "layout": "tabbar",
       "style": {
         "navigationBarTitleText": "我的",
-        "navigationBarBackgroundColor": "#121212",
-        "navigationBarTextStyle": "white"
+        "navigationStyle": "custom"
       }
     },
     {
@@ -69,10 +67,23 @@
       "name": "activity",
       "layout": "tabbar",
       "style": {
-        "navigationBarTitleText": "活动公告",
+        "navigationBarTitleText": "活动工具",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/webview/webview",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "打开地图",
         "navigationBarBackgroundColor": "#121212",
         "navigationBarTextStyle": "white"
       }
+    },
+    {
+      "path": "pages/shop/shop",
+      "type": "page",
+      "style": {}
     }
   ],
   "subPackages": [

@@ -29,5 +29,5 @@ export const SHOP_TYPE_CONFIG: Record<ShopType, { label: string; icon: string; c
   restaurant: { label: '餐厅', icon: 'i-carbon:restaurant', color: '#FF7A00' },
   cafe: { label: '咖啡馆', icon: 'i-carbon:cafe', color: '#8D99AE' },
   scenic: { label: '景点', icon: 'i-carbon:location', color: '#9945FF' },
-  parking: { label: '停车场', icon: 'i-carbon:car', color: '#3385FF' },
+  parking: { label: '停车场', icon: 'i-fluent:vehicle-motorcycle-28-filled', color: '#3385FF' },
 }

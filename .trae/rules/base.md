@@ -12,3 +12,7 @@
 - UniApp 工具函数
 - Woto UI 组件（wd-*）
 - src/components/ 下业务组件
+
+## 三、类型检查规则
+- uni_modules 目录下的类型不需要检查
+- 仅检查 src 目录下的 TypeScript 类型

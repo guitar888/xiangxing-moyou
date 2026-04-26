@@ -14,7 +14,31 @@ export type MapProvider = 'amap' | 'tencent' | 'baidu'
 
 export function useMapNavigation() {
   /**
-   * 获取高德地图 URL
+   * 获取高德地图 Schema URL
+   */
+  function getAmapSchemaUrl(options: NavigationOptions): string {
+    const { latitude, longitude, name } = options
+    return `amapuri://route/plan?sourceApplication=moyou&dname=${encodeURIComponent(name || '目标位置')}&dlat=${latitude}&dlon=${longitude}&dev=0&t=0`
+  }
+
+  /**
+   * 获取腾讯地图 Schema URL
+   */
+  function getTencentMapSchemaUrl(options: NavigationOptions): string {
+    const { latitude, longitude, name } = options
+    return `qqmap://map/routeplan?type=drive&from=我的位置&fromcoord=CurrentLocation&to=${encodeURIComponent(name || '目标位置')}&tocoord=${latitude},${longitude}&referer=moyou`
+  }
+
+  /**
+   * 获取百度地图 Schema URL
+   */
+  function getBaiduMapSchemaUrl(options: NavigationOptions): string {
+    const { latitude, longitude, name } = options
+    return `baidumap://map/direction?origin=我的位置&destination=name:${encodeURIComponent(name || '目标位置')}|latlng:${latitude},${longitude}&mode=driving&coord_type=wgs84`
+  }
+
+  /**
+   * 获取高德地图 Web URL
    */
   function getAmapUrl(options: NavigationOptions): string {
     const { longitude, latitude, name } = options
@@ -23,7 +47,7 @@ export function useMapNavigation() {
   }
 
   /**
-   * 获取腾讯地图 URL
+   * 获取腾讯地图 Web URL
    */
   function getTencentMapUrl(options: NavigationOptions): string {
     const { latitude, longitude, name, address } = options
@@ -33,7 +57,7 @@ export function useMapNavigation() {
   }
 
   /**
-   * 获取百度地图 URL
+   * 获取百度地图 Web URL
    */
   function getBaiduMapUrl(options: NavigationOptions): string {
     const { latitude, longitude, name, address } = options
@@ -92,9 +116,38 @@ export function useMapNavigation() {
    */
   function openAmapNavigation(options: NavigationOptions): void {
     // #ifdef MP-WEIXIN
-    const url = getAmapUrl(options)
-    // 小程序环境：直接打开网页版高德
-    window.location.href = url
+    const schemaUrl = getAmapSchemaUrl(options)
+    // 尝试打开高德地图
+    uni.getSystemInfo({
+      success: (sysInfo) => {
+        if (sysInfo.platform === 'ios') {
+          // iOS 直接使用 schema URL
+          uni.showToast({ title: '正在打开高德地图...', icon: 'none' })
+          setTimeout(() => {
+            window.location.href = schemaUrl
+          }, 500)
+        } else {
+          // Android 使用 uni.openLocation
+          uni.openLocation({
+            latitude: options.latitude,
+            longitude: options.longitude,
+            name: options.name || '目标位置',
+            address: options.address || options.name || '目标位置',
+            success: () => {
+              console.log('打开地图成功')
+            },
+            fail: (err) => {
+              console.error('打开地图失败:', err)
+              uni.showToast({ title: '打开地图失败', icon: 'none' })
+            }
+          })
+        }
+      },
+      fail: (err) => {
+        console.error('获取系统信息失败:', err)
+        uni.showToast({ title: '打开导航失败', icon: 'none' })
+      }
+    })
     // #endif
 
     // #ifdef H5
@@ -108,8 +161,38 @@ export function useMapNavigation() {
    */
   function openTencentMapNavigation(options: NavigationOptions): void {
     // #ifdef MP-WEIXIN
-    const url = getTencentMapUrl(options)
-    window.location.href = url
+    const schemaUrl = getTencentMapSchemaUrl(options)
+    // 尝试打开腾讯地图
+    uni.getSystemInfo({
+      success: (sysInfo) => {
+        if (sysInfo.platform === 'ios') {
+          // iOS 直接使用 schema URL
+          uni.showToast({ title: '正在打开腾讯地图...', icon: 'none' })
+          setTimeout(() => {
+            window.location.href = schemaUrl
+          }, 500)
+        } else {
+          // Android 使用 uni.openLocation
+          uni.openLocation({
+            latitude: options.latitude,
+            longitude: options.longitude,
+            name: options.name || '目标位置',
+            address: options.address || options.name || '目标位置',
+            success: () => {
+              console.log('打开地图成功')
+            },
+            fail: (err) => {
+              console.error('打开地图失败:', err)
+              uni.showToast({ title: '打开地图失败', icon: 'none' })
+            }
+          })
+        }
+      },
+      fail: (err) => {
+        console.error('获取系统信息失败:', err)
+        uni.showToast({ title: '打开导航失败', icon: 'none' })
+      }
+    })
     // #endif
 
     // #ifdef H5
@@ -123,8 +206,38 @@ export function useMapNavigation() {
    */
   function openBaiduMapNavigation(options: NavigationOptions): void {
     // #ifdef MP-WEIXIN
-    const url = getBaiduMapUrl(options)
-    window.location.href = url
+    const schemaUrl = getBaiduMapSchemaUrl(options)
+    // 尝试打开百度地图
+    uni.getSystemInfo({
+      success: (sysInfo) => {
+        if (sysInfo.platform === 'ios') {
+          // iOS 直接使用 schema URL
+          uni.showToast({ title: '正在打开百度地图...', icon: 'none' })
+          setTimeout(() => {
+            window.location.href = schemaUrl
+          }, 500)
+        } else {
+          // Android 使用 uni.openLocation
+          uni.openLocation({
+            latitude: options.latitude,
+            longitude: options.longitude,
+            name: options.name || '目标位置',
+            address: options.address || options.name || '目标位置',
+            success: () => {
+              console.log('打开地图成功')
+            },
+            fail: (err) => {
+              console.error('打开地图失败:', err)
+              uni.showToast({ title: '打开地图失败', icon: 'none' })
+            }
+          })
+        }
+      },
+      fail: (err) => {
+        console.error('获取系统信息失败:', err)
+        uni.showToast({ title: '打开导航失败', icon: 'none' })
+      }
+    })
     // #endif
 
     // #ifdef H5
