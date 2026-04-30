@@ -14,9 +14,9 @@ export type { Coordinate, RideRecord, RideStats, MonthlyStats, RecordFilter, Rid
 export type { Coordinate as MapCoordinate, SpotType, RouteDifficulty, MapMarker, RouteFilter, CheckInSpot, RideRoute, RegionType } from './map'
 export { SPOT_TYPE_CONFIG, DIFFICULTY_CONFIG, REGION_CONFIG } from './map'
 
-// 店铺模块
-export type { Shop, ShopType } from './shop'
-export { SHOP_TYPE_CONFIG } from './shop'
+// 店铺模块（已移除）
+// export type { Shop, ShopType } from './shop'
+// export { SHOP_TYPE_CONFIG } from './shop'
 
 // 交通模块
 export type { TrafficPolicy, TimeRestriction, RestrictedArea } from './traffic'

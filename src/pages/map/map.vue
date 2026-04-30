@@ -239,7 +239,7 @@ function onMapMarkerTap(e: any) {
       <!-- 微信小程序地图模块（免费无Key） -->
       <!-- ================================================ -->
       <!-- #ifdef MP-WEIXIN -->
-      <view class="mx-[24rpx] mt-[12rpx] rounded-[20rpx] overflow-hidden border border-white/10 shadow-lg">
+      <view class="mx-[24rpx] mt-[12rpx] rounded-[20rpx] overflow-hidden border border-white/10 shadow-lg bg-card">
         <map
           class="w-full"
           :style="{ height: '320rpx' }"
@@ -250,7 +250,7 @@ function onMapMarkerTap(e: any) {
           :show-location="true"
           @markertap="onMapMarkerTap"
         />
-        <view class="bg-[#1E1E1E] px-[16rpx] py-[10rpx] flex items-center justify-between">
+        <view class="bg-card px-[16rpx] py-[10rpx] flex items-center justify-between">
           <view class="flex items-center gap-[8rpx]">
             <text class="i-carbon:location text-[22rpx] text-primary" />
             <text class="text-[20rpx] text-white/80">点击标记跳转导航</text>
@@ -264,13 +264,13 @@ function onMapMarkerTap(e: any) {
       <!-- #endif -->
       <!-- #ifndef MP-WEIXIN -->
       <!-- H5端地图占位 -->
-      <view class="mx-[24rpx] mt-[12rpx] rounded-[20rpx] overflow-hidden border border-white/10 shadow-lg bg-[#1E1E1E]">
+      <view class="mx-[24rpx] mt-[12rpx] rounded-[20rpx] overflow-hidden border border-white/10 shadow-lg bg-card">
         <view class="flex flex-col items-center justify-center" :style="{ height: '280rpx' }">
           <text class="i-carbon:map text-[80rpx] text-primary/50 mb-[12rpx]" />
           <text class="text-[24rpx] text-white/60 font-500">地图预览</text>
           <text class="text-[20rpx] text-gray/60 mt-[8rpx]">小程序内可查看完整地图</text>
         </view>
-        <view class="bg-[#1E1E1E] px-[16rpx] py-[10rpx] flex items-center justify-between border-t border-white/5">
+        <view class="bg-card px-[16rpx] py-[10rpx] flex items-center justify-between border-t border-white/5">
           <view class="flex items-center gap-[8rpx]">
             <text class="i-carbon:information text-[22rpx] text-primary" />
             <text class="text-[20rpx] text-white/80">请在微信小程序中查看地图</text>
@@ -292,7 +292,7 @@ function onMapMarkerTap(e: any) {
           <view
             v-for="route in hotRoutes"
             :key="route.id"
-            class="inline-block w-[280rpx] mr-[16rpx] bg-[var(--wot-color-bg-card)] rounded-[20rpx] p-[16rpx] shadow-lg border border-white/5 align-top overflow-hidden"
+            class="inline-block w-[280rpx] mr-[16rpx] bg-card rounded-[20rpx] p-[16rpx] shadow-lg border border-white/5 align-top overflow-hidden"
             @click="handleRouteSelect(route)"
           >
             <view class="flex items-start justify-between mb-[6rpx]">
@@ -334,7 +334,7 @@ function onMapMarkerTap(e: any) {
           <view
             v-for="route in hotRoutes"
             :key="route.id"
-            class="flex-shrink-0 w-[280rpx] bg-[#1E1E1E] rounded-[20rpx] p-[16rpx] shadow-lg border border-white/5 overflow-hidden"
+            class="flex-shrink-0 w-[280rpx] bg-card rounded-[20rpx] p-[16rpx] shadow-lg border border-white/5 overflow-hidden"
             @click="handleRouteSelect(route)"
           >
             <view class="flex items-start justify-between mb-[6rpx]">

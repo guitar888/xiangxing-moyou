@@ -55,10 +55,10 @@ function onSwiperChange(e: any) {
         >
           <view class="pointer-events-none absolute inset-0 from-transparent via-[rgba(46,213,115,0.05)] to-[rgba(46,213,115,0.15)] bg-gradient-to-b" />
           <view class="relative z-2 flex flex-col gap-[8rpx]">
-            <text class="text-[36rpx] text-white font-700 text-shadow">
+            <text class="text-[36rpx] font-700 text-[#FFFFFF] text-shadow">
               {{ banner.title }}
             </text>
-            <text class="text-[24rpx] text-muted text-shadow-sm">
+            <text class="text-[24rpx] text-[#E0E0E0] text-shadow-sm">
               {{ banner.desc }}
             </text>
           </view>
@@ -139,9 +139,8 @@ function onSwiperChange(e: any) {
 </template>
 
 <style lang="scss" scoped>
-/* H5 版本样式 */
 .banner-item {
-  background: linear-gradient(135deg, #1E1E1E 0%, #2A2A2A 100%);
+  background: var(--banner-bg, linear-gradient(135deg, #1E1E1E 0%, #2A2A2A 100%));
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -174,7 +173,6 @@ function onSwiperChange(e: any) {
   text-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.5);
 }
 
-/* 小程序版本原生样式 */
 .mini-banner-item {
   background: linear-gradient(135deg, #2A2A2A 0%, #1E1E1E 100%);
   display: flex;
@@ -191,14 +189,14 @@ function onSwiperChange(e: any) {
 
 .mini-banner-title {
   font-size: 36rpx;
-  color: #FFFFFF;
+  color: var(--wot-color-text-white);
   font-weight: 700;
   text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.6);
 }
 
 .mini-banner-desc {
   font-size: 24rpx;
-  color: #CCCCCC;
+  color: var(--wot-color-text-muted);
   text-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.6);
 }
 
@@ -211,7 +209,7 @@ function onSwiperChange(e: any) {
   background: linear-gradient(90deg, #2ED573 0%, #27C468 100%);
   padding: 6rpx 16rpx;
   font-size: 20rpx;
-  color: #121212;
+  color: var(--wot-color-bg-base);
   font-weight: 600;
   box-shadow: 0 2rpx 8rpx rgba(46, 213, 115, 0.3);
 }
@@ -231,7 +229,7 @@ function onSwiperChange(e: any) {
   height: 8rpx;
   width: 16rpx;
   border-radius: 4rpx;
-  background: #8D99AE;
+  background: var(--wot-color-text-gray);
 }
 
 .mini-indicator-active {

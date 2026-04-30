@@ -15,6 +15,14 @@ const router = useRouter()
 
 function handleEntryClick(entry: QuickEntry) {
   uni.vibrateShort({ type: 'light' })
+  if (entry.id === 'shop') {
+    uni.showToast({
+      title: '功能正在开发中',
+      icon: 'none',
+      duration: 2000
+    })
+    return
+  }
   if (entry.isTab) {
     router.pushTab(entry.path)
   }

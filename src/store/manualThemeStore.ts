@@ -2,6 +2,8 @@ import type { ThemeMode, ThemeState } from '@/composables/types/theme'
 import { defineStore } from 'pinia'
 import { themeColorOptions } from '@/composables/types/theme'
 
+const PRIMARY_COLOR = '#2ED573'
+
 /**
  * 完整版主题状态管理
  * 支持手动切换主题、主题色选择、跟随系统主题等完整功能
@@ -9,23 +11,10 @@ import { themeColorOptions } from '@/composables/types/theme'
 export const useManualThemeStore = defineStore('manualTheme', {
   state: (): ThemeState => ({
     theme: 'dark',
-    followSystem: false, // 是否跟随系统主题
-    hasUserSet: true, // 用户是否手动设置过主题
+    followSystem: false,
+    hasUserSet: true,
     currentThemeColor: themeColorOptions[0],
-    themeVars: {
-      darkBackground: '#0f0f0f',
-      darkBackground2: '#1a1a1a',
-      darkBackground3: '#242424',
-      darkBackground4: '#2f2f2f',
-      darkBackground5: '#3d3d3d',
-      darkBackground6: '#4a4a4a',
-      darkBackground7: '#606060',
-      darkColor: '#ffffff',
-      darkColor2: '#e0e0e0',
-      darkColor3: '#a0a0a0',
-      colorTheme: themeColorOptions[0].primary,
-      colorWarning: '#FF7A00',
-    },
+    themeVars: {},
   }),
 
   getters: {
@@ -34,134 +23,145 @@ export const useManualThemeStore = defineStore('manualTheme', {
 
   actions: {
     /**
-     * 手动切换主题
-     * @param mode 指定主题模式，不传则自动切换
-     * @param isFollw 是否是跟随系统
+     * 设置 DOM 上的 CSS 变量
      */
+    setCssVariables(vars: Record<string, string>) {
+      try {
+        // #ifdef H5
+        const root = document.documentElement
+        for (const key in vars) {
+          if (key.startsWith('--')) {
+            root.style.setProperty(key, vars[key])
+          }
+        }
+        // #endif
+
+        // #ifdef MP-WEIXIN
+        // 小程序中通过 wd-config-provider 的 theme-vars 传递
+        // #endif
+      }
+      catch (error) {
+        console.warn('设置 CSS 变量失败:', error)
+      }
+    },
+
     /**
-     * 重写：禁用手动切换，强制保留 dark
+     * 获取当前主题的 CSS 变量
+     */
+    getThemeCssVars(): Record<string, string> {
+      const isDark = this.theme === 'dark'
+      const primaryColor = this.currentThemeColor.primary
+
+      return {
+        '--wot-color-theme': primaryColor,
+        '--wot-color-theme-light': '#4FE085',
+        '--wot-color-theme-dark': '#27C468',
+        '--wot-color-theme-rgb': '46, 213, 115',
+        '--wot-color-bg-base': isDark ? '#121212' : '#ffffff',
+        '--wot-color-bg-card': isDark ? '#1E1E1E' : '#f5f5f5',
+        '--wot-color-bg-hover': isDark ? '#272727' : '#e5e5e5',
+        '--wot-color-text-white': isDark ? '#FFFFFF' : '#000000',
+        '--wot-color-text-gray': isDark ? '#8D99AE' : '#737373',
+        '--wot-color-text-muted': isDark ? '#CCCCCC' : '#a3a3a3',
+        '--wot-color-border': isDark ? '#333333' : '#d4d4d4',
+        '--wot-color-border-light': isDark ? '#444444' : '#e5e5e5',
+        '--wot-color-warning': '#FF7A00',
+        '--wot-color-danger': '#FF4757',
+        '--wot-color-success': primaryColor,
+        '--wot-filled-content': isDark ? '#121212' : '#f5f5f5',
+      }
+    },
+
+    /**
+     * 更新主题变量
+     */
+    updateThemeVars() {
+      const vars = this.getThemeCssVars()
+      this.themeVars = vars
+      this.setCssVariables(vars)
+    },
+
+    /**
+     * 手动切换主题
      */
     toggleTheme(mode?: ThemeMode, isFollw: boolean = false) {
-      console.log('toggleTheme', mode, isFollw)
-      // this.theme = mode || (this.theme === 'light' ? 'dark' : 'light')
-      // if (!isFollw) {
-      //   // 如果不是跟随系统，是手动切换
-      //   this.hasUserSet = true // 标记用户已手动设置
-      //   this.followSystem = false // 不再跟随系统
-      // }
-
-      this.theme = 'dark'
-      this.hasUserSet = true
-      this.followSystem = false
-
+      this.theme = mode || (this.theme === 'light' ? 'dark' : 'light')
+      if (!isFollw) {
+        this.hasUserSet = true
+        this.followSystem = false
+      }
       this.setNavigationBarColor()
+      this.updateThemeVars()
+      console.log('主题切换成功:', this.theme)
     },
 
     /**
      * 设置是否跟随系统主题
-     * @param follow 是否跟随系统
-     */
-    /**
-     * 重写：禁用跟随系统，强制设为 false
      */
     setFollowSystem(follow: boolean) {
-      console.log('setFollowSystem', follow)
-      // this.followSystem = follow
-      // if (follow) {
-      //   this.hasUserSet = false
-      //   this.initTheme() // 重新获取系统主题
-      // }
-
-      this.followSystem = false
+      this.followSystem = follow
+      if (follow) {
+        this.hasUserSet = false
+        this.initTheme()
+      }
     },
 
     /**
      * 设置导航栏颜色
      */
-    /**
-     * 重写：导航栏强制使用暗黑模式配色
-     */
     setNavigationBarColor() {
-      // uni.setNavigationBarColor({
-      //   frontColor: this.theme === 'light' ? '#000000' : '#ffffff',
-      //   backgroundColor: this.theme === 'light' ? '#ffffff' : '#000000',
-      // })
-
       uni.setNavigationBarColor({
-        frontColor: '#ffffff', // 暗黑模式文字（白色）
-        backgroundColor: '#000000', // 暗黑模式背景（黑色）
+        frontColor: this.theme === 'light' ? '#000000' : '#ffffff',
+        backgroundColor: this.theme === 'light' ? '#ffffff' : '#000000',
       })
     },
 
     /**
      * 获取系统主题
-     * @returns 系统主题模式
-     */
-    /**
-     * 重写：强制返回 dark，忽略系统检测
      */
     getSystemTheme(): ThemeMode {
-      // try {
-      //   // #ifdef MP-WEIXIN
-      //   // 微信小程序使用 getAppBaseInfo
-      //   const appBaseInfo = uni.getAppBaseInfo()
-      //   if (appBaseInfo && appBaseInfo.theme) {
-      //     return appBaseInfo.theme as ThemeMode
-      //   }
-      //   // #endif
+      try {
+        // #ifdef MP-WEIXIN
+        const appBaseInfo = uni.getAppBaseInfo()
+        if (appBaseInfo && appBaseInfo.theme) {
+          return appBaseInfo.theme as ThemeMode
+        }
+        // #endif
 
-      //   // #ifndef MP-WEIXIN
-      //   // 其他平台使用 getSystemInfoSync
-      //   const systemInfo = uni.getSystemInfoSync()
-      //   if (systemInfo && systemInfo.theme) {
-      //     return systemInfo.theme as ThemeMode
-      //   }
-      //   // #endif
-      // }
-      // catch (error) {
-      //   console.warn('获取系统主题失败:', error)
-      // }
-      // return 'light' // 默认返回 light
-      return 'dark'
+        // #ifndef MP-WEIXIN
+        const systemInfo = uni.getSystemInfoSync()
+        if (systemInfo && systemInfo.theme) {
+          return systemInfo.theme as ThemeMode
+        }
+        // #endif
+      }
+      catch (error) {
+        console.warn('获取系统主题失败:', error)
+      }
+      return 'light'
     },
 
     /**
      * 初始化主题
      */
-    /**
-     * 重写：初始化直接锁定 dark，跳过系统逻辑
-     */
     initTheme() {
-      // // 如果用户已手动设置且不跟随系统，保持当前主题
-      // if (this.hasUserSet && !this.followSystem) {
-      //   console.log('使用用户设置的主题:', this.theme)
-      //   this.setNavigationBarColor()
-      //   return
-      // }
-
-      // // 获取系统主题
-      // const systemTheme = this.getSystemTheme()
-
-      // // 如果是首次启动或跟随系统，使用系统主题
-      // if (!this.hasUserSet || this.followSystem) {
-      //   this.theme = systemTheme
-      //   if (!this.hasUserSet) {
-      //     this.followSystem = true
-      //     console.log('首次启动，使用系统主题:', this.theme)
-      //   }
-      //   else {
-      //     console.log('跟随系统主题:', this.theme)
-      //   }
-      // }
-
-      // this.setNavigationBarColor()
-      this.theme = 'dark'
-      if (!this.currentThemeColor) {
-        this.currentThemeColor = themeColorOptions[0]
+      if (this.hasUserSet && !this.followSystem) {
+        this.setNavigationBarColor()
+        this.updateThemeVars()
+        return
       }
-      this.themeVars.colorTheme = this.currentThemeColor.primary
+
+      const systemTheme = this.getSystemTheme()
+
+      if (!this.hasUserSet || this.followSystem) {
+        this.theme = systemTheme
+        if (!this.hasUserSet) {
+          this.followSystem = true
+        }
+      }
+
       this.setNavigationBarColor()
-      console.log('初始化主题: dark（强制锁定）')
+      this.updateThemeVars()
     },
   },
 })

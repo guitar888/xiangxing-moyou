@@ -79,11 +79,6 @@
         "navigationBarBackgroundColor": "#121212",
         "navigationBarTextStyle": "white"
       }
-    },
-    {
-      "path": "pages/shop/shop",
-      "type": "page",
-      "style": {}
     }
   ],
   "subPackages": [
@@ -239,16 +234,6 @@
           "name": "safety",
           "style": {
             "navigationBarTitleText": "骑行安全",
-            "navigationBarBackgroundColor": "#121212",
-            "navigationBarTextStyle": "white"
-          }
-        },
-        {
-          "path": "shop/shop",
-          "type": "page",
-          "name": "shop",
-          "style": {
-            "navigationBarTitleText": "口碑店铺",
             "navigationBarBackgroundColor": "#121212",
             "navigationBarTextStyle": "white"
           }

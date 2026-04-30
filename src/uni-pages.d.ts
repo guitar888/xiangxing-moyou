@@ -10,7 +10,6 @@ type _LocationUrl =
   "/pages/data/data" |
   "/pages/map/map" |
   "/pages/mine/mine" |
-  "/pages/shop/shop" |
   "/pages/webview/webview" |
   "/subPages/activity/detail" |
   "/subPages/ci/index" |
@@ -30,7 +29,6 @@ type _LocationUrl =
   "/subPages/router/demo-string" |
   "/subPages/router/index" |
   "/subPages/safety/safety" |
-  "/subPages/shop/shop" |
   "/subPages/skills/index" |
   "/subPages/styles/index" |
   "/subPages/tools/tools" |

@@ -20,8 +20,6 @@ import { ref, computed } from 'vue'
 import { useRouter } from '@wot-ui/router'
 import { useRideStats } from '@/composables/useRideStats'
 import { useAdminContact } from '@/composables/useAdminContact'
-import { useThemeStore } from '@/store/themeStore'
-import { useManualThemeStore } from '@/store/manualThemeStore'
 import { useSystemInfo } from '@/composables/useSystemInfo'
 
 // ================================================
@@ -58,13 +56,11 @@ const { statusBarHeight } = useSystemInfo()
 // 主题管理
 // ================================================
 
-const themeStore = useThemeStore()
-const manualThemeStore = useManualThemeStore()
-const isDarkMode = computed(() => manualThemeStore.theme === 'dark' || themeStore.isDark)
+const { theme, isDark, toggleTheme: toggleThemeFromComposable } = useManualTheme()
+const isDarkMode = computed(() => isDark)
 
 function toggleTheme() {
-  const newTheme = manualThemeStore.theme === 'dark' ? 'light' : 'dark'
-  manualThemeStore.setTheme(newTheme)
+  toggleThemeFromComposable()
 }
 
 // ================================================

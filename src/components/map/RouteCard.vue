@@ -1,8 +1,4 @@
 <script setup lang="ts">
-/**
- * 路线卡片组件
- * 紧凑设计，方便手机浏览
- */
 import type { RideRoute, SpotType } from '@/types'
 import { DIFFICULTY_CONFIG, SPOT_TYPE_CONFIG, REGION_CONFIG } from '@/types'
 
@@ -61,9 +57,9 @@ const displaySpots = computed(() => {
 
 <template>
   <view
-    class="rounded-[12rpx] px-[24rpx] py-[16rpx] transition-all duration-100"
+    class="rounded-[12rpx] px-[24rpx] py-[16rpx] transition-all duration-100 bg-card border"
     :class="[
-      isSelected ? 'border border-primary shadow-[0_0_12rpx_rgba(46,213,115,0.3)] bg-[#1E1E1E]' : 'border border-transparent bg-[#1E1E1E]',
+      isSelected ? 'border-primary shadow-[0_0_12rpx_rgba(46,213,115,0.3)]' : 'border-transparent',
       'active:scale-98',
     ]"
     @click="handleSelect"
