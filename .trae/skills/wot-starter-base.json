@@ -1,5 +1,5 @@
 {
-  "name": "Wot-Starter 开发规范",
-  "description": "基于 Wot-Starter + Vue3 + TS + UnoCSS + Woto UI + 自动引入 + 路由封装",
-  "keywords": ["wot-starter", "uni-app", "vue3", "typescript", "unocss", "wot-design-uni", "自动引入", "pages.config.ts"]
+  "name": "wot-starter 基础开发",
+  "description": "Vue3+TS+UnoCSS+wot-design-uni+自动引入+alova+Pinia",
+  "keywords": ["wot-starter", "uni-app", "vue3", "typescript", "unocss"]
 }

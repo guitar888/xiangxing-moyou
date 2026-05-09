@@ -1,4 +1,6 @@
 {
+  "vetur.validation.template": false,
+  "volar.takeOverMode.enabled": true,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
@@ -10,6 +12,7 @@
     "typescriptreact",
     "vue"
   ],
+  "files.autoSave": "onFocusChange",
   "[json]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "vscode.json-language-features"

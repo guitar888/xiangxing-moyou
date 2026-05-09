@@ -61,7 +61,9 @@
     "alova-gen": "alova gen -f",
     "docs:dev": "pnpm -F docs docs:dev",
     "docs:build": "pnpm run build:h5 && pnpm -F docs docs:build",
-    "docs:preview": "pnpm -F docs docs:preview"
+    "docs:preview": "pnpm -F docs docs:preview",
+    "check-spec": "ts-node scripts/check-speck.ts",
+    "ai-run": "ts-node scripts/ai-helper.ts"
   },
   "dependencies": {
     "@alova/adapter-uniapp": "^2.0.14",
@@ -106,7 +108,7 @@
     "@iconify-json/carbon": "^1.1.37",
     "@iconify-json/fluent": "^1.2.45",
     "@mini-types/alipay": "^3.0.14",
-    "@types/node": "^20.16.2",
+    "@types/node": "^20.19.25",
     "@uni-helper/eslint-config": "^0.5.0",
     "@uni-helper/plugin-uni": "^0.1.0",
     "@uni-helper/uni-env": "^0.2.0",
@@ -132,6 +134,7 @@
     "miniprogram-api-typings": "^3.12.3",
     "sass": "1.78.0",
     "standard-version": "^9.5.0",
+    "ts-node": "^10.9.2",
     "typescript": "~5.5.4",
     "unocss": "66.0.0",
     "unplugin-auto-import": "^0.18.2",
