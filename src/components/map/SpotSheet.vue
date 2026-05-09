@@ -73,7 +73,7 @@ function handleClose() {
 <template>
   <wd-root-portal>
     <wd-popup
-      v-model:visible="visible"
+      v-model="visible"
       position="bottom"
       custom-class="rounded-t-[24rpx] overflow-hidden"
       :close-on-click-modal="true"

@@ -3,6 +3,7 @@
  * 骑行统计数据卡片组件
  */
 import type { RideStats } from '@/types'
+import { useUserStore } from '@/store/userStore'
 
 interface Props {
   stats: RideStats
@@ -14,6 +15,14 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const { formatDuration } = useRideStats()
+const userStore = useUserStore()
+
+const displayStats = computed(() => {
+  if (userStore.isLoggedIn) {
+    return userStore.rideStats
+  }
+  return props.stats
+})
 </script>
 
 <template>
@@ -24,21 +33,21 @@ const { formatDuration } = useRideStats()
     <!-- 数据卡片 -->
     <view class="flex justify-between">
       <view class="flex-1 flex flex-col items-center">
-        <text class="text-[48rpx] font-700 text-primary">{{ stats.totalRides }}</text>
+        <text class="text-[48rpx] font-700 text-primary">{{ displayStats.totalRides }}</text>
         <text class="text-[22rpx] text-gray mt-[4rpx]">骑行次数</text>
       </view>
 
       <view class="w-[2rpx] bg-base" />
 
       <view class="flex-1 flex flex-col items-center">
-        <text class="text-[48rpx] font-700 text-white">{{ stats.totalDistance }}</text>
+        <text class="text-[48rpx] font-700 text-white">{{ displayStats.totalDistance }}</text>
         <text class="text-[22rpx] text-gray mt-[4rpx]">总里程(km)</text>
       </view>
 
       <view class="w-[2rpx] bg-base" />
 
       <view class="flex-1 flex flex-col items-center">
-        <text class="text-[48rpx] font-700 text-white">{{ formatDuration(stats.totalDuration) }}</text>
+        <text class="text-[32rpx] font-700 text-white">{{ formatDuration(displayStats.totalDuration) }}</text>
         <text class="text-[22rpx] text-gray mt-[4rpx]">总时长</text>
       </view>
     </view>
@@ -48,12 +57,12 @@ const { formatDuration } = useRideStats()
       <view class="flex items-center gap-[8rpx]">
         <text class="i-carbon:delta text-[24rpx] text-primary" />
         <text class="text-[22rpx] text-gray">均距</text>
-        <text class="text-[24rpx] text-white font-600">{{ stats.avgDistance }}km</text>
+        <text class="text-[24rpx] text-white font-600">{{ displayStats.avgDistance }}km</text>
       </view>
       <view class="flex items-center gap-[8rpx]">
         <text class="i-carbon:speedometer text-[24rpx] text-primary" />
         <text class="text-[22rpx] text-gray">均速</text>
-        <text class="text-[24rpx] text-white font-600">{{ stats.avgSpeed }}km/h</text>
+        <text class="text-[24rpx] text-white font-600">{{ displayStats.avgSpeed }}km/h</text>
       </view>
     </view>
   </view>

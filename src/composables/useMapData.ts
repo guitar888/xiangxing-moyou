@@ -5,6 +5,7 @@
  */
 import type { RideRoute, CheckInSpot, RouteFilter, SpotType, Coordinate, RideRecord, ActiveRide, MapMarker } from '@/types'
 import { getRoutes, getRouteById } from '@/api/services/mapService'
+import { useUserStore } from '@/store/userStore'
 
 export function useMapData() {
   // ================================================
@@ -368,6 +369,16 @@ export function useMapData() {
 
     saveActiveRideToStorage()
     saveRideRecord(record)
+
+    // 同步到用户 Store（用于勋章统计）
+    const userStore = useUserStore()
+    if (userStore.isLoggedIn) {
+      userStore.addRideRecord({
+        distance: record.distance,
+        duration: record.duration,
+        route: record.routeName,
+      })
+    }
 
     return record
   }

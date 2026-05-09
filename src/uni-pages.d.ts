@@ -8,6 +8,7 @@ type _LocationUrl =
   "/pages/about/index" |
   "/pages/activity/activity" |
   "/pages/data/data" |
+  "/pages/login/index" |
   "/pages/map/map" |
   "/pages/mine/mine" |
   "/pages/webview/webview" |

@@ -79,7 +79,18 @@
         "navigationBarBackgroundColor": "#121212",
         "navigationBarTextStyle": "white"
       }
+    },
+    // #ifdef H5
+    {
+      "path": "pages/login/index",
+      "type": "page",
+      "name": "login",
+      "style": {
+        "navigationBarTitleText": "登录",
+        "navigationStyle": "custom"
+      }
     }
+    // #endif
   ],
   "subPackages": [
     {
@@ -120,6 +131,7 @@
             "navigationBarTitleText": "全局反馈"
           }
         },
+        // #ifdef MP-WEIXIN
         {
           "path": "help/help",
           "type": "page",
@@ -130,6 +142,19 @@
             "navigationBarTextStyle": "white"
           }
         },
+        // #endif
+        // #ifdef H5
+        {
+          "path": "help/help",
+          "type": "page",
+          "name": "help",
+          "style": {
+            "navigationBarTitleText": "帮助中心",
+            "navigationBarBackgroundColor": "#121212",
+            "navigationBarTextStyle": "white"
+          }
+        },
+        // #endif
         {
           "path": "icon/index",
           "type": "page",

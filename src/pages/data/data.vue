@@ -318,13 +318,13 @@ onMounted(() => {
 
       <!-- 筛选 -->
       <view class="px-[24rpx] mt-[16rpx]">
-        <view class="flex gap-[12rpx]">
+        <view class="flex gap-[16rpx] justify-between">
           <wd-button
             v-for="f in filters"
             :key="f.key"
             :type="currentFilter === f.key ? 'primary' : 'info'"
-            size="medium"
-            :custom-class="`flex-1 rounded-[28rpx] font-500 ${currentFilter === f.key ? 'bg-primary text-white' : 'bg-card text-gray border border-white/10'}`"
+            size="small"
+            :custom-class="`flex-1 max-w-[200rpx] rounded-[28rpx] font-500 py-[12rpx] ${currentFilter === f.key ? 'bg-primary text-white' : 'bg-card text-gray border border-white/10'}`"
             @click="setFilter(f.key)"
           >
             {{ f.label }}

@@ -4,6 +4,7 @@
  */
 import type { Activity } from '@/types'
 import { ACTIVITY_TAG_CONFIG } from '@/types'
+import { ref } from 'vue'
 
 interface Props {
   activity: Activity
@@ -18,6 +19,8 @@ const emit = defineEmits<{
 
 const { selectRoute, clearSelection } = useMapData()
 
+const imageError = ref(false)
+
 function getStatusText(status: string) {
   if (status === 'upcoming') return '即将开始'
   if (status === 'ongoing') return '进行中'
@@ -27,7 +30,7 @@ function getStatusText(status: string) {
 function getStatusColor(status: string) {
   if (status === 'upcoming') return 'bg-primary'
   if (status === 'ongoing') return 'bg-warning'
-  return 'bg-gray'
+  return 'bg-[#FF7A00]'
 }
 
 function handleClick() {
@@ -48,13 +51,14 @@ function handleViewRoute(e: Event) {
     <!-- 活动图片 -->
     <view class="relative w-full h-[280rpx]">
       <image
-        v-if="activity.image"
+        v-if="activity.image && !imageError"
         :src="activity.image"
         class="w-full h-full object-cover"
         mode="aspectFill"
+        @error="imageError = true"
       />
-      <view v-else class="w-full h-full bg-secondary flex items-center justify-center">
-        <text class="i-carbon:calendar text-[80rpx] text-gray" />
+      <view v-else class="w-full h-full bg-gradient-to-br from-[rgba(46,213,115,0.2)] to-[rgba(46,213,115,0.05)] flex items-center justify-center">
+        <text class="text-[120rpx] opacity-60">🏍️</text>
       </view>
 
       <!-- 状态标签 -->
