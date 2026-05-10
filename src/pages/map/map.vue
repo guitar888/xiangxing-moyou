@@ -68,6 +68,7 @@ const {
   toggleSpotType,
   setRegion,
   clearFilters,
+  confirmStartRide,
   confirmEndRide,
   handleRouteSelect,
   handleSpotClose,
@@ -234,6 +235,34 @@ function onMapMarkerTap(e: any) {
 
       <!-- 合规提示横幅 -->
       <common-ComplianceBanner />
+
+      <!-- 开始骑行按钮（非骑行状态时显示） -->
+      <view v-if="!isRiding" class="mx-[24rpx] mt-[12rpx]">
+        <view
+          class="h-[120rpx] w-full rounded-[20rpx] overflow-hidden relative"
+          @click="confirmStartRide"
+        >
+          <view class="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-primary/80" />
+          <view class="absolute inset-0 opacity-15">
+            <view class="absolute -right-[30rpx] -top-[30rpx] w-[160rpx] h-[160rpx] rounded-full border-[50rpx] border-white/20" />
+            <view class="absolute -left-[40rpx] -bottom-[40rpx] w-[140rpx] h-[140rpx] rounded-full border-[40rpx] border-white/10" />
+          </view>
+          <view class="relative h-full flex items-center justify-between px-[32rpx]">
+            <view class="flex items-center gap-[16rpx]">
+              <view class="w-[64rpx] h-[64rpx] rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+                <text class="i-fluent:vehicle-motorcycle-28-filled text-[32rpx] text-white" />
+              </view>
+              <view>
+                <text class="text-[28rpx] font-600 text-white block">开始骑行</text>
+                <text class="text-[20rpx] text-white/70 mt-[2rpx]">记录你的骑行轨迹</text>
+              </view>
+            </view>
+            <view class="w-[64rpx] h-[64rpx] rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+              <text class="i-carbon:play text-[28rpx] text-white" />
+            </view>
+          </view>
+        </view>
+      </view>
 
       <!-- ================================================ -->
       <!-- 微信小程序地图模块（免费无Key） -->

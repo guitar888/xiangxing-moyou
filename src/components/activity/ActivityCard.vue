@@ -2,22 +2,19 @@
 /**
  * 活动卡片组件
  */
-import type { Activity } from '@/types'
+import type { ActivityItem } from '@/types'
 import { ACTIVITY_TAG_CONFIG } from '@/types'
-import { ref } from 'vue'
 
 interface Props {
-  activity: Activity
+  activity: ActivityItem
 }
 
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  click: [activity: Activity]
-  viewRoute: [activity: Activity]
+  click: [activity: ActivityItem]
+  viewRoute: [activity: ActivityItem]
 }>()
-
-const { selectRoute, clearSelection } = useMapData()
 
 const imageError = ref(false)
 
@@ -37,8 +34,7 @@ function handleClick() {
   emit('click', props.activity)
 }
 
-function handleViewRoute(e: Event) {
-  e.stopPropagation()
+function handleViewRoute() {
   emit('viewRoute', props.activity)
 }
 </script>
@@ -49,7 +45,7 @@ function handleViewRoute(e: Event) {
     @click="handleClick"
   >
     <!-- 活动图片 -->
-    <view class="relative w-full h-[280rpx]">
+    <view class="relative w-full h-[560rpx]">
       <image
         v-if="activity.image && !imageError"
         :src="activity.image"
@@ -97,11 +93,11 @@ function handleViewRoute(e: Event) {
           :key="tag"
           class="px-[12rpx] py-[6rpx] rounded-[6rpx] text-[18rpx]"
           :style="{
-            backgroundColor: ACTIVITY_TAG_CONFIG[tag]?.color + '20',
-            color: ACTIVITY_TAG_CONFIG[tag]?.color
+            backgroundColor: (ACTIVITY_TAG_CONFIG[tag as keyof typeof ACTIVITY_TAG_CONFIG]?.color || '#8D99AE') + '20',
+            color: ACTIVITY_TAG_CONFIG[tag as keyof typeof ACTIVITY_TAG_CONFIG]?.color || '#8D99AE'
           }"
         >
-          {{ ACTIVITY_TAG_CONFIG[tag]?.label || tag }}
+          {{ ACTIVITY_TAG_CONFIG[tag as keyof typeof ACTIVITY_TAG_CONFIG]?.label || tag }}
         </view>
       </view>
 
@@ -110,21 +106,14 @@ function handleViewRoute(e: Event) {
         {{ activity.description }}
       </text>
 
-      <!-- 底部：参与人数 + 查看路线 -->
-      <view class="flex justify-between items-center">
-        <view class="flex items-center gap-[6rpx]">
-          <text class="i-carbon:users text-[22rpx] text-gray" />
-          <text class="text-[22rpx] text-gray">{{ activity.participantCount }}/{{ activity.maxParticipants }}人关注</text>
-        </view>
-
-        <view
-          v-if="activity.routeId"
-          class="flex items-center gap-[4rpx] text-primary"
-          @click="handleViewRoute"
-        >
-          <text class="i-carbon:map text-[22rpx]" />
-          <text class="text-[22rpx]">查看路线</text>
-        </view>
+      <!-- 底部：查看路线 -->
+      <view
+        v-if="activity.routeId"
+        class="flex items-center gap-[4rpx] text-primary ml-auto"
+        @click="handleViewRoute"
+      >
+        <text class="i-carbon:map text-[22rpx]" />
+        <text class="text-[22rpx]">查看路线</text>
       </view>
     </view>
   </view>

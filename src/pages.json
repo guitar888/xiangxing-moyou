@@ -82,11 +82,11 @@
     },
     // #ifdef H5
     {
-      "path": "pages/login/index",
+      "path": "pages/about/privacy",
       "type": "page",
-      "name": "login",
+      "name": "privacy",
       "style": {
-        "navigationBarTitleText": "登录",
+        "navigationBarTitleText": "隐私协议",
         "navigationStyle": "custom"
       }
     }

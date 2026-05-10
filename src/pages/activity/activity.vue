@@ -4,7 +4,7 @@
  * 实现摩友匿名报名、AA计算器功能
  * 活动由管理员从后台发布
  */
-import type { Activity, ActivityFilter, ActivityTag } from '@/types'
+import type { ActivityItem, ActivityFilter, ActivityTag } from '@/types'
 import { ACTIVITY_TAG_CONFIG } from '@/types'
 
 definePage({
@@ -67,7 +67,7 @@ const filters: { key: ActivityFilter; label: string }[] = [
 // 活动提示
 // ================================================
 
-function openSignupModal(activity: Activity) {
+function openSignupModal(activity: ActivityItem) {
   const { info: showInfo } = useGlobalToast()
   showInfo({
     msg: '活动详情请留意群公告，如需帮助请联系管理员',
@@ -109,21 +109,15 @@ const aaResult = computed(() => {
 
 const router = useRouter()
 
-function handleActivityClick(activity: Activity) {
+function handleActivityClick(activity: ActivityItem) {
   if (activity.routeId) {
-    router.push({
-      path: '/pages/map/map',
-      query: { routeId: activity.routeId },
-    })
+    router.pushTab('/pages/map/map')
   }
 }
 
-function handleViewRoute(activity: Activity) {
+function handleViewRoute(activity: ActivityItem) {
   if (activity.routeId) {
-    router.push({
-      path: '/pages/map/map',
-      query: { routeId: activity.routeId },
-    })
+    router.pushTab('/pages/map/map')
   }
 }
 

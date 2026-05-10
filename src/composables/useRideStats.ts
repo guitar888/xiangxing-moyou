@@ -152,12 +152,12 @@ export function useRideStats() {
    * @param minutes 分钟
    */
   function formatDuration(minutes: number): string {
-    if (minutes < 60) {
-      return `${minutes}分钟`
-    }
-    const h = Math.floor(minutes / 60)
-    const m = minutes % 60
-    return m > 0 ? `${h}小时${m}分钟` : `${h}小时`
+    const h = Math.round(minutes / 60 * 10) / 10
+    return `${h}h`
+  }
+
+  function toHours(minutes: number): number {
+    return Math.round(minutes / 60 * 10) / 10
   }
 
   /**
@@ -213,6 +213,7 @@ export function useRideStats() {
     loadStats,
     setFilter,
     formatDuration,
+    toHours,
     formatDate,
     formatFullDate,
     formatTime,

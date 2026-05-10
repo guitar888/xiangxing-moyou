@@ -1,0 +1,27 @@
+{
+  "rules": {
+    "autoLoad": true,
+    "alwaysApply": [
+      "./rules/project-rules.md"
+    ]
+  },
+  "skills": {
+    "autoLoad": true,
+    "paths": [
+      "./skills/wot-starter.md",
+      "./skills/business.md"
+    ]
+  },
+  "docs": {
+    "autoInclude": [
+      "../docs/development-spec.md",
+      "../docs/api对接指南.md"
+    ]
+  },
+  "editor": {
+    "formatOnSave": true,
+    "codeActionsOnSave": {
+      "source.fixAll": true
+    }
+  }
+}

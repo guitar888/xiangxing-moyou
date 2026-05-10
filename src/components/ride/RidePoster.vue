@@ -1,7 +1,4 @@
 <script setup lang="ts">
-/**
- * 骑行海报组件
- */
 import type { RideRecord } from '@/types'
 
 interface Props {
@@ -10,44 +7,30 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-
-const emit = defineEmits<{
-  close: []
-}>()
+const emit = defineEmits<{ close: [] }>()
 
 const { generating, posterPath, generatePoster, savePoster, sharePoster } = usePoster()
+const canvasKey = ref(0)
 
 watch(() => props.visible, async (val) => {
   if (val && props.record) {
-    try {
-      await generatePoster({
-        record: props.record,
-        routeName: props.record.routeName,
-      })
-    } catch (err) {
-      console.error('生成海报失败:', err)
-    }
+    canvasKey.value++
+    await nextTick()
+    await generatePoster({
+      record: props.record,
+      routeName: props.record.routeName,
+    })
   }
 })
 
 async function handleSave() {
-  if (posterPath.value) {
-    try {
-      await savePoster(posterPath.value)
-    } catch (err) {
-      console.error('保存失败:', err)
-    }
-  }
+  if (!posterPath.value) return
+  await savePoster(posterPath.value)
 }
 
 async function handleShare() {
-  if (posterPath.value) {
-    try {
-      await sharePoster(posterPath.value)
-    } catch (err) {
-      console.error('分享失败:', err)
-    }
-  }
+  if (!posterPath.value) return
+  await sharePoster(posterPath.value)
 }
 
 function handleClose() {
@@ -56,28 +39,25 @@ function handleClose() {
 </script>
 
 <template>
-  <!-- 遮罩 -->
   <view v-if="visible" class="fixed inset-0 z-[998] bg-black/80" @click="handleClose" />
 
-  <!-- 海报弹窗 -->
   <view v-if="visible && record" class="fixed inset-0 z-[999] flex flex-col items-center justify-center p-[40rpx]">
-    <!-- 海报预览 -->
-    <view class="relative bg-card rounded-[24rpx] p-[8rpx] shadow-lg">
-      <!-- 海报画布 -->
+    <!-- 关键：外层固定为 280x415，canvas 绘制尺寸 560x830，再用 CSS 缩放 0.5 -->
+    <view
+      class="relative bg-card rounded-[24rpx] p-[8rpx] shadow-lg overflow-hidden"
+      style="width: 280px; height: 415px;"
+      :key="canvasKey"
+    >
       <canvas
         canvas-id="posterCanvas"
-        class="w-[560rpx]"
-        :style="{ height: '830rpx' }"
+        style="width: 560px; height: 830px; transform: scale(0.5); transform-origin: top left;"
       />
-
-      <!-- 生成中 -->
       <view v-if="generating" class="absolute inset-0 bg-card/90 flex flex-col items-center justify-center rounded-[24rpx]">
         <wd-loading type="ring" />
         <text class="text-[26rpx] text-gray mt-[16rpx]">正在生成海报...</text>
       </view>
     </view>
 
-    <!-- 操作按钮 -->
     <view class="flex gap-[24rpx] mt-[32rpx]">
       <wd-button
         type="info"
@@ -97,7 +77,6 @@ function handleClose() {
       </wd-button>
     </view>
 
-    <!-- 关闭 -->
     <wd-button
       type="info"
       size="small"

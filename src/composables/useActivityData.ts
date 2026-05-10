@@ -1,17 +1,17 @@
 /**
  * 活动数据 composable
- * 职责：管理活动列表数据
+ * 职责：管理活动列表数据（统一使用 HomeService）
  */
-import type { Activity, ActivityFilter } from '@/types'
-import { getActivities, getActivityById } from '@/api/services/activityService'
+import type { ActivityItem, ActivityFilter } from '@/types'
+import { HomeService } from '@/api/services/homeService'
 
 export function useActivityData() {
   // ================================================
   // 状态
   // ================================================
 
-  const activities = ref<Activity[]>([])
-  const currentActivity = ref<Activity | null>(null)
+  const activities = ref<ActivityItem[]>([])
+  const currentActivity = ref<ActivityItem | null>(null)
   const loading = ref(false)
   const error = ref(false)
 
@@ -31,7 +31,11 @@ export function useActivityData() {
 
     try {
       const filterToUse = filter || currentFilter.value
-      activities.value = await getActivities(filterToUse)
+      let data = await HomeService.getActivities()
+      if (filterToUse !== 'all') {
+        data = data.filter(a => a.tags.includes(filterToUse))
+      }
+      activities.value = data
     } catch (err) {
       console.error('加载活动失败:', err)
       error.value = true
@@ -44,7 +48,8 @@ export function useActivityData() {
     loading.value = true
 
     try {
-      currentActivity.value = await getActivityById(id)
+      const allActivities = await HomeService.getActivities()
+      currentActivity.value = allActivities.find(a => a.id === id) || null
     } catch (err) {
       console.error('加载活动详情失败:', err)
     } finally {
@@ -67,6 +72,10 @@ export function useActivityData() {
 
   const upcomingActivities = computed(() =>
     activities.value.filter(a => a.status === 'upcoming')
+  )
+
+  const ongoingActivities = computed(() =>
+    activities.value.filter(a => a.status === 'ongoing')
   )
 
   const endedActivities = computed(() =>

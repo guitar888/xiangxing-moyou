@@ -6,9 +6,9 @@
 type _LocationUrl =
   "/pages/index/index" |
   "/pages/about/index" |
+  "/pages/about/privacy" |
   "/pages/activity/activity" |
   "/pages/data/data" |
-  "/pages/login/index" |
   "/pages/map/map" |
   "/pages/mine/mine" |
   "/pages/webview/webview" |

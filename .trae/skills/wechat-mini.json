@@ -1,5 +1,0 @@
-{
-  "name": "微信小程序开发规范",
-  "description": "仅支持微信小程序 | uni-app 规范 | 安全区域适配 | 禁用敏感API | 合规审核通过",
-  "keywords": ["微信小程序", "mp-weixin", "uni-api", "安全区域", "合规", "禁用隐私API"]
-}

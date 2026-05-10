@@ -4,19 +4,13 @@
  * 展示骑行统计、记录，支持海报分享
  */
 import type { RecordFilter } from '@/types'
-import { LineChart } from 'echarts/charts'
-import { DatasetComponent, GridComponent, LegendComponent, TooltipComponent } from 'echarts/components'
-import * as echarts from 'echarts/core'
-import { CanvasRenderer } from 'echarts/renderers'
+import RideLineChart from '@/subEcharts/echarts/components/RideLineChart.vue'
 
-echarts.use([
-  GridComponent,
-  LegendComponent,
-  TooltipComponent,
-  DatasetComponent,
-  LineChart,
-  CanvasRenderer,
-])
+defineOptions({
+  componentPlaceholder: {
+    RideLineChart: 'view',
+  },
+})
 
 definePage({
   name: 'data',
@@ -42,152 +36,7 @@ const {
   loading,
   loadRecords,
   setFilter,
-  formatDuration,
-  formatDate,
-  formatFullDate,
 } = useRideStats()
-
-// ================================================
-// 图表配置
-// ================================================
-
-const chartOption = computed(() => {
-  const monthlyData = monthlyStats.value || []
-  const sortedData = [...monthlyData].sort((a, b) => a.month.localeCompare(b.month))
-  
-  return {
-    tooltip: {
-      trigger: 'axis',
-      backgroundColor: 'rgba(18, 18, 18, 0.9)',
-      borderColor: '#2ED573',
-      textStyle: {
-        color: '#FFFFFF'
-      }
-    },
-    legend: {
-      data: ['骑行距离', '骑行次数'],
-      top: 10,
-      textStyle: {
-        color: '#8D99AE'
-      }
-    },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      containLabel: true
-    },
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-      data: sortedData.map(item => item.month),
-      axisLine: {
-        lineStyle: {
-          color: '#333333'
-        }
-      },
-      axisLabel: {
-        color: '#8D99AE'
-      }
-    },
-    yAxis: [
-      {
-        type: 'value',
-        name: '距离(km)',
-        position: 'left',
-        axisLine: {
-          lineStyle: {
-            color: '#2ED573'
-          }
-        },
-        axisLabel: {
-          color: '#8D99AE'
-        },
-        splitLine: {
-          lineStyle: {
-            color: '#333333'
-          }
-        }
-      },
-      {
-        type: 'value',
-        name: '次数',
-        position: 'right',
-        axisLine: {
-          lineStyle: {
-            color: '#FF7A00'
-          }
-        },
-        axisLabel: {
-          color: '#8D99AE'
-        },
-        splitLine: {
-          show: false
-        }
-      }
-    ],
-    series: [
-      {
-        name: '骑行距离',
-        type: 'line',
-        stack: 'Total',
-        data: sortedData.map(item => item.totalDistance),
-        smooth: true,
-        itemStyle: {
-          color: '#2ED573'
-        },
-        areaStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              {
-                offset: 0,
-                color: 'rgba(46, 213, 115, 0.3)'
-              },
-              {
-                offset: 1,
-                color: 'rgba(46, 213, 115, 0.1)'
-              }
-            ]
-          }
-        }
-      },
-      {
-        name: '骑行次数',
-        type: 'line',
-        yAxisIndex: 1,
-        data: sortedData.map(item => item.totalRides),
-        smooth: true,
-        itemStyle: {
-          color: '#FF7A00'
-        },
-        areaStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              {
-                offset: 0,
-                color: 'rgba(255, 122, 0, 0.3)'
-              },
-              {
-                offset: 1,
-                color: 'rgba(255, 122, 0, 0.1)'
-              }
-            ]
-          }
-        }
-      }
-    ]
-  }
-})
 
 // ================================================
 // 骑行记录
@@ -196,8 +45,67 @@ const chartOption = computed(() => {
 const {
   isRiding,
   formattedDuration,
-  removeRecord,
 } = useRideRecord()
+
+// ================================================
+// 记录分组（按月份）
+// ================================================
+
+interface RecordGroup {
+  month: string
+  monthKey: string
+  records: typeof records.value
+  expanded: boolean
+}
+
+const expandedMonths = ref<Set<string>>(new Set())
+
+watch(
+  () => records.value,
+  () => {
+    const monthKeys = [...expandedMonths.value].filter(k => {
+      const exists = groupedRecords.value.some(g => g.monthKey === k)
+      return exists
+    })
+    expandedMonths.value = new Set(monthKeys)
+  }
+)
+
+const groupedRecords = computed<RecordGroup[]>(() => {
+  const groups: Record<string, typeof records.value> = {}
+
+  records.value.forEach((record) => {
+    const date = new Date(record.startTime)
+    const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
+
+    if (!groups[monthKey]) {
+      groups[monthKey] = []
+    }
+    groups[monthKey].push(record)
+  })
+
+  return Object.keys(groups)
+    .sort((a, b) => b.localeCompare(a))
+    .slice(0, 3)
+    .map((monthKey) => {
+      const date = new Date(monthKey + '-01')
+      const monthLabel = `${date.getFullYear()}年${date.getMonth() + 1}月`
+      return {
+        month: monthLabel,
+        monthKey,
+        records: groups[monthKey],
+        expanded: expandedMonths.value.has(monthKey),
+      }
+    })
+})
+
+function toggleMonth(monthKey: string) {
+  if (expandedMonths.value.has(monthKey)) {
+    expandedMonths.value.delete(monthKey)
+  } else {
+    expandedMonths.value.add(monthKey)
+  }
+}
 
 // ================================================
 // 海报
@@ -211,14 +119,6 @@ function handleShare(record: any) {
   showPoster.value = true
 }
 
-function handleDelete(id: string) {
-  removeRecord(id)
-  uni.showToast({
-    title: '已删除',
-    icon: 'success',
-  })
-}
-
 function handleClosePoster() {
   showPoster.value = false
   selectedRecord.value = null
@@ -229,9 +129,9 @@ function handleClosePoster() {
 // ================================================
 
 const filters: { key: RecordFilter; label: string }[] = [
-  { key: 'week', label: '本周' },
-  { key: 'month', label: '本月' },
   { key: 'all', label: '全部' },
+  { key: 'month', label: '本月' },
+  { key: 'week', label: '本周' },
 ]
 
 // ================================================
@@ -312,7 +212,7 @@ onMounted(() => {
             <text class="i-carbon:trending-up text-[24rpx] text-primary" />
             骑行趋势
           </text>
-          <uni-echarts custom-class="h-[400rpx] w-full" :option="chartOption" />
+          <RideLineChart :data="monthlyStats" />
         </view>
       </view>
 
@@ -342,14 +242,36 @@ onMounted(() => {
           <text class="text-[22rpx] text-gray">{{ records.length }} 条</text>
         </view>
 
-        <view class="flex flex-col gap-[12rpx]">
-          <ride-RideRecordCard
-            v-for="record in records"
-            :key="record.id"
-            :record="record"
-            @delete="handleDelete"
-            @share="handleShare"
-          />
+        <view class="flex flex-col gap-[16rpx]">
+          <view
+            v-for="group in groupedRecords"
+            :key="group.monthKey"
+            class="bg-card rounded-[16rpx] overflow-hidden border border-white/10"
+          >
+            <view
+              class="flex items-center justify-between p-[20rpx] bg-card/80"
+              @click="toggleMonth(group.monthKey)"
+            >
+              <view class="flex items-center gap-[12rpx]">
+                <text class="i-carbon:calendar text-[28rpx] text-primary" />
+                <text class="text-[26rpx] text-white font-600">{{ group.month }}</text>
+                <text class="text-[22rpx] text-gray">({{ group.records.length }}次骑行)</text>
+              </view>
+              <text
+                class="i-carbon:chevron-down text-[24rpx] text-gray transition-transform duration-200"
+                :class="{ 'rotate-180': group.expanded }"
+              />
+            </view>
+
+            <view v-if="group.expanded" class="flex flex-col gap-[2rpx] p-[12rpx]">
+              <ride-RideRecordCard
+                v-for="record in group.records"
+                :key="record.id"
+                :record="record"
+                @share="handleShare"
+              />
+            </view>
+          </view>
         </view>
 
         <!-- 空状态 -->

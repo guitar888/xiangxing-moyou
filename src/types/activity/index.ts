@@ -40,16 +40,21 @@ export interface Activity {
 export type ActivityFilter = ActivityTag | 'all'
 
 /**
- * 活动列表项（用于首页展示）
+ * 活动列表项（用于首页和活动页展示，统一数据源）
  */
 export interface ActivityItem {
   id: string
   title: string
   date: string
   time: string
+  location: string
   info: string
+  description: string
   tags: string[]
   image: string
+  status: ActivityStatus
+  routeId?: string
+  routeName?: string
   isUpcoming: boolean
   countdownText?: string
 }

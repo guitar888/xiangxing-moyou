@@ -5,7 +5,6 @@
  */
 import type { RideRoute, CheckInSpot, RouteFilter, SpotType, Coordinate, RideRecord, ActiveRide, MapMarker } from '@/types'
 import { getRoutes, getRouteById } from '@/api/services/mapService'
-import { useUserStore } from '@/store/userStore'
 
 export function useMapData() {
   // ================================================
@@ -370,16 +369,6 @@ export function useMapData() {
     saveActiveRideToStorage()
     saveRideRecord(record)
 
-    // 同步到用户 Store（用于勋章统计）
-    const userStore = useUserStore()
-    if (userStore.isLoggedIn) {
-      userStore.addRideRecord({
-        distance: record.distance,
-        duration: record.duration,
-        route: record.routeName,
-      })
-    }
-
     return record
   }
 
@@ -401,12 +390,17 @@ export function useMapData() {
     if (isRiding.value) return
 
     uni.showModal({
-      title: '开始骑行记录',
-      content: `${currentRoute.value?.name || '当前位置'}出发，开始记录骑行？`,
-      confirmText: '开始',
-      success: (res) => {
+      title: '开始骑行',
+      content: '点击确定将申请定位权限，用于记录骑行轨迹和距离（数据仅保存在本地设备）',
+      confirmText: '确定',
+      success: async (res) => {
         if (res.confirm) {
-          handleStartRide()
+          const location = await checkAndRequestLocation()
+          if (location) {
+            handleStartRide()
+          } else {
+            uni.showToast({ title: '需要定位权限才能记录骑行', icon: 'none' })
+          }
         }
       },
     })
