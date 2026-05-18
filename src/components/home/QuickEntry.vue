@@ -66,9 +66,6 @@ function handleEntryClick(entry: QuickEntry) {
         <text class="text-[20rpx] text-gray">
           {{ entry.subname }}
         </text>
-        <view v-if="entry.badge" class="absolute right-[8rpx] top-[8rpx] rounded-[6rpx] bg-warning px-[8rpx] py-[2rpx] text-[18rpx] text-base">
-          {{ entry.badge }}
-        </view>
       </view>
     </view>
   </view>
@@ -101,9 +98,6 @@ function handleEntryClick(entry: QuickEntry) {
         <text class="text-[20rpx] text-gray">
           {{ entry.subname }}
         </text>
-        <view v-if="entry.badge" class="absolute right-[8rpx] top-[8rpx] rounded-[6rpx] bg-warning px-[8rpx] py-[2rpx] text-[18rpx] text-base">
-          {{ entry.badge }}
-        </view>
       </view>
     </view>
   </view>

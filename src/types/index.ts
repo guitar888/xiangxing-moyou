@@ -20,10 +20,3 @@ export { SPOT_TYPE_CONFIG, DIFFICULTY_CONFIG, REGION_CONFIG } from './map'
 
 // 交通模块
 export type { TrafficPolicy, TimeRestriction, RestrictedArea } from './traffic'
-
-// 天气模块
-export type { WeatherType, WeatherData, WeatherForecast, RideIndex } from './weather'
-export { WEATHER_CONFIG } from './weather'
-
-// 轮播图模块
-export type { BannerData } from './banner'

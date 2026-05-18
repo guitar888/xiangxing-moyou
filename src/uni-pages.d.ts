@@ -35,7 +35,6 @@ type _LocationUrl =
   "/subPages/tools/tools" |
   "/subPages/traffic/traffic" |
   "/subPages/uni-ku-root/index" |
-  "/subPages/weather/weather" |
   "/subEcharts/echarts/index" |
   "/subAsyncEcharts/asyncEcharts/index";
 

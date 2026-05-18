@@ -1,5 +1,5 @@
 /**
- * 活动数据 composable
+ * 活动数据 composable - 精简版
  * 职责：管理活动列表数据（统一使用 HomeService）
  */
 import type { ActivityItem, ActivityFilter } from '@/types'
@@ -9,22 +9,30 @@ export function useActivityData() {
   // ================================================
   // 状态
   // ================================================
-
   const activities = ref<ActivityItem[]>([])
-  const currentActivity = ref<ActivityItem | null>(null)
   const loading = ref(false)
   const error = ref(false)
 
   // ================================================
   // 筛选
   // ================================================
-
   const currentFilter = ref<ActivityFilter>('all')
+
+  // 英文 -> 中文映射（修复TS类型 + 修复筛选）
+  const filterMap: Record<ActivityFilter, string> = {
+    all: 'all',
+    night: '夜骑',
+    morning: '晨骑',
+    gather: '聚会',
+    scenic: '景区',
+    greenway: '绿道',
+    free: '免费',
+    photo: '摄影',
+  }
 
   // ================================================
   // 数据加载
   // ================================================
-
   async function loadActivities(filter?: ActivityFilter) {
     loading.value = true
     error.value = false
@@ -32,9 +40,12 @@ export function useActivityData() {
     try {
       const filterToUse = filter || currentFilter.value
       let data = await HomeService.getActivities()
+
       if (filterToUse !== 'all') {
-        data = data.filter(a => a.tags.includes(filterToUse))
+        const tagName = filterMap[filterToUse]
+        data = data.filter(a => a.tags.includes(tagName))
       }
+
       activities.value = data
     } catch (err) {
       console.error('加载活动失败:', err)
@@ -44,62 +55,27 @@ export function useActivityData() {
     }
   }
 
-  async function loadActivityDetail(id: string) {
-    loading.value = true
-
-    try {
-      const allActivities = await HomeService.getActivities()
-      currentActivity.value = allActivities.find(a => a.id === id) || null
-    } catch (err) {
-      console.error('加载活动详情失败:', err)
-    } finally {
-      loading.value = false
-    }
-  }
-
   // ================================================
   // 筛选操作
   // ================================================
-
   async function setFilter(filter: ActivityFilter) {
     currentFilter.value = filter
     await loadActivities(filter)
   }
 
   // ================================================
-  // 计算属性
-  // ================================================
-
-  const upcomingActivities = computed(() =>
-    activities.value.filter(a => a.status === 'upcoming')
-  )
-
-  const ongoingActivities = computed(() =>
-    activities.value.filter(a => a.status === 'ongoing')
-  )
-
-  const endedActivities = computed(() =>
-    activities.value.filter(a => a.status === 'ended')
-  )
-
-  // ================================================
   // 生命周期
   // ================================================
-
   onMounted(() => {
     loadActivities()
   })
 
   return {
     activities,
-    currentActivity,
     loading,
     error,
     currentFilter,
-    upcomingActivities,
-    endedActivities,
     loadActivities,
-    loadActivityDetail,
     setFilter,
   }
 }

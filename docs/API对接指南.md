@@ -39,7 +39,7 @@ export class XxxService {
         { id: '1', name: '数据1' },
         { id: '2', name: '数据2' },
       ]
-      
+
       // 后期取消下面注释，启用 Bmob API
       // const result = await bmob.request<XxxData[]>('/classes/XxxTable')
       // return result.results
@@ -370,9 +370,6 @@ export interface ActivityItem {
 | 骑行地图 | 襄阳本地路线 | carbon:map | true | /pages/map/map | true | 1 |
 | 骑行数据 | 我的骑行轨迹 | chart | true | /pages/data/data | true | 2 |
 | 活动接龙 | 本地活动报名 | calendar | false | /pages/activity/activity | true | 3 |
-| 天气查询 | 出行天气参考 | carbon:cloud | false | /pages/weather/weather | false | 4 |
-| 禁摩限行 | 安全出行指南 | warning | false | /pages/traffic/traffic | false | 5 |
-| 口碑店铺 | 摩友推荐商家 | shop | false | /pages/shop/shop | false | 6 |
 
 #### RideData 初始数据
 
@@ -622,8 +619,8 @@ pnpm build:mp-weixin
 ## 快速参考
 
 ### Mock 模式开发（当前）
-✅ 无需任何配置  
-✅ 直接运行 `pnpm dev:mp-weixin`  
+✅ 无需任何配置
+✅ 直接运行 `pnpm dev:mp-weixin`
 ✅ 使用内置 Mock 数据
 
 ### Bmob 模式切换（后期）
@@ -651,5 +648,5 @@ A: 可以！在 Bmob 控制台可以随时添加、修改、删除字段。
 
 ---
 
-**文档版本：** v1.0  
+**文档版本：** v1.0
 **最后更新：** 2026-04-16

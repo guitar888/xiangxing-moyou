@@ -1,11 +1,10 @@
 <script setup lang="ts">
 /**
- * 活动页面
- * 实现摩友匿名报名、AA计算器功能
- * 活动由管理员从后台发布
+ * 活动页面 - 纯展示版
+ * 仅展示活动信息 + 状态 + 路线查看
+ * 无社交、无报名、无交互
  */
-import type { ActivityItem, ActivityFilter, ActivityTag } from '@/types'
-import { ACTIVITY_TAG_CONFIG } from '@/types'
+import type { ActivityItem, ActivityFilter } from '@/types'
 
 definePage({
   name: 'activity',
@@ -19,13 +18,11 @@ definePage({
 // ================================================
 // 系统信息
 // ================================================
-
 const { statusBarHeight } = useSystemInfo()
 
 // ================================================
 // 数据
 // ================================================
-
 const {
   activities,
   loading,
@@ -61,59 +58,43 @@ const filters: { key: ActivityFilter; label: string }[] = [
   { key: 'scenic', label: '景区' },
   { key: 'greenway', label: '绿道' },
   { key: 'free', label: '免费' },
+  { key: 'photo', label: '摄影' }, // 加上这个
 ]
 
 // ================================================
-// 活动提示
+// AA计算器 - 彻底修复版
 // ================================================
-
-function openSignupModal(activity: ActivityItem) {
-  const { info: showInfo } = useGlobalToast()
-  showInfo({
-    msg: '活动详情请留意群公告，如需帮助请联系管理员',
-  })
-}
-
-// ================================================
-// AA计算器
-// ================================================
-
 const aaTotal = ref(0)
 const aaParticipants = ref(1)
 
-// 限制输入为正数
-function handleTotalInput(value: number | undefined) {
-  if (value !== undefined && value < 0) {
+// 监听变量变化，强制修正 NaN
+watch(aaTotal, (val) => {
+  if (isNaN(val) || val < 0) {
     aaTotal.value = 0
   }
-}
+})
 
-function handleParticipantsInput(value: number | undefined) {
-  if (value !== undefined) {
-    if (value <= 0) {
-      aaParticipants.value = 1
-    }
+watch(aaParticipants, (val) => {
+  if (isNaN(val) || val <= 0) {
+    aaParticipants.value = 1
   }
-}
+})
 
+// 计算结果，去掉不必要的限制，直接计算并兜底
 const aaResult = computed(() => {
-  if (aaParticipants.value <= 0 || aaTotal.value < 0) return 0
-  const result = aaTotal.value / aaParticipants.value
-  // 避免科学计数法，确保结果为正数
-  return result >= 0 ? result : 0
+  // 强制转数字，兜底为 0/1
+  const total = Number(aaTotal.value) || 0
+  const participants = Number(aaParticipants.value) || 1
+
+  // 直接计算，结果非负
+  const result = total / participants
+  return Math.max(0, Math.round(result * 100) / 100)
 })
 
 // ================================================
-// 路由
+// 路线查看
 // ================================================
-
 const router = useRouter()
-
-function handleActivityClick(activity: ActivityItem) {
-  if (activity.routeId) {
-    router.pushTab('/pages/map/map')
-  }
-}
 
 function handleViewRoute(activity: ActivityItem) {
   if (activity.routeId) {
@@ -124,7 +105,6 @@ function handleViewRoute(activity: ActivityItem) {
 // ================================================
 // 生命周期
 // ================================================
-
 onMounted(() => {
   loadActivities()
 })
@@ -133,14 +113,8 @@ onMounted(() => {
 <template>
   <view class="relative min-h-screen overflow-hidden bg-gradient-to-br from-base via-[var(--wot-color-bg-hover)] to-[var(--wot-color-bg-card)]">
     <!-- 背景装饰 -->
-    <!-- #ifdef H5 -->
-    <view class="pointer-events-none absolute inset-x-0 top-0 z-0 h-[240rpx]" :style="{ background: 'radial-gradient(circle at top, rgba(var(--wot-color-theme-rgb),0.18), transparent 55%)' }" />
-    <view class="pointer-events-none absolute inset-0 z-0 opacity-5" :style="{ background: `repeating-linear-gradient(45deg, transparent, transparent 40rpx, var(--wot-color-theme) 40rpx, var(--wot-color-theme) 80rpx), repeating-linear-gradient(-45deg, transparent, transparent 40rpx, var(--wot-color-theme) 40rpx, var(--wot-color-theme) 80rpx)` }" />
-    <!-- #endif -->
-    <!-- #ifndef H5 -->
     <view class="pointer-events-none absolute inset-x-0 top-0 z-0 h-[240rpx]" :style="{ background: 'linear-gradient(to bottom, rgba(46, 213, 115, 0.25), transparent 100%)' }" />
     <view class="pointer-events-none absolute inset-0 z-0 opacity-3" :style="{ background: 'repeating-linear-gradient(45deg, transparent, transparent 40rpx, #2ED573 40rpx, #2ED573 80rpx), repeating-linear-gradient(-45deg, transparent, transparent 40rpx, #2ED573 40rpx, #2ED573 80rpx)' }" />
-    <!-- #endif -->
 
     <!-- 页面内容 -->
     <view class="relative z-10 flex flex-col">
@@ -155,12 +129,12 @@ onMounted(() => {
         }"
       >
         <view class="flex items-center gap-[12rpx]">
-          <text class="i-carbon:calendar text-[36rpx] text-primary" />
-          <text class="text-[32rpx] font-700 tracking-[1px]" :style="{ color: '#2ED573' }">活动工具</text>
+          <text class="i-carbon:calendar text-[36rpx] text-white" />
+          <text class="text-[32rpx] font-700 tracking-[1px] text-white">活动工具</text>
         </view>
         <view class="flex items-center gap-[8rpx] rounded-[10rpx] bg-card/50 px-[16rpx] py-[10rpx]">
-          <text class="i-carbon:shield text-[24rpx] text-primary" />
-          <text class="text-[22rpx] text-white/80 font-500">匿名报名</text>
+          <text class="i-carbon:information text-[24rpx] text-white" />
+          <text class="text-[22rpx] text-white font-500">活动公示</text>
         </view>
       </view>
 
@@ -202,14 +176,14 @@ onMounted(() => {
           </view>
         </view>
 
-        <!-- 筛选标签 - 多行布局 -->
+        <!-- 筛选标签 -->
         <view class="px-[24rpx] pb-[16rpx]">
           <view class="flex flex-wrap gap-[12rpx]">
             <view
               v-for="f in filters"
               :key="f.key"
               class="px-[20rpx] py-[8rpx] rounded-[20rpx] text-[22rpx] font-500 transition-all duration-200"
-              :class="currentFilter === f.key ? 'bg-primary text-base' : 'bg-card text-gray border border-white/5'"
+              :class="currentFilter === f.key ? 'bg-primary text-white' : 'bg-card text-gray border border-white/5'"
               @click="setFilter(f.key)"
             >
               {{ f.label }}
@@ -227,20 +201,8 @@ onMounted(() => {
             >
               <activity-ActivityCard
                 :activity="activity"
-                @click="handleActivityClick"
                 @view-route="handleViewRoute"
               />
-              <!-- 报名按钮 -->
-              <view class="p-[20rpx] border-t border-border">
-                <button
-                  class="w-full py-[20rpx] rounded-[12rpx] text-[24rpx] font-500 transition-all duration-200"
-                  :class="activity.status === 'ended' ? 'bg-gradient-to-r from-[#FF7A00]/80 to-[#FF6B00]/80 text-white cursor-not-allowed' : 'bg-gradient-to-r from-primary to-[#27C468] text-white active:opacity-90'"
-                  @click.stop="openSignupModal(activity)"
-                  :disabled="activity.status === 'ended'"
-                >
-                  {{ activity.status === 'ended' ? '活动已结束' : '立即报名' }}
-                </button>
-              </view>
             </view>
           </view>
 
@@ -258,42 +220,39 @@ onMounted(() => {
         </view>
       </view>
 
-      <!-- AA计算器标签页 -->
-      <view v-else-if="activeTab === 'aa'" class="p-[24rpx]">
-        <view class="space-y-[32rpx]">
-          <view class="bg-card rounded-[16rpx] p-[24rpx]">
-            <text class="block text-[24rpx] text-white mb-[16rpx]">总费用</text>
-            <wd-input
-              v-model.number="aaTotal"
-              type="digit"
-              placeholder="输入总费用"
-              class="text-[32rpx] font-500"
-              @input="handleTotalInput"
-            />
-          </view>
-          <view class="bg-card rounded-[16rpx] p-[24rpx]">
-            <text class="block text-[24rpx] text-white mb-[16rpx]">参与人数</text>
-            <wd-input
-              v-model.number="aaParticipants"
-              type="number"
-              placeholder="输入参与人数"
-              class="text-[32rpx] font-500"
-              @input="handleParticipantsInput"
-            />
-          </view>
-          <view class="bg-card rounded-[16rpx] p-[24rpx]">
-            <text class="block text-[24rpx] text-white mb-[16rpx]">人均费用</text>
-            <text class="text-[40rpx] font-600 text-primary">{{ aaResult.toFixed(2) }} 元</text>
-          </view>
-        </view>
+
+  <!-- AA计算器标签页 -->
+  <view v-else-if="activeTab === 'aa'" class="p-[24rpx]">
+    <view class="space-y-[32rpx]">
+      <view class="bg-card rounded-[16rpx] p-[24rpx]">
+        <text class="block text-[24rpx] text-white mb-[16rpx]">总费用</text>
+        <wd-input
+          v-model.number="aaTotal"
+          type="digit"
+          placeholder="输入总费用"
+          class="text-[32rpx] font-500 text-white"
+        />
       </view>
+      <view class="bg-card rounded-[16rpx] p-[24rpx]">
+        <text class="block text-[24rpx] text-white mb-[16rpx]">参与人数</text>
+        <wd-input
+          v-model.number="aaParticipants"
+          type="number"
+          placeholder="输入参与人数"
+          class="text-[32rpx] font-500 text-white"
+        />
+      </view>
+      <view class="bg-card rounded-[16rpx] p-[24rpx]">
+        <text class="block text-[24rpx] text-white mb-[16rpx]">人均费用</text>
+        <text class="text-[40rpx] font-600 text-primary">{{ aaResult.toFixed(2) }} 元</text>
+      </view>
+    </view>
+  </view>
 
-
-
-      <!-- 底部合规声明 -->
+      <!-- 底部声明 -->
       <view class="px-[20rpx] py-[12rpx]">
         <text class="text-[18rpx] text-gray/50 text-center block">
-          活动信息仅作参考 · 遵守交通法规 · 安全骑行
+          活动信息仅作公示 · 详情请咨询微信群 · 安全骑行
         </text>
       </view>
     </view>

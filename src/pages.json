@@ -309,16 +309,6 @@
           "style": {
             "navigationBarTitleText": "uni-ku/root"
           }
-        },
-        {
-          "path": "weather/weather",
-          "type": "page",
-          "name": "weather",
-          "style": {
-            "navigationBarTitleText": "天气查询",
-            "navigationBarBackgroundColor": "#121212",
-            "navigationBarTextStyle": "white"
-          }
         }
       ]
     },

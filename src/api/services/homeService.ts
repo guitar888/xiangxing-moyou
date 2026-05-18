@@ -1,49 +1,15 @@
 import bmob from '@/utils/bmob'
-import type { BannerData, QuickEntry, RideData, ActivityItem } from '@/types'
+import type { QuickEntry, RideData, ActivityItem } from '@/types'
 
 // 首页数据 API 服务
 export class HomeService {
-  // 获取轮播图数据
-  static async getBanners(): Promise<BannerData[]> {
+  static async getBanners(): Promise<ActivityItem[]> {
     try {
-      // 实际项目中使用 Bmob API
-      // const result = await bmob.request<BannerData[]>('/classes/Banner')
-      // return result.results
-
-      // 模拟数据
-      return [
-        {
-          id: '1',
-          title: '唐城追焦夜骑',
-          desc: '每周六晚 唐城城墙下 骑行&摄影活动',
-          tag: '热门',
-          url: '/pages/activity/activity',
-        },
-        {
-          id: '2',
-          title: '古城环线晨骑',
-          desc: '襄阳古城墙环线，全程约25公里',
-          tag: '周末',
-          url: '/pages/activity/activity',
-        },
-        {
-          id: '3',
-          title: '汉江沿岸骑行',
-          desc: '沿汉江绿道，尽享江风拂面',
-          tag: '推荐',
-          url: '/pages/map/map',
-        },
-        {
-          id: '4',
-          title: '隆中至武当山',
-          desc: '襄阳至武当山摩旅路线，约180公里',
-          tag: '长途',
-          url: '/pages/map/map',
-        },
-      ]
+      const activities = await this.getActivities()
+      // 只取即将开始的，原样返回，不做 map 转换
+      return activities.filter(act => act.status === 'upcoming')
     } catch (error) {
       console.error('Failed to get banners:', error)
-      // 返回默认数据作为降级方案
       return []
     }
   }
@@ -83,27 +49,27 @@ export class HomeService {
           path: '/pages/activity/activity',
           isTab: true,
         },
-        {
-          id: 'weather',
-          name: '天气查询',
-          subname: '出行天气参考',
-          icon: 'i-carbon:cloud',
-          path: '/subPages/weather/weather',
-        },
-        {
-          id: 'traffic',
-          name: '禁摩限行',
-          subname: '安全出行指南',
-          icon: 'warning',
-          path: '/subPages/traffic/traffic',
-        },
-        {
-          id: 'shop',
-          name: '口碑店铺',
-          subname: '摩友推荐商家',
-          icon: 'shop',
-          path: '/subPages/shop/shop',
-        },
+        // {
+        //   id: 'weather',
+        //   name: '天气查询',
+        //   subname: '出行天气参考',
+        //   icon: 'i-carbon:cloud',
+        //   path: '/subPages/weather/weather',
+        // },
+        // {
+        //   id: 'traffic',
+        //   name: '禁摩限行',
+        //   subname: '安全出行指南',
+        //   icon: 'warning',
+        //   path: '/subPages/traffic/traffic',
+        // },
+        // {
+        //   id: 'shop',
+        //   name: '口碑店铺',
+        //   subname: '摩友推荐商家',
+        //   icon: 'shop',
+        //   path: '/subPages/shop/shop',
+        // },
       ]
     } catch (error) {
       console.error('Failed to get quick entries:', error)
