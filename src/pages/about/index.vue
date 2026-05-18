@@ -11,17 +11,17 @@ const { success: showToast } = useGlobalToast()
 
 const adminInfo = {
   nickname: '明辰',
-  avatar: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=野生摄影师%20摩托车骑士%20穿着复古皮衣%20戴墨镜%20文艺青年%20襄阳&image_size=square',
+  avatar: 'https://img.cdn1.vip/i/6a016f610ed6a_1778478945.webp',
   wechatId: 'MingChen202Y',
   qrCodeImage: '/static/qrcode.JPG',
-  description: '襄阳野生摄影师 | 巡航车主 | 业余摩友修理工',
+  description: '野生摄影师 | 巡航车主 | AI打螺丝',
   intro: `在襄阳骑了2年车，拍过无数日出日落。
 
 喜欢用镜头记录摩友们的帅气身影，
 也喜欢在汉江边蹲守夕阳下的机车大片。
 
 如果你也爱摄影、爱骑行，
-欢迎来聊~ 🚗📷`,
+欢迎来聊~ 📷`,
 }
 
 function copyWechatId() {
@@ -55,64 +55,54 @@ function copyWechatId() {
           </view>
         </view>
 
-        <view class="flex justify-center mb-[-40rpx] z-10 relative">
-          <view class="relative">
-            <view class="w-[200rpx] h-[200rpx] rounded-[40rpx] border-2 border-primary/30 bg-primary/10 flex items-center justify-center overflow-hidden shadow-[0_0_60rpx_rgba(46,213,115,0.2)]">
-              <image
-                :src="adminInfo.avatar"
-                class="w-full h-full"
-                mode="aspectFill"
-              />
-            </view>
-            <view class="absolute -bottom-[16rpx] left-1/2 -translate-x-1/2 px-[24rpx] py-[8rpx] rounded-full bg-primary border border-primary/30 shadow-[0_0_20rpx_rgba(46,213,115,0.3)]">
-              <text class="text-[22rpx] text-white font-600">襄阳摩友</text>
-            </view>
+        <view class="flex flex-col items-center mb-[32rpx]">
+          <!-- 圆形头像（简洁、无嵌套框） -->
+          <view class="w-[200rpx] h-[200rpx] rounded-full border-2 border-primary/30 shadow-[0_0_60rpx_rgba(46,213,115,0.2)] overflow-hidden">
+            <wd-img
+              :src="adminInfo.avatar"
+              class="w-full h-full"
+              mode="aspectFill"
+            />
+          </view>
+          <!-- 昵称（直接放在头像下，清晰） -->
+          <text class="mt-[20rpx] text-[32rpx] font-700 text-white">{{ adminInfo.nickname }}</text>
+          <!-- 一句话简介（简洁，无多余装饰） -->
+          <text class="mt-[8rpx] text-[24rpx] text-primary/80">{{ adminInfo.description }}</text>
+        </view>
+
+        <view class="flex justify-center gap-[16rpx] mb-[32rpx] flex-wrap">
+          <view class="px-[20rpx] py-[10rpx] rounded-[12rpx] border border-primary/30 bg-primary/10 flex items-center justify-center">
+            <text class="text-[22rpx] text-white">📷 野生摄影师</text>
+          </view>
+          <view class="px-[20rpx] py-[10rpx] rounded-[12rpx] border border-primary/30 bg-primary/10 flex items-center justify-center">
+            <text class="text-[22rpx] text-white">🏍️ 巡航车主</text>
           </view>
         </view>
 
-        <view class="mt-[80rpx] bg-card/80 backdrop-blur-xl rounded-[32rpx] border border-white/10 p-[32rpx] shadow-xl">
-          <view class="text-center mb-[24rpx]">
-            <text class="text-[44rpx] font-800 text-white tracking-[2px]">{{ adminInfo.nickname }}</text>
-            <view class="flex justify-center mt-[8rpx]">
-              <text class="text-[24rpx] text-primary/80 tracking-widest">{{ adminInfo.description }}</text>
-            </view>
+        <view class="bg-bg-hover rounded-[20rpx] p-[28rpx] mb-[24rpx]">
+          <view class="flex items-center gap-[8rpx] mb-[16rpx]">
+            <text class="text-[22rpx] text-gray">个人签名</text>
           </view>
+          <text class="text-[24rpx] text-white/90 leading-[1.8] whitespace-pre-line">{{ adminInfo.intro }}</text>
+        </view>
 
-          <view class="flex justify-center gap-[16rpx] mb-[32rpx] flex-wrap">
-            <view class="px-[20rpx] py-[10rpx] rounded-[12rpx] border border-primary/30 bg-primary/10">
-              <text class="text-[22rpx] text-primary">📷 野生摄影师</text>
-            </view>
-            <view class="px-[20rpx] py-[10rpx] rounded-[12rpx] border border-primary/30 bg-primary/10">
-              <text class="text-[22rpx] text-primary">🏍️ 巡航车主</text>
-            </view>
-          </view>
-
-          <view class="bg-bg-hover rounded-[20rpx] p-[28rpx] mb-[24rpx]">
-            <view class="flex items-center gap-[8rpx] mb-[16rpx]">
-              <view class="i-carbon:quote text-[24rpx] text-primary" />
-              <text class="text-[22rpx] text-gray">个人签名</text>
-            </view>
-            <text class="text-[24rpx] text-white/90 leading-[1.8] whitespace-pre-line">{{ adminInfo.intro }}</text>
-          </view>
-
-          <view class="bg-bg-hover rounded-[20rpx] p-[28rpx]">
-            <view class="flex items-center justify-between">
-              <view class="flex items-center gap-[16rpx]">
-                <view class="w-[56rpx] h-[56rpx] rounded-[14rpx] bg-primary/20 flex items-center justify-center">
-                  <text class="i-carbon:logo-wechat text-[28rpx] text-primary" />
-                </view>
-                <view>
-                  <text class="text-[20rpx] text-gray block mb-[4rpx]">微信号</text>
-                  <text class="text-[26rpx] font-600 text-white">{{ adminInfo.wechatId }}</text>
-                </view>
+        <view class="bg-bg-hover rounded-[20rpx] p-[28rpx]">
+          <view class="flex items-center justify-between">
+            <view class="flex items-center gap-[16rpx]">
+              <view class="w-[56rpx] h-[56rpx] rounded-[14rpx] bg-primary/20 flex items-center justify-center">
+                <text class="i-carbon:logo-wechat text-[28rpx] text-white" />
               </view>
-              <view
-                class="px-[28rpx] py-[14rpx] rounded-[14rpx] bg-primary flex items-center gap-[8rpx] active:opacity-80"
-                @click="copyWechatId"
-              >
-                <text class="i-carbon-copy text-[22rpx] text-white" />
-                <text class="text-[22rpx] text-white font-500">复制</text>
+              <view>
+                <text class="text-[20rpx] text-gray block mb-[4rpx]">微信号</text>
+                <text class="text-[26rpx] font-600 text-white">{{ adminInfo.wechatId }}</text>
               </view>
+            </view>
+            <view
+              class="px-[28rpx] py-[14rpx] rounded-[14rpx] bg-primary flex items-center gap-[8rpx] active:opacity-80"
+              @click="copyWechatId"
+            >
+              <text class="i-carbon-copy text-[22rpx] text-white" />
+              <text class="text-[22rpx] text-white font-500">复制</text>
             </view>
           </view>
         </view>
@@ -139,6 +129,3 @@ function copyWechatId() {
     </view>
   </view>
 </template>
-
-<style scoped>
-</style>

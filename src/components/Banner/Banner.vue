@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BannerData } from '@/types'
+import type { ActivityItem } from '@/types'
 
 defineOptions({
   options: {
@@ -8,7 +8,7 @@ defineOptions({
 })
 
 interface Props {
-  list: BannerData[]
+  list: ActivityItem[]
 }
 
 defineProps<Props>()
@@ -16,15 +16,19 @@ defineProps<Props>()
 const router = useRouter()
 const currentIndex = ref(0)
 
-function handleClick(item: BannerData) {
-  if (item.url) {
-    if (item.url.includes('/pages/map/map') || item.url.includes('/pages/activity/activity')) {
-      router.pushTab(item.url)
-    }
-    else {
-      router.push(item.url)
-    }
-  }
+// 图片加载状态管理
+const imageLoadStatus = ref<Record<string, boolean>>({})
+
+function handleImageLoad(id: string) {
+  imageLoadStatus.value[id] = true
+}
+
+function handleImageError(id: string) {
+  imageLoadStatus.value[id] = false
+}
+
+function handleClick(item: ActivityItem) {
+  router.pushTab('/pages/activity/activity')
 }
 
 function onSwiperChange(e: any) {
@@ -36,7 +40,7 @@ function onSwiperChange(e: any) {
   <!-- #ifdef H5 -->
   <view class="relative z-1 animate-float-slow animate-scale-in px-[24rpx] pt-[20rpx]">
     <swiper
-      class="h-[320rpx] overflow-hidden rounded-[16rpx]"
+      class="h-[480rpx] overflow-hidden rounded-[16rpx]"
       :indicator-dots="false"
       :autoplay="true"
       :interval="4000"
@@ -53,23 +57,37 @@ function onSwiperChange(e: any) {
           :class="`banner-${banner.id}`"
           @click="handleClick(banner)"
         >
-          <view class="pointer-events-none absolute inset-0 from-transparent via-[rgba(46,213,115,0.05)] to-[rgba(46,213,115,0.15)] bg-gradient-to-b" />
+          <!-- 图片正常加载时，显示图片 + 遮罩 -->
+          <template v-if="imageLoadStatus[banner.id] !== false && banner.image">
+            <image
+              class="absolute inset-0 w-full h-full"
+              :src="banner.image"
+              mode="aspectFill"
+              @load="handleImageLoad(banner.id)"
+              @error="handleImageError(banner.id)"
+            />
+            <view class="absolute inset-0 bg-black/50" />
+          </template>
+
+          <!-- 图片加载失败/无图片时，才用默认渐变背景和摩托车图标 -->
+          <template v-if="!banner.image || imageLoadStatus[banner.id] === false">
+            <view class="pointer-events-none absolute inset-0 from-transparent via-[rgba(46,213,115,0.05)] to-[rgba(46,213,115,0.15)] bg-gradient-to-b" />
+            <view class="absolute left-1/2 top-1/2 z-1 text-[156rpx] opacity-35 brightness-150 drop-shadow-[0_0_20rpx_rgba(46,213,115,0.6)] filter -translate-x-1/2 -translate-y-[80%]">
+              🏍️
+            </view>
+          </template>
+
           <view class="relative z-2 flex flex-col gap-[8rpx]">
             <text class="text-[36rpx] font-700 text-[#FFFFFF] text-shadow">
               {{ banner.title }}
             </text>
             <text class="text-[24rpx] text-[#E0E0E0] text-shadow-sm">
-              {{ banner.desc }}
+              {{ banner.info }}
             </text>
           </view>
-          <view v-if="banner.tag" class="absolute right-[20rpx] top-[20rpx] z-2 rounded-[8rpx] from-primary to-[var(--wot-color-theme-dark)] bg-gradient-to-r px-[16rpx] py-[6rpx] text-[20rpx] text-base font-600 shadow-[0_2rpx_8rpx_rgba(46,213,115,0.3)]">
-            <text v-if="banner.tag === '热门'" class="mr-[4rpx]">
-              🔥
-            </text>
-            {{ banner.tag }}
-          </view>
-          <view class="absolute left-1/2 top-1/2 z-1 text-[156rpx] opacity-35 brightness-150 drop-shadow-[0_0_20rpx_rgba(46,213,115,0.6)] filter -translate-x-1/2 -translate-y-[80%]">
-            🏍️
+
+          <view v-if="banner.isUpcoming" class="absolute right-[20rpx] top-[20rpx] z-2 rounded-[8rpx] from-primary to-[var(--wot-color-theme-dark)] bg-gradient-to-r px-[16rpx] py-[6rpx] text-[20rpx] text-base font-600 shadow-[0_2rpx_8rpx_rgba(46,213,115,0.3)]">
+            即将开始
           </view>
         </view>
       </swiper-item>
@@ -88,7 +106,7 @@ function onSwiperChange(e: any) {
   <!-- #ifndef H5 -->
   <view class="relative z-1 px-[24rpx] pt-[20rpx]">
     <swiper
-      class="h-[320rpx] overflow-hidden rounded-[16rpx]"
+      class="h-[480rpx] overflow-hidden rounded-[16rpx]"
       :indicator-dots="false"
       :autoplay="true"
       :interval="4000"
@@ -105,23 +123,37 @@ function onSwiperChange(e: any) {
           :class="`mini-banner-${banner.id}`"
           @click="handleClick(banner)"
         >
-          <view class="pointer-events-none absolute inset-0 mini-banner-gradient" />
+          <!-- 图片正常加载时，显示图片 + 遮罩 -->
+          <template v-if="imageLoadStatus[banner.id] !== false && banner.image">
+            <image
+              class="absolute inset-0 w-full h-full"
+              :src="banner.image"
+              mode="aspectFill"
+              @load="handleImageLoad(banner.id)"
+              @error="handleImageError(banner.id)"
+            />
+            <view class="absolute inset-0 bg-black/50" />
+          </template>
+
+          <!-- 图片加载失败/无图片时，才用默认渐变背景和摩托车图标 -->
+          <template v-if="!banner.image || imageLoadStatus[banner.id] === false">
+            <view class="pointer-events-none absolute inset-0 mini-banner-gradient" />
+            <view class="mini-banner-icon">
+              🏍️
+            </view>
+          </template>
+
           <view class="relative z-2 flex flex-col gap-[8rpx]">
             <text class="mini-banner-title">
               {{ banner.title }}
             </text>
             <text class="mini-banner-desc">
-              {{ banner.desc }}
+              {{ banner.info }}
             </text>
           </view>
-          <view v-if="banner.tag" class="mini-banner-tag">
-            <text v-if="banner.tag === '热门'" class="mr-[4rpx]">
-              🔥
-            </text>
-            {{ banner.tag }}
-          </view>
-          <view class="mini-banner-icon">
-            🏍️
+
+          <view v-if="banner.isUpcoming" class="mini-banner-tag">
+            即将开始
           </view>
         </view>
       </swiper-item>
@@ -152,15 +184,12 @@ function onSwiperChange(e: any) {
 .banner-item.banner-1 {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
 }
-
 .banner-item.banner-2 {
   background: linear-gradient(135deg, #1E1E1E 0%, #2d2d2d 50%, #1E1E1E 100%);
 }
-
 .banner-item.banner-3 {
   background: linear-gradient(135deg, #1a1a1a 0%, #2a3a2a 50%, #1a1a1a 100%);
 }
-
 .banner-item.banner-4 {
   background: linear-gradient(135deg, #1E1E1E 0%, #2a2a1a 50%, #1E1E1E 100%);
 }
@@ -168,7 +197,6 @@ function onSwiperChange(e: any) {
 .text-shadow {
   text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.5);
 }
-
 .text-shadow-sm {
   text-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.5);
 }
@@ -182,24 +210,20 @@ function onSwiperChange(e: any) {
   overflow: hidden;
   box-shadow: 0 8rpx 32rpx rgba(46, 213, 115, 0.15), inset 0 1rpx 0 rgba(255, 255, 255, 0.1);
 }
-
 .mini-banner-gradient {
   background: linear-gradient(180deg, transparent 0%, rgba(46, 213, 115, 0.05) 50%, rgba(46, 213, 115, 0.15) 100%);
 }
-
 .mini-banner-title {
   font-size: 36rpx;
   color: var(--wot-color-text-white);
   font-weight: 700;
   text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.6);
 }
-
 .mini-banner-desc {
   font-size: 24rpx;
   color: var(--wot-color-text-muted);
   text-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.6);
 }
-
 .mini-banner-tag {
   position: absolute;
   right: 20rpx;
@@ -213,7 +237,6 @@ function onSwiperChange(e: any) {
   font-weight: 600;
   box-shadow: 0 2rpx 8rpx rgba(46, 213, 115, 0.3);
 }
-
 .mini-banner-icon {
   position: absolute;
   left: 50%;
@@ -224,31 +247,25 @@ function onSwiperChange(e: any) {
   transform: translateX(-50%) translateY(-80%);
   text-shadow: 0 0 20rpx rgba(46, 213, 115, 0.4);
 }
-
 .mini-indicator {
   height: 8rpx;
   width: 16rpx;
   border-radius: 4rpx;
   background: var(--wot-color-text-gray);
 }
-
 .mini-indicator-active {
   width: 40rpx;
   background: #2ED573;
 }
-
 .mini-banner-1 {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
 }
-
 .mini-banner-2 {
   background: linear-gradient(135deg, #1E1E1E 0%, #2d2d2d 50%, #1E1E1E 100%);
 }
-
 .mini-banner-3 {
   background: linear-gradient(135deg, #1a1a1a 0%, #2a3a2a 50%, #1a1a1a 100%);
 }
-
 .mini-banner-4 {
   background: linear-gradient(135deg, #1E1E1E 0%, #2a2a1a 50%, #1E1E1E 100%);
 }

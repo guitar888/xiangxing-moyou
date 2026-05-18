@@ -366,8 +366,7 @@ export function usePoster() {
   async function sharePoster(path: string): Promise<void> {
     try {
       // #ifdef H5
-      uni.showToast({ title: '请长按图片分享', icon: 'none' })
-      return
+      return void uni.showToast({ title: '请长按图片分享', icon: 'none' })
       // #endif
 
       await uni.share({
