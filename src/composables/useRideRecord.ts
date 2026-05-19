@@ -20,6 +20,9 @@ export function useRideRecord() {
     duration: 0,
   })
 
+  /** 轨迹路径 */
+  const ridePath = ref<Coordinate[]>([])
+
   /** 加载状态 */
   const loading = ref(false)
 
@@ -69,7 +72,7 @@ export function useRideRecord() {
   /**
    * 开始骑行记录
    * @param location 当前位置
-   * @param routeId 路线ID（可选）
+   * @param routeId 路线 ID（可选）
    * @param routeName 路线名称（可选）
    */
   function startRide(location: Coordinate, routeId?: string, routeName?: string) {
@@ -80,8 +83,10 @@ export function useRideRecord() {
       routeName,
       startLocation: location,
       duration: 0,
+      path: [location],
     }
 
+    ridePath.value = [location]
     startRideTimer()
     saveActiveRideToStorage()
   }
@@ -93,6 +98,8 @@ export function useRideRecord() {
   function updateLocation(location: Coordinate) {
     if (activeRide.value.status === 'recording') {
       activeRide.value.currentLocation = location
+      activeRide.value.path?.push(location)
+      ridePath.value.push(location)
     }
   }
 
@@ -114,10 +121,14 @@ export function useRideRecord() {
       startTime: activeRide.value.startTime,
       endTime: now,
       duration,
+      distance: 0,
+      avgSpeed: 0,
+      maxSpeed: 0,
       routeId: activeRide.value.routeId,
       routeName: activeRide.value.routeName,
       startLocation: activeRide.value.startLocation!,
       endLocation: endLocation || activeRide.value.currentLocation,
+      path: activeRide.value.path || ridePath.value,
       createdAt: now,
     }
 
@@ -126,6 +137,8 @@ export function useRideRecord() {
       startTime: 0,
       duration: 0,
     }
+
+    ridePath.value = []
 
     records.value.unshift(record)
     saveRecordsToStorage()
@@ -150,6 +163,7 @@ export function useRideRecord() {
       startTime: 0,
       duration: 0,
     }
+    ridePath.value = []
     saveActiveRideToStorage()
   }
 
@@ -229,6 +243,7 @@ export function useRideRecord() {
   return {
     records,
     activeRide,
+    ridePath,
     loading,
     isRiding,
     formattedDuration,

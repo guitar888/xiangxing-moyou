@@ -2,7 +2,7 @@
  * 活动数据 composable
  * 职责：管理活动列表数据（统一使用 HomeService）
  */
-import type { ActivityItem, ActivityFilter } from '@/types'
+import type { ActivityItem, ActivityFilter, ActivityStatusTab } from '@/types'
 import { HomeService } from '@/api/services/homeService'
 
 export function useActivityData() {
@@ -20,6 +20,7 @@ export function useActivityData() {
   // ================================================
 
   const currentFilter = ref<ActivityFilter>('all')
+  const currentStatusTab = ref<ActivityStatusTab>('upcoming')
 
   // ================================================
   // 数据加载
@@ -66,8 +67,12 @@ export function useActivityData() {
     await loadActivities(filter)
   }
 
+  function setStatusTab(tab: ActivityStatusTab) {
+    currentStatusTab.value = tab
+  }
+
   // ================================================
-  // 计算属性
+  // 计算属性 - 按状态分组
   // ================================================
 
   const upcomingActivities = computed(() =>
@@ -81,6 +86,21 @@ export function useActivityData() {
   const endedActivities = computed(() =>
     activities.value.filter(a => a.status === 'ended')
   )
+
+  /** 当前 Tab 对应的活动列表 */
+  const filteredByStatus = computed(() => {
+    switch (currentStatusTab.value) {
+      case 'upcoming':
+        return upcomingActivities.value
+      case 'ongoing':
+        return ongoingActivities.value
+      case 'ended':
+        return endedActivities.value
+      case 'all':
+      default:
+        return activities.value
+    }
+  })
 
   // ================================================
   // 生命周期
@@ -96,10 +116,14 @@ export function useActivityData() {
     loading,
     error,
     currentFilter,
+    currentStatusTab,
     upcomingActivities,
+    ongoingActivities,
     endedActivities,
+    filteredByStatus,
     loadActivities,
     loadActivityDetail,
     setFilter,
+    setStatusTab,
   }
 }

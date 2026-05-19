@@ -1,11 +1,24 @@
 <script setup lang="ts">
 import type { ActivityItem } from '@/types/activity'
+import { ACTIVITY_TAG_CONFIG } from '@/types'
 
 defineProps<{
   activityList: ActivityItem[]
 }>()
 
 const router = useRouter()
+
+function getTagLabel(tag: string) {
+  return ACTIVITY_TAG_CONFIG[tag as keyof typeof ACTIVITY_TAG_CONFIG]?.label || tag
+}
+
+function getTagColor(tag: string) {
+  return ACTIVITY_TAG_CONFIG[tag as keyof typeof ACTIVITY_TAG_CONFIG]?.color || '#FF7A00'
+}
+
+function getTagBgColor(tag: string) {
+  return ACTIVITY_TAG_CONFIG[tag as keyof typeof ACTIVITY_TAG_CONFIG]?.bgColor || 'rgba(255, 122, 0, 0.15)'
+}
 
 function handleActivityClick(activity: ActivityItem) {
   router.push({
@@ -69,8 +82,8 @@ function handleGoToActivity() {
             {{ activity.info }}
           </text>
           <view class="flex gap-[8rpx]">
-            <text v-for="(tag, tIndex) in activity.tags" :key="tIndex" class="rounded-[6rpx] bg-[rgba(255,122,0,0.15)] px-[10rpx] py-[2rpx] text-[18rpx] text-warning">
-              {{ tag }}
+            <text v-for="(tag, tIndex) in activity.tags" :key="tIndex" class="rounded-[6rpx] px-[10rpx] py-[2rpx] text-[18rpx]" :style="{ color: getTagColor(tag), backgroundColor: getTagBgColor(tag) }">
+              {{ getTagLabel(tag) }}
             </text>
           </view>
           <text class="text-[20rpx] text-gray">
@@ -133,8 +146,8 @@ function handleGoToActivity() {
             {{ activity.info }}
           </text>
           <view class="mini-activity-tags">
-            <text v-for="(tag, tIndex) in activity.tags" :key="tIndex" class="mini-activity-tag">
-              {{ tag }}
+            <text v-for="(tag, tIndex) in activity.tags" :key="tIndex" class="mini-activity-tag" :style="{ color: getTagColor(tag), backgroundColor: getTagBgColor(tag) }">
+              {{ getTagLabel(tag) }}
             </text>
           </view>
           <text class="mini-activity-note">

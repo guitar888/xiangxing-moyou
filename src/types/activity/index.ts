@@ -8,6 +8,11 @@
 export type ActivityStatus = 'upcoming' | 'ongoing' | 'ended'
 
 /**
+ * 活动状态筛选 Tab
+ */
+export type ActivityStatusTab = 'upcoming' | 'ongoing' | 'ended' | 'all'
+
+/**
  * 活动标签/筛选条件
  * 统一使用相同类型，避免类型不匹配
  */

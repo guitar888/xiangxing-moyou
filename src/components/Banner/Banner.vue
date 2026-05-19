@@ -49,27 +49,34 @@ function onSwiperChange(e: any) {
     >
       <swiper-item v-for="(banner, index) in list" :key="index">
         <view
-          class="banner-item h-full cursor-pointer rounded-[16rpx] p-[32rpx] transition-all duration-300 active:translate-y-[-2rpx]"
+          class="banner-item h-full cursor-pointer overflow-hidden rounded-[16rpx] transition-all duration-300 active:translate-y-[-2rpx]"
           :class="`banner-${banner.id}`"
           @click="handleClick(banner)"
         >
-          <view class="pointer-events-none absolute inset-0 from-transparent via-[rgba(46,213,115,0.05)] to-[rgba(46,213,115,0.15)] bg-gradient-to-b" />
-          <view class="relative z-2 flex flex-col gap-[8rpx]">
+          <!-- 封面图片 -->
+          <image
+            v-if="banner.image"
+            class="absolute inset-0 h-full w-full object-cover"
+            :src="banner.image"
+            mode="aspectFill"
+          />
+          <!-- 渐变叠加层 -->
+          <view class="pointer-events-none absolute inset-0 from-black/40 via-black/20 to-black/60 bg-gradient-to-t" />
+          <!-- 文字内容 -->
+          <view class="absolute bottom-0 left-0 right-0 z-2 flex flex-col gap-[8rpx] p-[32rpx]">
             <text class="text-[36rpx] font-700 text-[#FFFFFF] text-shadow">
               {{ banner.title }}
             </text>
-            <text class="text-[24rpx] text-[#E0E0E0] text-shadow-sm">
+            <text v-if="banner.desc" class="text-[24rpx] text-[#E0E0E0] text-shadow-sm">
               {{ banner.desc }}
             </text>
           </view>
+          <!-- 标签 -->
           <view v-if="banner.tag" class="absolute right-[20rpx] top-[20rpx] z-2 rounded-[8rpx] from-primary to-[var(--wot-color-theme-dark)] bg-gradient-to-r px-[16rpx] py-[6rpx] text-[20rpx] text-base font-600 shadow-[0_2rpx_8rpx_rgba(46,213,115,0.3)]">
-            <text v-if="banner.tag === '热门'" class="mr-[4rpx]">
-              🔥
+            <text v-if="banner.tag.includes('/')" class="mr-[4rpx]">
+              👥
             </text>
             {{ banner.tag }}
-          </view>
-          <view class="absolute left-1/2 top-1/2 z-1 text-[156rpx] opacity-35 brightness-150 drop-shadow-[0_0_20rpx_rgba(46,213,115,0.6)] filter -translate-x-1/2 -translate-y-[80%]">
-            🏍️
           </view>
         </view>
       </swiper-item>
@@ -101,27 +108,34 @@ function onSwiperChange(e: any) {
     >
       <swiper-item v-for="(banner, index) in list" :key="index">
         <view
-          class="mini-banner-item h-full rounded-[16rpx] p-[32rpx]"
+          class="mini-banner-item h-full overflow-hidden rounded-[16rpx]"
           :class="`mini-banner-${banner.id}`"
           @click="handleClick(banner)"
         >
+          <!-- 封面图片 -->
+          <image
+            v-if="banner.image"
+            class="absolute inset-0 h-full w-full object-cover"
+            :src="banner.image"
+            mode="aspectFill"
+          />
+          <!-- 渐变叠加层 -->
           <view class="pointer-events-none absolute inset-0 mini-banner-gradient" />
-          <view class="relative z-2 flex flex-col gap-[8rpx]">
+          <!-- 文字内容 -->
+          <view class="absolute bottom-0 left-0 right-0 z-2 flex flex-col gap-[8rpx] p-[32rpx]">
             <text class="mini-banner-title">
               {{ banner.title }}
             </text>
-            <text class="mini-banner-desc">
+            <text v-if="banner.desc" class="mini-banner-desc">
               {{ banner.desc }}
             </text>
           </view>
+          <!-- 标签 -->
           <view v-if="banner.tag" class="mini-banner-tag">
-            <text v-if="banner.tag === '热门'" class="mr-[4rpx]">
-              🔥
+            <text v-if="banner.tag.includes('/')" class="mr-[4rpx]">
+              👥
             </text>
             {{ banner.tag }}
-          </view>
-          <view class="mini-banner-icon">
-            🏍️
           </view>
         </view>
       </swiper-item>
@@ -143,26 +157,9 @@ function onSwiperChange(e: any) {
   background: var(--banner-bg, linear-gradient(135deg, #1E1E1E 0%, #2A2A2A 100%));
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   position: relative;
   overflow: hidden;
   box-shadow: 0 8rpx 32rpx rgba(46, 213, 115, 0.08), inset 0 1rpx 0 rgba(255, 255, 255, 0.05);
-}
-
-.banner-item.banner-1 {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-}
-
-.banner-item.banner-2 {
-  background: linear-gradient(135deg, #1E1E1E 0%, #2d2d2d 50%, #1E1E1E 100%);
-}
-
-.banner-item.banner-3 {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2a3a2a 50%, #1a1a1a 100%);
-}
-
-.banner-item.banner-4 {
-  background: linear-gradient(135deg, #1E1E1E 0%, #2a2a1a 50%, #1E1E1E 100%);
 }
 
 .text-shadow {
@@ -177,14 +174,13 @@ function onSwiperChange(e: any) {
   background: linear-gradient(135deg, #2A2A2A 0%, #1E1E1E 100%);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   position: relative;
   overflow: hidden;
   box-shadow: 0 8rpx 32rpx rgba(46, 213, 115, 0.15), inset 0 1rpx 0 rgba(255, 255, 255, 0.1);
 }
 
 .mini-banner-gradient {
-  background: linear-gradient(180deg, transparent 0%, rgba(46, 213, 115, 0.05) 50%, rgba(46, 213, 115, 0.15) 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.7) 100%);
 }
 
 .mini-banner-title {
@@ -214,17 +210,6 @@ function onSwiperChange(e: any) {
   box-shadow: 0 2rpx 8rpx rgba(46, 213, 115, 0.3);
 }
 
-.mini-banner-icon {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 1;
-  font-size: 156rpx;
-  opacity: 0.35;
-  transform: translateX(-50%) translateY(-80%);
-  text-shadow: 0 0 20rpx rgba(46, 213, 115, 0.4);
-}
-
 .mini-indicator {
   height: 8rpx;
   width: 16rpx;
@@ -235,21 +220,5 @@ function onSwiperChange(e: any) {
 .mini-indicator-active {
   width: 40rpx;
   background: #2ED573;
-}
-
-.mini-banner-1 {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-}
-
-.mini-banner-2 {
-  background: linear-gradient(135deg, #1E1E1E 0%, #2d2d2d 50%, #1E1E1E 100%);
-}
-
-.mini-banner-3 {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2a3a2a 50%, #1a1a1a 100%);
-}
-
-.mini-banner-4 {
-  background: linear-gradient(135deg, #1E1E1E 0%, #2a2a1a 50%, #1E1E1E 100%);
 }
 </style>
