@@ -16,6 +16,10 @@ import { defineConfig } from 'vite'
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
+  server: {
+    host: '0.0.0.0',
+    allowedHosts: ['.monkeycode-ai.online'],
+  },
   optimizeDeps: {
     exclude: process.env.NODE_ENV === 'development' ? ['wot-design-uni', 'uni-echarts'] : [],
   },

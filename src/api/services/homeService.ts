@@ -1,13 +1,50 @@
 import bmob from '@/utils/bmob'
-import type { QuickEntry, RideData, ActivityItem } from '@/types'
+import type { BannerData, QuickEntry, RideData, ActivityItem } from '@/types'
+import { mockActivities, mockAdminContact } from '@/api/mock/activityMock'
+
+/** 活动封面图片占位符（统一数据源，图片与活动主题契合） */
+const ACTIVITY_COVER_IMAGES: Record<string, string> = {
+  // 樱花谷春季骑行 - 春季樱花风景
+  '1': 'https://images.unsplash.com/photo-1522383225653-ed111181a951?w=800&h=400&fit=crop',
+  // 五山茶园品茶骑行 - 茶园风光
+  '2': 'https://images.unsplash.com/photo-1564834724105-918b73d1b9e0?w=800&h=400&fit=crop',
+  // 赵湾天路挑战赛 - 山路弯道
+  '3': 'https://images.unsplash.com/photo-1558980394-0a06c4631733?w=800&h=400&fit=crop',
+  // 薤山避暑纳凉骑 - 森林公路
+  '4': 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=400&fit=crop',
+  // 古城环线夜骑 - 古城夜景
+  '5': 'https://images.unsplash.com/photo-1548013146-72479768bada?w=800&h=400&fit=crop',
+  // 唐城追焦夜骑 - 唐代建筑夜景
+  '6': 'https://images.unsplash.com/photo-1584646098530-50625b59663e?w=800&h=400&fit=crop',
+  // 汉江沿岸绿道骑 - 江边骑行
+  '7': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop',
+  // 隆中景区骑行 - 景区山路
+  '8': 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&h=400&fit=crop',
+  // 鹿门山挑战 - 山路风景
+  '9': 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=400&fit=crop',
+  // 摩友交流会 - 聚会场景
+  '10': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop',
+}
 
 // 首页数据 API 服务
 export class HomeService {
-  static async getBanners(): Promise<ActivityItem[]> {
+  // 获取轮播图数据（从即将开始的活动派生，统一数据源）
+  static async getBanners(): Promise<BannerData[]> {
     try {
-      const activities = await this.getActivities()
-      // 只取即将开始的，原样返回，不做 map 转换
-      return activities.filter(act => act.status === 'upcoming')
+      // 筛选即将开始的活动（upcoming）
+      const upcomingActivities = mockActivities.filter(a => a.status === 'upcoming')
+
+      // 转换为 BannerData 格式
+      return upcomingActivities.slice(0, 5).map((activity) => ({
+        id: activity.id,
+        title: activity.title,
+        desc: activity.description.slice(0, 50) + (activity.description.length > 50 ? '...' : ''),
+        tag: activity.participantCount && activity.maxParticipants
+          ? `${activity.participantCount}/${activity.maxParticipants}人`
+          : '即将开始',
+        url: `/pages/activity/activity`,
+        image: ACTIVITY_COVER_IMAGES[activity.id] || activity.coverImage || '',
+      }))
     } catch (error) {
       console.error('Failed to get banners:', error)
       return []
@@ -101,74 +138,26 @@ export class HomeService {
     }
   }
 
-  // 获取活动列表
+  // 获取活动列表（统一数据源，从 mockActivities 转换）
   static async getActivities(): Promise<ActivityItem[]> {
     try {
-      // 实际项目中使用 Bmob API
-      // const result = await bmob.request<ActivityItem[]>('/classes/Activity')
-      // return result.results
-
-      // 模拟数据
-      return [
-        {
-          id: '1',
-          title: '唐城追焦夜骑',
-          date: '4月20日',
-          time: '19:00',
-          location: '襄阳唐城',
-          info: '穿越盛唐夜景，襄阳唐城夜间骑行&摄影活动',
-          description: '穿越盛唐夜景，襄阳唐城夜间骑行&摄影活动',
-          tags: ['夜骑', '摄影'],
-          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=襄阳唐城夜景%20摩托车骑行%20古建筑灯光&image_size=square_hd',
-          status: 'upcoming',
-          routeId: 'route_001',
-          routeName: '唐城夜骑路线',
-          isUpcoming: true,
-          countdownText: '距开始 3天',
-        },
-        {
-          id: '2',
-          title: '古城环线晨骑',
-          date: '4月27日',
-          time: '06:30',
-          location: '襄阳古城墙',
-          info: '襄阳古城墙环线，全程约25公里',
-          description: '襄阳古城墙环线，全程约25公里',
-          tags: ['晨骑', '免费'],
-          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=襄阳古城墙%20摩托车%20清晨骑行&image_size=square_hd',
-          status: 'upcoming',
-          routeId: 'route_002',
-          routeName: '古城环线',
-          isUpcoming: true,
-          countdownText: '距开始 10天',
-        },
-        {
-          id: '3',
-          title: '摩友交流会',
-          date: '5月1日',
-          time: '14:00',
-          location: '襄阳摩友俱乐部',
-          info: '襄阳摩友俱乐部月度聚会',
-          description: '襄阳摩友俱乐部月度聚会',
-          tags: ['聚会', '交流'],
-          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=摩托车俱乐部聚会%20摩友交流&image_size=square_hd',
-          status: 'ended',
-          isUpcoming: false,
-        },
-        {
-          id: '4',
-          title: '汉江沿岸骑行',
-          date: '5月3日',
-          time: '08:00',
-          location: '汉江绿道',
-          info: '沿汉江绿道，尽享江风拂面',
-          description: '沿汉江绿道，尽享江风拂面',
-          tags: ['绿道', '休闲'],
-          image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=汉江沿岸%20摩托车骑行%20江景&image_size=square_hd',
-          status: 'ended',
-          isUpcoming: false,
-        },
-      ]
+      // 从 mockActivities 转换为 ActivityItem 格式
+      return mockActivities.map((activity) => ({
+        id: activity.id,
+        title: activity.title,
+        date: activity.date,
+        time: activity.time,
+        location: activity.location,
+        info: activity.description.slice(0, 60) + (activity.description.length > 60 ? '...' : ''),
+        description: activity.description,
+        tags: activity.tags,
+        image: ACTIVITY_COVER_IMAGES[activity.id] || activity.coverImage || '',
+        status: activity.status,
+        routeId: activity.routeId,
+        routeName: activity.routeName,
+        isUpcoming: activity.status === 'upcoming',
+        countdownText: activity.status === 'upcoming' ? '距活动开始' : undefined,
+      }))
     } catch (error) {
       console.error('Failed to get activities:', error)
       return []

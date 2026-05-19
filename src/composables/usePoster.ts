@@ -4,6 +4,9 @@ interface PosterOptions {
   record: RideRecord
   routeName?: string
   avgSpeed?: number
+  routePath?: Coordinate[]
+  startLocationName?: string
+  endLocationName?: string
 }
 
 export function usePoster() {
@@ -50,6 +53,82 @@ export function usePoster() {
     ctx.arcTo(x, y + h, x, y, r)
     ctx.arcTo(x, y, x + w, y, r)
     ctx.closePath()
+  }
+
+  /**
+   * 绘制轨迹缩略图
+   */
+  function drawRoutePath(
+    ctx: UniApp.CanvasContext,
+    path: Coordinate[],
+    x: number,
+    y: number,
+    width: number,
+    height: number
+  ) {
+    if (!path || path.length < 2) return
+
+    // 计算边界
+    let minLat = path[0].latitude
+    let maxLat = path[0].latitude
+    let minLng = path[0].longitude
+    let maxLng = path[0].longitude
+
+    path.forEach(point => {
+      minLat = Math.min(minLat, point.latitude)
+      maxLat = Math.max(maxLat, point.latitude)
+      minLng = Math.min(minLng, point.longitude)
+      maxLng = Math.max(maxLng, point.longitude)
+    })
+
+    // 添加边距
+    const padding = 0.1
+    const latRange = (maxLat - minLat) || 0.001
+    const lngRange = (maxLng - minLng) || 0.001
+
+    // 坐标转换函数
+    const toX = (lng: number) => x + ((lng - minLng) / (lngRange * (1 + padding))) * width
+    const toY = (lat: number) => y + height - ((lat - minLat) / (latRange * (1 + padding))) * height
+
+    // 绘制背景
+    ctx.fillStyle = 'rgba(46, 213, 115, 0.05)'
+    drawRoundedRect(ctx, x, y, width, height, 8)
+    ctx.fill()
+
+    // 绘制轨迹线
+    ctx.strokeStyle = COLORS.primary
+    ctx.lineWidth = 2.5
+    ctx.lineCap = 'round'
+    ctx.lineJoin = 'round'
+    ctx.beginPath()
+
+    path.forEach((point, index) => {
+      const px = toX(point.longitude)
+      const py = toY(point.latitude)
+      if (index === 0) {
+        ctx.moveTo(px, py)
+      } else {
+        ctx.lineTo(px, py)
+      }
+    })
+    ctx.stroke()
+
+    // 绘制起点（绿色）
+    const startX = toX(path[0].longitude)
+    const startY = toY(path[0].latitude)
+    ctx.fillStyle = '#2ED573'
+    ctx.beginPath()
+    ctx.arc(startX, startY, 4, 0, Math.PI * 2)
+    ctx.fill()
+
+    // 绘制终点（红色）
+    const endPath = path[path.length - 1]
+    const endX = toX(endPath.longitude)
+    const endY = toY(endPath.latitude)
+    ctx.fillStyle = '#FF6B35'
+    ctx.beginPath()
+    ctx.arc(endX, endY, 4, 0, Math.PI * 2)
+    ctx.fill()
   }
 
   async function generatePoster(options: PosterOptions): Promise<string> {
@@ -248,7 +327,7 @@ export function usePoster() {
       ctx.textAlign = 'left'
 
       // 虚线分割
-      const lineY = 665
+      const lineY = 655
       ctx.strokeStyle = 'rgba(46, 213, 115, 0.25)'
       ctx.lineWidth = 1
       ctx.setLineDash([6, 6])
@@ -258,24 +337,57 @@ export function usePoster() {
       ctx.stroke()
       ctx.setLineDash([])
 
-      // 位置标签
+      // 骑行路线信息 - 起点 → 终点
+      const routeInfoY = lineY + 30
+      const startName = options.startLocationName || '起点'
+      const endName = options.endLocationName || '终点'
+      const routeText = `${startName}  →  ${endName}`
+
       ctx.fillStyle = 'rgba(46, 213, 115, 0.12)'
-      drawRoundedRect(ctx, POSTER_WIDTH / 2 - 55, lineY + 12, 110, 30, 15)
+      const textWidth = ctx.measureText(routeText).width || 160
+      const boxWidth = Math.max(textWidth + 40, 180)
+      drawRoundedRect(ctx, (POSTER_WIDTH - boxWidth) / 2, routeInfoY - 15, boxWidth, 32, 16)
       ctx.fill()
-      ctx.fillStyle = COLORS.primary
-      ctx.font = '14px sans-serif'
+
+      ctx.fillStyle = COLORS.text
+      ctx.font = '15px sans-serif'
       ctx.textAlign = 'center'
-      ctx.fillText('📍 襄阳', POSTER_WIDTH / 2, lineY + 32)
+      ctx.fillText(routeText, POSTER_WIDTH / 2, routeInfoY + 5)
       ctx.textAlign = 'left'
 
-      // 底部免责
+      // 轨迹缩略图 - 如果有轨迹数据
+      const hasPath = options.routePath && options.routePath.length > 1
+
+      if (hasPath) {
+        const pathBoxY = routeInfoY + 40
+        const pathBoxW = 210
+        const pathBoxH = 65
+        const pathBoxX = (POSTER_WIDTH - pathBoxW) / 2
+
+        // 背景卡片
+        ctx.fillStyle = COLORS.cardBg
+        drawRoundedRect(ctx, pathBoxX, pathBoxY, pathBoxW, pathBoxH, 12)
+        ctx.fill()
+
+        // 边框
+        ctx.strokeStyle = COLORS.cardBorder
+        ctx.lineWidth = 1
+        drawRoundedRect(ctx, pathBoxX, pathBoxY, pathBoxW, pathBoxH, 12)
+        ctx.stroke()
+
+        // 绘制轨迹
+        drawRoutePath(ctx, options.routePath!, pathBoxX + 10, pathBoxY + 8, pathBoxW - 20, 48)
+      }
+
+      // 底部免责声明 - 固定在最底部
+      const disclaimerY = POSTER_HEIGHT - 45
       ctx.fillStyle = 'rgba(255, 255, 255, 0.25)'
       ctx.font = '11px sans-serif'
       ctx.textAlign = 'center'
-      ctx.fillText('骑行有风险，遵守交通法规', POSTER_WIDTH / 2, lineY + 75)
+      ctx.fillText('骑行有风险，遵守交通法规', POSTER_WIDTH / 2, disclaimerY)
       ctx.fillStyle = 'rgba(255, 255, 255, 0.15)'
       ctx.font = '10px sans-serif'
-      ctx.fillText('本海报仅个人分享，非商业用途', POSTER_WIDTH / 2, lineY + 93)
+      ctx.fillText('本海报仅个人分享，非商业用途', POSTER_WIDTH / 2, disclaimerY + 16)
       ctx.textAlign = 'left'
 
       // 四角装饰

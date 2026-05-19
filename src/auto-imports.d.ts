@@ -529,7 +529,6 @@ declare module 'vue' {
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
     readonly useActiveElement: UnwrapRef<typeof import('@vueuse/core')['useActiveElement']>
     readonly useActivityData: UnwrapRef<typeof import('./composables/useActivityData')['useActivityData']>
-    readonly useAdminContact: UnwrapRef<typeof import('./composables/useAdminContact')['useAdminContact']>
     readonly useAnimate: UnwrapRef<typeof import('@vueuse/core')['useAnimate']>
     readonly useAnimateNumber: UnwrapRef<typeof import('./composables/useAnimateNumber')['useAnimateNumber']>
     readonly useArrayDifference: UnwrapRef<typeof import('@vueuse/core')['useArrayDifference']>

@@ -30,6 +30,9 @@ export interface RideRecord {
   routeName?: string
   startLocation?: Coordinate
   endLocation?: Coordinate
+  startLocationName?: string
+  endLocationName?: string
+  path?: Coordinate[]
   createdAt?: number
 }
 
@@ -73,6 +76,8 @@ export interface ActiveRide {
   routeId?: string
   routeName?: string
   startLocation?: Coordinate
+  currentLocation?: Coordinate
+  path?: Coordinate[]
 }
 
 /**

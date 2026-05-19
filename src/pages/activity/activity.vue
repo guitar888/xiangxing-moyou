@@ -4,7 +4,8 @@
  * 仅展示活动信息 + 状态 + 路线查看
  * 无社交、无报名、无交互
  */
-import type { ActivityItem, ActivityFilter } from '@/types'
+import type { ActivityItem, ActivityFilter, ActivityTag, ActivityStatusTab } from '@/types'
+import { ACTIVITY_TAG_CONFIG } from '@/types'
 
 definePage({
   name: 'activity',
@@ -27,8 +28,14 @@ const {
   activities,
   loading,
   currentFilter,
+  currentStatusTab,
+  filteredByStatus,
+  upcomingActivities,
+  ongoingActivities,
+  endedActivities,
   loadActivities,
   setFilter,
+  setStatusTab,
 } = useActivityData()
 
 // 标签页切换
@@ -37,19 +44,14 @@ const activeTab = ref('activities')
 // 搜索
 const searchQuery = ref('')
 
-// 活动筛选
-const filteredActivities = computed(() => {
-  if (!searchQuery.value) return activities.value
+// 状态筛选 Tab
+const statusTabs: { key: ActivityStatusTab; label: string; icon: string }[] = [
+  { key: 'upcoming', label: '即将开始', icon: 'i-carbon:time' },
+  { key: 'ongoing', label: '进行中', icon: 'i-carbon:play' },
+  { key: 'ended', label: '历史记录', icon: 'i-carbon:document' },
+]
 
-  const query = searchQuery.value.toLowerCase()
-  return activities.value.filter(a =>
-    a.title.toLowerCase().includes(query) ||
-    a.description.toLowerCase().includes(query) ||
-    a.location.toLowerCase().includes(query)
-  )
-})
-
-// 筛选标签
+// 活动类型筛选标签
 const filters: { key: ActivityFilter; label: string }[] = [
   { key: 'all', label: '全部' },
   { key: 'night', label: '夜骑' },
@@ -60,6 +62,28 @@ const filters: { key: ActivityFilter; label: string }[] = [
   { key: 'free', label: '免费' },
   { key: 'photo', label: '摄影' }, // 加上这个
 ]
+
+// 活动筛选（结合状态 Tab + 类型筛选 + 搜索）
+const finalFilteredActivities = computed(() => {
+  let data = filteredByStatus.value
+
+  // 搜索过滤
+  if (searchQuery.value) {
+    const query = searchQuery.value.toLowerCase()
+    data = data.filter(a =>
+      a.title.toLowerCase().includes(query) ||
+      a.description.toLowerCase().includes(query) ||
+      a.location.toLowerCase().includes(query)
+    )
+  }
+
+  // 类型过滤
+  if (currentFilter.value !== 'all') {
+    data = data.filter(a => a.tags.includes(currentFilter.value))
+  }
+
+  return data
+})
 
 // ================================================
 // AA计算器 - 彻底修复版
@@ -162,6 +186,23 @@ onMounted(() => {
 
       <!-- 活动列表标签页 -->
       <view v-if="activeTab === 'activities'">
+        <!-- 状态筛选 Tab -->
+        <view class="flex gap-[12rpx] px-[24rpx] pt-[16rpx]">
+          <view
+            v-for="tab in statusTabs"
+            :key="tab.key"
+            class="flex-1 flex items-center justify-center gap-[8rpx] py-[16rpx] rounded-[12rpx] transition-all duration-200"
+            :class="currentStatusTab === tab.key ? 'bg-primary text-base' : 'bg-card text-gray'"
+            @click="setStatusTab(tab.key)"
+          >
+            <text :class="[tab.icon, 'text-[24rpx]']" />
+            <text class="text-[24rpx] font-500">{{ tab.label }}</text>
+            <text v-if="tab.key === 'upcoming'" class="text-[20rpx] opacity-80">({{ upcomingActivities.length }})</text>
+            <text v-else-if="tab.key === 'ongoing'" class="text-[20rpx] opacity-80">({{ ongoingActivities.length }})</text>
+            <text v-else-if="tab.key === 'ended'" class="text-[20rpx] opacity-80">({{ endedActivities.length }})</text>
+          </view>
+        </view>
+
         <!-- 搜索栏 -->
         <view class="p-[24rpx]">
           <view class="relative">
@@ -176,7 +217,7 @@ onMounted(() => {
           </view>
         </view>
 
-        <!-- 筛选标签 -->
+        <!-- 活动类型筛选标签 - 多行布局 -->
         <view class="px-[24rpx] pb-[16rpx]">
           <view class="flex flex-wrap gap-[12rpx]">
             <view
@@ -195,7 +236,7 @@ onMounted(() => {
         <view class="px-[24rpx]">
           <view class="space-y-[20rpx]">
             <view
-              v-for="activity in filteredActivities"
+              v-for="activity in finalFilteredActivities"
               :key="activity.id"
               class="bg-card rounded-[16rpx] overflow-hidden"
             >
@@ -207,7 +248,7 @@ onMounted(() => {
           </view>
 
           <!-- 空状态 -->
-          <view v-if="filteredActivities.length === 0 && !loading" class="flex flex-col items-center justify-center py-[100rpx]">
+          <view v-if="finalFilteredActivities.length === 0 && !loading" class="flex flex-col items-center justify-center py-[100rpx]">
             <text class="i-carbon:calendar text-[80rpx] text-gray mb-[16rpx]" />
             <text class="text-[26rpx] text-gray">暂无活动</text>
             <text class="text-[22rpx] text-gray mt-[8rpx]">关注更多摩友活动</text>

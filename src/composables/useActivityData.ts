@@ -2,7 +2,7 @@
  * 活动数据 composable - 精简版
  * 职责：管理活动列表数据（统一使用 HomeService）
  */
-import type { ActivityItem, ActivityFilter } from '@/types'
+import type { ActivityItem, ActivityFilter, ActivityStatusTab } from '@/types'
 import { HomeService } from '@/api/services/homeService'
 
 export function useActivityData() {
@@ -17,6 +17,7 @@ export function useActivityData() {
   // 筛选
   // ================================================
   const currentFilter = ref<ActivityFilter>('all')
+  const currentStatusTab = ref<ActivityStatusTab>('upcoming')
 
   // 英文 -> 中文映射（修复TS类型 + 修复筛选）
   const filterMap: Record<ActivityFilter, string> = {
@@ -63,6 +64,41 @@ export function useActivityData() {
     await loadActivities(filter)
   }
 
+  function setStatusTab(tab: ActivityStatusTab) {
+    currentStatusTab.value = tab
+  }
+
+  // ================================================
+  // 计算属性 - 按状态分组
+  // ================================================
+
+  const upcomingActivities = computed(() =>
+    activities.value.filter(a => a.status === 'upcoming')
+  )
+
+  const ongoingActivities = computed(() =>
+    activities.value.filter(a => a.status === 'ongoing')
+  )
+
+  const endedActivities = computed(() =>
+    activities.value.filter(a => a.status === 'ended')
+  )
+
+  /** 当前 Tab 对应的活动列表 */
+  const filteredByStatus = computed(() => {
+    switch (currentStatusTab.value) {
+      case 'upcoming':
+        return upcomingActivities.value
+      case 'ongoing':
+        return ongoingActivities.value
+      case 'ended':
+        return endedActivities.value
+      case 'all':
+      default:
+        return activities.value
+    }
+  })
+
   // ================================================
   // 生命周期
   // ================================================
@@ -75,7 +111,13 @@ export function useActivityData() {
     loading,
     error,
     currentFilter,
+    currentStatusTab,
+    upcomingActivities,
+    ongoingActivities,
+    endedActivities,
+    filteredByStatus,
     loadActivities,
     setFilter,
+    setStatusTab,
   }
 }
