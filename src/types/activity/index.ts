@@ -16,7 +16,7 @@ export type ActivityStatusTab = 'upcoming' | 'ongoing' | 'ended' | 'all'
  * 活动标签/筛选条件
  * 统一使用相同类型，避免类型不匹配
  */
-export type ActivityTag = 'night' | 'photo' | 'morning' | 'free' | 'gather' | 'scenic' | 'greenway'
+export type ActivityTag = 'photo' | 'morning' | 'free' | 'gather' | 'scenic' | 'greenway'
 
 /**
  * 活动详情
@@ -77,7 +77,6 @@ export interface AdminContact {
  * 活动标签配置
  */
 export const ACTIVITY_TAG_CONFIG: Record<ActivityTag, { color: string; bgColor: string; label: string }> = {
-  'night': { color: '#3385FF', bgColor: 'rgba(51, 133, 255, 0.15)', label: '夜骑' },
   'photo': { color: '#9945FF', bgColor: 'rgba(153, 69, 255, 0.15)', label: '摄影' },
   'morning': { color: '#2ED573', bgColor: 'rgba(46, 213, 115, 0.15)', label: '晨骑' },
   'free': { color: '#FF7A00', bgColor: 'rgba(255, 122, 0, 0.15)', label: '免费' },

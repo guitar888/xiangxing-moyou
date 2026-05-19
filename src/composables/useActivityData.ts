@@ -22,7 +22,6 @@ export function useActivityData() {
   // 英文 -> 中文映射（修复TS类型 + 修复筛选）
   const filterMap: Record<ActivityFilter, string> = {
     all: 'all',
-    night: '夜骑',
     morning: '晨骑',
     gather: '聚会',
     scenic: '景区',

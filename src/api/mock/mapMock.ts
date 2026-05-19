@@ -8,7 +8,7 @@ export const mockRoutes: RideRoute[] = [
   {
     id: '1',
     name: '古城环线',
-    description: '穿越襄阳古城墙，感受千年历史底蕴，路线平坦，适合夜骑',
+    description: '穿越襄阳古城墙，感受千年历史底蕴，路线平坦，适合休闲骑行',
     region: 'xiangcheng',
     path: [
       { latitude: 32.0603, longitude: 112.1401 },

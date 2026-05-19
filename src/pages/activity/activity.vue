@@ -54,13 +54,12 @@ const statusTabs: { key: ActivityStatusTab; label: string; icon: string }[] = [
 // 活动类型筛选标签
 const filters: { key: ActivityFilter; label: string }[] = [
   { key: 'all', label: '全部' },
-  { key: 'night', label: '夜骑' },
   { key: 'morning', label: '晨骑' },
   { key: 'gather', label: '聚会' },
   { key: 'scenic', label: '景区' },
   { key: 'greenway', label: '绿道' },
   { key: 'free', label: '免费' },
-  { key: 'photo', label: '摄影' }, // 加上这个
+  { key: 'photo', label: '摄影' },
 ]
 
 // 活动筛选（结合状态 Tab + 类型筛选 + 搜索）

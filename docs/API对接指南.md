@@ -358,7 +358,7 @@ export interface ActivityItem {
 
 | title | desc | tag | url | sort |
 |-------|------|-----|-----|------|
-| 唐城追焦夜骑 | 每周六晚 唐城城墙下 骑行&摄影活动 | 热门 | /pages/activity/activity | 1 |
+| 唐城文化骑行 | 每周六上午 唐城城墙下 骑行&摄影活动 | 热门 | /pages/activity/activity | 1 |
 | 古城环线晨骑 | 襄阳古城墙环线，全程约25公里 | 周末 | /pages/activity/activity | 2 |
 | 汉江沿岸骑行 | 沿汉江绿道，尽享江风拂面 | 推荐 | /pages/map/map | 3 |
 | 隆中至武当山 | 襄阳至武当山摩旅路线，约180公里 | 长途 | /pages/map/map | 4 |

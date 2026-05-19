@@ -78,11 +78,11 @@ export const mockActivities: Activity[] = [
 
   {
     id: '5',
-    title: '古城环线夜骑',
+    title: '古城环线骑行',
     date: '2026-04-26',
-    time: '19:00',
+    time: '08:00',
     location: '襄阳古城墙',
-    description: '襄阳古城墙环线，全程约 25 公里。清晨骑行，感受古城魅力。路况平坦，适合新手。',
+    description: '襄阳古城墙环线，全程约 25 公里。感受古城魅力，路况平坦，适合新手。',
     tags: ['morning', 'free'],
     status: 'upcoming',
     participantCount: 28,

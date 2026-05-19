@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ActivityItem } from '@/types'
+import type { BannerData } from '@/types'
 
 defineOptions({
   options: {
@@ -8,7 +8,7 @@ defineOptions({
 })
 
 interface Props {
-  list: ActivityItem[]
+  list: BannerData[]
 }
 
 defineProps<Props>()
@@ -27,8 +27,12 @@ function handleImageError(id: string) {
   imageLoadStatus.value[id] = false
 }
 
-function handleClick(item: ActivityItem) {
-  router.pushTab('/pages/activity/activity')
+function handleClick(item: BannerData) {
+  if (item.url) {
+    router.push(item.url)
+  } else {
+    router.pushTab('/pages/activity/activity')
+  }
 }
 
 function onSwiperChange(e: any) {

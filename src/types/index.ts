@@ -4,7 +4,7 @@
  */
 
 // 活动模块
-export type { Activity, ActivityItem, ActivityFilter, ActivityStatus, ActivityTag, AdminContact } from './activity'
+export type { Activity, ActivityItem, ActivityFilter, ActivityStatus, ActivityStatusTab, ActivityTag, AdminContact } from './activity'
 export { ACTIVITY_TAG_CONFIG } from './activity'
 
 // 骑行模块
@@ -17,6 +17,9 @@ export { SPOT_TYPE_CONFIG, DIFFICULTY_CONFIG, REGION_CONFIG } from './map'
 // 店铺模块（已移除）
 // export type { Shop, ShopType } from './shop'
 // export { SHOP_TYPE_CONFIG } from './shop'
+
+// 轮播图模块
+export type { BannerData } from './banner'
 
 // 交通模块
 export type { TrafficPolicy, TimeRestriction, RestrictedArea } from './traffic'

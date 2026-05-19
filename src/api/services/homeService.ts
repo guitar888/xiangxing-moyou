@@ -12,9 +12,9 @@ const ACTIVITY_COVER_IMAGES: Record<string, string> = {
   '3': 'https://images.unsplash.com/photo-1558980394-0a06c4631733?w=800&h=400&fit=crop',
   // 薤山避暑纳凉骑 - 森林公路
   '4': 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=400&fit=crop',
-  // 古城环线夜骑 - 古城夜景
+  // 古城环线骑行 - 古城风景
   '5': 'https://images.unsplash.com/photo-1548013146-72479768bada?w=800&h=400&fit=crop',
-  // 唐城追焦夜骑 - 唐代建筑夜景
+  // 唐城文化骑行 - 唐代建筑风景
   '6': 'https://images.unsplash.com/photo-1584646098530-50625b59663e?w=800&h=400&fit=crop',
   // 汉江沿岸绿道骑 - 江边骑行
   '7': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop',
