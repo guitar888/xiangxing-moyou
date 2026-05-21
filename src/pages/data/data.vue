@@ -157,7 +157,14 @@ const filters: { key: RecordFilter; label: string }[] = [
 // ================================================
 
 onMounted(() => {
-  loadRecords()
+  loadRecords().then(() => {
+    if (records.value.length > 0) {
+      const latest = records.value[0]
+      const date = new Date(latest.startTime)
+      const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
+      expandedMonths.value.add(monthKey)
+    }
+  })
   rideEvents.on(POSTER_OPEN_EVENT, handlePosterOpen)
   rideEvents.on(RECORD_UPDATED_EVENT, handleRecordUpdated)
   rideEvents.on(EXPAND_MONTH_EVENT, handleExpandMonth)

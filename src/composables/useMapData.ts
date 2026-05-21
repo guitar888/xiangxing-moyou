@@ -307,6 +307,7 @@ export function useMapData() {
       routeName,
       startLocation: location,
       duration: 0,
+      path: [location],
     }
 
     startRideTimer()
@@ -324,7 +325,7 @@ export function useMapData() {
 
     // 模拟模式：未选路线时按均速 25km/h 生成模拟距离（H5 开发环境）
     const simulatedDistance = distance === 0 && duration > 0
-      ? Math.round((duration / 60) * 25000)
+      ? Math.round(((duration / 60) * 25) * 10) / 10 // 25km/h * 分钟 -> KM
       : distance
     const avgSpeed = simulatedDistance > 0 && duration > 0
       ? Math.round((simulatedDistance / (duration / 60)) * 10) / 10
