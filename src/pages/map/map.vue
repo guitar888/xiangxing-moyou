@@ -209,20 +209,20 @@ function onMapMarkerTap(e: any) {
 
 
       <!-- 骑行中横幅 -->
-      <view v-if="isRiding" class="mx-[24rpx] mt-[12rpx] bg-gradient-to-r from-primary/25 to-primary/10 px-[24rpx] py-[14rpx] rounded-[20rpx] border border-primary/20 shadow-lg">
+      <view v-if="isRiding" class="mx-[24rpx] mt-[12rpx] bg-gradient-to-r from-primary to-primary/80 px-[24rpx] py-[14rpx] rounded-[20rpx] border border-primary/20 shadow-lg">
         <view class="flex items-center justify-between">
           <view class="flex items-center gap-[12rpx]">
-            <view class="w-[14rpx] h-[14rpx] bg-primary rounded-full" />
-            <text class="text-[24rpx] text-primary font-600 flex items-center gap-[6rpx]">
+            <view class="w-[14rpx] h-[14rpx] bg-white rounded-full animate-pulse" />
+            <text class="text-[24rpx] text-white font-600 flex items-center gap-[6rpx]">
               <text class="i-fluent:vehicle-motorcycle-28-filled text-[24rpx]" />
               骑行中
             </text>
             <text class="text-[24rpx] text-white font-600 ml-[8rpx]">{{ formattedDuration }}</text>
           </view>
-          <wd-button type="primary" size="small" custom-class="rounded-[24rpx] font-600" @click="confirmEndRide">
+          <wd-button type="white" size="small" custom-class="rounded-[24rpx] font-600" @click="confirmEndRide">
             <view class="flex items-center gap-[4rpx]">
-              <text class="i-fluent:vehicle-motorcycle-28-filled text-[20rpx]" />
-              <text class="text-[20rpx]">结束骑行</text>
+              <text class="i-carbon:stop-filled text-[20rpx] text-primary" />
+              <text class="text-[20rpx] text-primary">结束骑行</text>
             </view>
           </wd-button>
         </view>
