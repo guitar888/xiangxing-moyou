@@ -219,12 +219,10 @@ function onMapMarkerTap(e: any) {
             </text>
             <text class="text-[24rpx] text-white font-600 ml-[8rpx]">{{ formattedDuration }}</text>
           </view>
-          <wd-button type="white" size="small" custom-class="rounded-[24rpx] font-600" @click="confirmEndRide">
-            <view class="flex items-center gap-[4rpx]">
-              <text class="i-carbon:stop-filled text-[20rpx] text-primary" />
-              <text class="text-[20rpx] text-primary">结束骑行</text>
-            </view>
-          </wd-button>
+          <view class="flex items-center gap-[4rpx] px-[16rpx] py-[8rpx] rounded-[24rpx] bg-white" @click="confirmEndRide">
+            <text class="i-carbon:stop-filled text-[20rpx] text-primary" />
+            <text class="text-[20rpx] text-primary font-600">结束骑行</text>
+          </view>
         </view>
       </view>
 
