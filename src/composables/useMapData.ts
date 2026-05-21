@@ -5,6 +5,7 @@
  */
 import type { RideRoute, CheckInSpot, RouteFilter, SpotType, Coordinate, RideRecord, ActiveRide, MapMarker } from '@/types'
 import { getRoutes, getRouteById } from '@/api/services/mapService'
+import { saveRideRecord as apiSaveRideRecord } from '@/api/services/rideService'
 import { openPosterDialog, emitRecordUpdated } from '@/composables/rideEvents'
 
 export function useMapData() {
@@ -273,21 +274,6 @@ export function useMapData() {
     uni.setStorageSync(ACTIVE_RIDE_KEY, JSON.stringify(activeRide.value))
   }
 
-  function saveRideRecord(record: RideRecord) {
-    try {
-      const storedRecords = uni.getStorageSync(STORAGE_KEY)
-      const records: RideRecord[] = storedRecords ? JSON.parse(storedRecords) : []
-      records.unshift(record) // 新记录放在最前面
-      // 只保留最近100条记录
-      if (records.length > 100) {
-        records.splice(100)
-      }
-      uni.setStorageSync(STORAGE_KEY, JSON.stringify(records))
-    } catch (err) {
-      console.error('保存骑行记录失败:', err)
-    }
-  }
-
   // ================================================
   // 骑行记录 - 计时器
   // ================================================
@@ -362,8 +348,14 @@ export function useMapData() {
     }
 
     saveActiveRideToStorage()
-    saveRideRecord(record)
-    emitRecordUpdated(record, 'add')
+
+    try {
+      await apiSaveRideRecord(record)
+      emitRecordUpdated(record, 'add')
+    } catch (err) {
+      console.error('保存骑行记录失败:', err)
+      uni.showToast({ title: '记录保存失败', icon: 'none' })
+    }
 
     return record
   }

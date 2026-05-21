@@ -4,8 +4,9 @@
  * 合规优先：路线信息由摩友分享，骑行记录仅本地存储
  * 全端兼容：无地图Key依赖，导航跳转第三方APP
  */
-import type { SpotType, RideRoute, CheckInSpot, Coordinate } from '@/types'
+import type { RideRecord, SpotType, RideRoute, CheckInSpot, Coordinate } from '@/types'
 import { SPOT_TYPE_CONFIG, DIFFICULTY_CONFIG, REGION_CONFIG } from '@/types'
+import { POSTER_OPEN_EVENT, rideEvents } from '@/composables/rideEvents'
 
 // 辅助函数：获取打卡点类型配置
 function getSpotTypeConfigForHot(type: SpotType) {
@@ -74,6 +75,31 @@ const {
   handleMapMarkertap,
   loadRoutes,
 } = useMapData()
+
+// ================================================
+// 海报弹窗（本地状态）
+// ================================================
+
+const showPoster = ref(false)
+const completedRecord = ref<RideRecord | null>(null)
+
+function handlePosterOpen(record: RideRecord) {
+  completedRecord.value = record
+  showPoster.value = true
+}
+
+function handleClosePoster() {
+  showPoster.value = false
+  completedRecord.value = null
+}
+
+onMounted(() => {
+  rideEvents.on(POSTER_OPEN_EVENT, handlePosterOpen)
+})
+
+onUnmounted(() => {
+  rideEvents.off(POSTER_OPEN_EVENT, handlePosterOpen)
+})
 
 // ================================================
 // 导航逻辑
@@ -497,6 +523,13 @@ function onMapMarkerTap(e: any) {
         :spot="currentSpot"
         @close="handleSpotClose"
         @navigate="handleNavigateToSpot"
+      />
+
+      <!-- 海报弹窗 -->
+      <ride-RidePoster
+        :visible="showPoster"
+        :record="completedRecord"
+        @close="handleClosePoster"
       />
 
       <!-- 底部合规声明 -->
