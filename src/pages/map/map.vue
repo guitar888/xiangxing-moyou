@@ -274,14 +274,14 @@ function onMapMarkerTap(e: any) {
           :show-location="true"
           @markertap="onMapMarkerTap"
         />
-        <view class="bg-card px-[16rpx] py-[10rpx] flex items-center justify-between">
+        <view class="bg-[#1a1a2e]/95 backdrop-blur-md px-[16rpx] py-[12rpx] flex items-center justify-between">
           <view class="flex items-center gap-[8rpx]">
-            <text class="i-carbon:location text-[22rpx] text-primary" />
-            <text class="text-[20rpx] text-white/80">点击标记跳转导航</text>
+            <text class="i-carbon:location text-[22rpx] text-white" />
+            <text class="text-[20rpx] text-white font-500">点击标记跳转导航</text>
           </view>
           <view class="flex items-center gap-[6rpx]">
-            <text class="i-carbon:drone text-[20rpx] text-gray" />
-            <text class="text-[18rpx] text-gray">{{ markers?.length || 0 }}个打卡点</text>
+            <text class="i-carbon:drone text-[20rpx] text-white/80" />
+            <text class="text-[18rpx] text-white/80">{{ markers?.length || 0 }}个打卡点</text>
           </view>
         </view>
       </view>
@@ -294,10 +294,10 @@ function onMapMarkerTap(e: any) {
           <text class="text-[24rpx] text-white/60 font-500">地图预览</text>
           <text class="text-[20rpx] text-gray/60 mt-[8rpx]">小程序内可查看完整地图</text>
         </view>
-        <view class="bg-card px-[16rpx] py-[10rpx] flex items-center justify-between border-t border-white/5">
+        <view class="bg-[#1a1a2e]/95 backdrop-blur-md px-[16rpx] py-[12rpx] flex items-center justify-between border-t border-white/10">
           <view class="flex items-center gap-[8rpx]">
-            <text class="i-carbon:information text-[22rpx] text-primary" />
-            <text class="text-[20rpx] text-white/80">请在微信小程序中查看地图</text>
+            <text class="i-carbon:information text-[22rpx] text-white" />
+            <text class="text-[20rpx] text-white font-500">请在微信小程序中查看地图</text>
           </view>
         </view>
       </view>
