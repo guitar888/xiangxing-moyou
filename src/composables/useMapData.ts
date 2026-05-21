@@ -5,6 +5,7 @@
  */
 import type { RideRoute, CheckInSpot, RouteFilter, SpotType, Coordinate, RideRecord, ActiveRide, MapMarker } from '@/types'
 import { getRoutes, getRouteById } from '@/api/services/mapService'
+import { openPosterDialog, emitRecordUpdated } from '@/composables/rideEvents'
 
 export function useMapData() {
   // ================================================
@@ -47,15 +48,6 @@ export function useMapData() {
 
   const STORAGE_KEY = 'ride_records'
   const ACTIVE_RIDE_KEY = 'active_ride'
-
-  // ================================================
-  // 海报状态
-  // ================================================
-
-  const showPoster = ref(false)
-  const completedRecord = ref<RideRecord | null>(null)
-
-
 
   // ================================================
   // 地图视图高度
@@ -357,6 +349,9 @@ export function useMapData() {
       routeName: activeRide.value.routeName,
       startLocation: activeRide.value.startLocation!,
       endLocation: currentLocation.value,
+      startLocationName: activeRide.value.startLocationName || '未知起点',
+      endLocationName: currentLocation.value ? '当前位置' : '未知终点',
+      path: activeRide.value.path || [],
       createdAt: now,
     }
 
@@ -368,6 +363,7 @@ export function useMapData() {
 
     saveActiveRideToStorage()
     saveRideRecord(record)
+    emitRecordUpdated(record, 'add')
 
     return record
   }
@@ -415,7 +411,7 @@ export function useMapData() {
         if (res.confirm) {
           const record = await handleEndRide()
           if (record) {
-            openPoster(record)
+            openPosterDialog(record)
           }
         }
       },
@@ -512,20 +508,6 @@ export function useMapData() {
   }
 
   // ================================================
-  // 海报控制
-  // ================================================
-
-  function openPoster(record: RideRecord) {
-    completedRecord.value = record
-    showPoster.value = true
-  }
-
-  function closePoster() {
-    showPoster.value = false
-    completedRecord.value = null
-  }
-
-  // ================================================
   // 生命周期
   // ================================================
 
@@ -563,9 +545,6 @@ export function useMapData() {
     isRiding,
     formattedDuration,
     rideLoading,
-    // 状态 - 海报
-    showPoster,
-    completedRecord,
     // 状态 - 视图
     mapViewHeight,
     listHeight,
@@ -601,8 +580,5 @@ export function useMapData() {
     confirmStartRide,
     confirmEndRide,
     confirmCancelRide,
-    // 海报
-    openPoster,
-    closePoster,
   }
 }

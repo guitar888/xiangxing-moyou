@@ -3,8 +3,9 @@
  * 骑行数据页面
  * 展示骑行统计、记录，支持海报分享
  */
-import type { RecordFilter } from '@/types'
+import type { RideRecord, RecordFilter } from '@/types'
 import RideLineChart from '@/subEcharts/echarts/components/RideLineChart.vue'
+import { POSTER_OPEN_EVENT, RECORD_UPDATED_EVENT, rideEvents } from '@/composables/rideEvents'
 
 defineOptions({
   componentPlaceholder: {
@@ -108,20 +109,29 @@ function toggleMonth(monthKey: string) {
 }
 
 // ================================================
-// 海报
+// 海报（统一管理）
 // ================================================
 
 const showPoster = ref(false)
-const selectedRecord = ref<any>(null)
+const selectedRecord = ref<RideRecord | null>(null)
 
-function handleShare(record: any) {
+function handlePosterOpen(record: RideRecord) {
   selectedRecord.value = record
   showPoster.value = true
+}
+
+function handleShare(record: RideRecord) {
+  handlePosterOpen(record)
 }
 
 function handleClosePoster() {
   showPoster.value = false
   selectedRecord.value = null
+}
+
+// 监听全局事件
+function handleRecordUpdated() {
+  loadRecords()
 }
 
 // ================================================
@@ -140,6 +150,13 @@ const filters: { key: RecordFilter; label: string }[] = [
 
 onMounted(() => {
   loadRecords()
+  rideEvents.on(POSTER_OPEN_EVENT, handlePosterOpen)
+  rideEvents.on(RECORD_UPDATED_EVENT, handleRecordUpdated)
+})
+
+onUnmounted(() => {
+  rideEvents.off(POSTER_OPEN_EVENT, handlePosterOpen)
+  rideEvents.off(RECORD_UPDATED_EVENT, handleRecordUpdated)
 })
 </script>
 

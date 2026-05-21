@@ -62,8 +62,6 @@ const {
   selectedRegion,
   isRiding,
   formattedDuration,
-  showPoster,
-  completedRecord,
   hotRoutes,
   toggleSpotType,
   setRegion,
@@ -72,7 +70,6 @@ const {
   confirmEndRide,
   handleRouteSelect,
   handleSpotClose,
-  closePoster,
   markers,
   handleMapMarkertap,
   loadRoutes,
@@ -500,13 +497,6 @@ function onMapMarkerTap(e: any) {
         :spot="currentSpot"
         @close="handleSpotClose"
         @navigate="handleNavigateToSpot"
-      />
-
-      <!-- 海报弹窗 -->
-      <ride-RidePoster
-        :visible="showPoster"
-        :record="completedRecord"
-        @close="closePoster"
       />
 
       <!-- 底部合规声明 -->
