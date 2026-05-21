@@ -193,21 +193,16 @@ function onMapMarkerTap(e: any) {
     <view class="relative z-10 flex flex-col">
       <!-- 自定义Header头部 -->
       <view
-        class="relative z-50 flex items-center justify-between border-b border-white/10 pb-[12rpx]"
+        class="relative z-50 flex items-center border-b border-white/10 pb-[12rpx]"
         :style="{
           paddingTop: `${statusBarHeight + 12}px`,
           paddingLeft: '24rpx',
-          paddingRight: '32rpx',
           background: 'linear-gradient(to bottom, rgba(46, 213, 115, 0.15) 0%, transparent 100%)',
         }"
       >
         <view class="flex items-center gap-[12rpx]">
           <text class="i-carbon:map text-[36rpx] text-primary" />
           <text class="text-[32rpx] font-700 tracking-[1px]" :style="{ color: '#2ED573' }">骑行地图</text>
-        </view>
-        <view class="flex items-center gap-[8rpx] rounded-[10rpx] bg-card/50 px-[16rpx] py-[10rpx]">
-          <text class="i-carbon:information text-[24rpx] text-primary" />
-          <text class="text-[22rpx] text-white/80 font-500">安全骑行</text>
         </view>
       </view>
 
