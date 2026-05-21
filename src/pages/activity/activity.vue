@@ -40,6 +40,7 @@ const {
 
 // 标签页切换
 const activeTab = ref('activities')
+const showDisclaimer = ref(false)
 
 // 搜索
 const searchQuery = ref('')
@@ -155,9 +156,9 @@ onMounted(() => {
           <text class="i-carbon:calendar text-[36rpx] text-white" />
           <text class="text-[32rpx] font-700 tracking-[1px] text-white">活动工具</text>
         </view>
-        <view class="flex items-center gap-[8rpx] rounded-[10rpx] bg-card/50 px-[16rpx] py-[10rpx]">
-          <text class="i-carbon:information text-[24rpx] text-white" />
-          <text class="text-[22rpx] text-white font-500">活动公示</text>
+        <view class="flex items-center gap-[8rpx] rounded-[10rpx] bg-warning px-[16rpx] py-[10rpx]" @click="showDisclaimer = true">
+          <text class="i-carbon:document text-[24rpx] text-white" />
+          <text class="text-[22rpx] text-white font-500">免责声明</text>
         </view>
       </view>
 
@@ -289,12 +290,56 @@ onMounted(() => {
     </view>
   </view>
 
-      <!-- 底部声明 -->
+      <!-- 底部合规声明 -->
       <view class="px-[20rpx] py-[12rpx]">
         <text class="text-[18rpx] text-gray/50 text-center block">
-          活动信息仅作公示 · 详情请咨询微信群 · 安全骑行
+          活动信息仅作参考 · 遵守交通法规 · 安全骑行
         </text>
       </view>
     </view>
+
+    <!-- 免责声明弹窗 -->
+    <wd-popup v-model="showDisclaimer" position="center" :close-on-click-modal="true" custom-class="disclaimer-popup">
+      <view class="w-[90vw] rounded-[24rpx] bg-card overflow-hidden shadow-[0_16rpx_48rpx_rgba(0,0,0,0.4)]">
+        <!-- 头部 -->
+        <view class="flex items-center justify-between px-[24rpx] py-[20rpx] border-b border-white/10">
+          <view class="flex items-center gap-[12rpx]">
+            <view class="w-[44rpx] h-[44rpx] rounded-[12rpx] bg-warning/20 flex items-center justify-center">
+              <text class="text-[22rpx]">🛡️</text>
+            </view>
+            <text class="text-[26rpx] text-white font-600">免责声明</text>
+          </view>
+          <text class="i-carbon:close text-[28rpx] text-white/60 active:text-white cursor-pointer" @click="showDisclaimer = false" />
+        </view>
+
+        <!-- 内容 -->
+        <view class="p-[20rpx] pt-[12rpx]">
+          <!-- 风险提示 -->
+          <view class="mb-[16rpx] p-[16rpx] rounded-[12rpx] bg-warning/5 border border-warning/10">
+            <text class="text-[24rpx] font-600 text-white mb-[8rpx] block">安全风险提示</text>
+            <text class="block text-[22rpx] text-white/70 leading-[1.6]">骑行属高风险户外运动，请务必佩戴头盔护具。本活动为摩友自发组织的非盈利骑行，参与者需自愿承担风险，组织者不承担任何法律及连带责任。建议自行购买意外险。</text>
+          </view>
+          
+          <!-- 隐私说明 -->
+          <view class="mb-[16rpx] p-[16rpx] rounded-[12rpx] bg-primary/5 border border-primary/10">
+            <text class="text-[24rpx] font-600 text-white mb-[8rpx] block">纯展示平台·零隐私收集</text>
+            <text class="block text-[22rpx] text-white/70 leading-[1.6]">本小程序仅为活动展示工具，不收集、不上传任何个人身份信息。您无需注册登录，所有浏览记录均保存在本地。</text>
+          </view>
+
+          <!-- 报名指引 -->
+          <view class="p-[16rpx] rounded-[12rpx] bg-blue-500/5 border border-blue-500/10">
+            <text class="text-[24rpx] font-600 text-white mb-[8rpx] block">如何报名参与？</text>
+            <text class="block text-[22rpx] text-white/70 leading-[1.6]">本应用不设在线报名。请按以下步骤操作：\n① 前往"我的-联系我们"复制微信号。\n② 添加管理员微信，说明想参加的活动。\n③ 受邀加入对应微信群，在群内接龙报名。</text>
+          </view>
+        </view>
+        
+        <!-- 底部按钮 -->
+        <view class="px-[24rpx] pb-[24rpx]">
+          <button class="w-full py-[20rpx] rounded-[12rpx] bg-gradient-to-r from-primary to-[#27C468] text-white text-[26rpx] font-500 active:opacity-90" @click="showDisclaimer = false">
+            我已阅读并同意
+          </button>
+        </view>
+      </view>
+    </wd-popup>
   </view>
 </template>

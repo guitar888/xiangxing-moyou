@@ -7,7 +7,6 @@ export default uni(
       'no-console': 'off',
       'eslint-comments/no-unlimited-disable': 'off',
       'comma-dangle': ['error', 'never'],
-      '@typescript-eslint/comma-dangle': ['error', 'never'],
     },
     ignores: [
       'src/uni_modules/**/*',

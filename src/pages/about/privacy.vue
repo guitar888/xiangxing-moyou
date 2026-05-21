@@ -11,7 +11,12 @@ definePage({
   },
 })
 
+const router = useRouter()
 const { statusBarHeight } = useSystemInfo()
+
+function handleBack() {
+  router.back()
+}
 
 const sections = [
   {
@@ -71,10 +76,11 @@ const lastUpdate = '2026年5月19日'
   <view class="min-h-screen bg-base">
     <!-- 自定义Header -->
     <view
-      class="relative z-50 flex items-center border-b border-white/10 bg-base/80 backdrop-blur-xl"
+      class="relative z-50 flex items-center justify-between border-b border-white/10 bg-base/80 backdrop-blur-xl"
       :style="{ paddingTop: `${statusBarHeight + 12}px` }"
     >
       <view class="flex items-center gap-[12rpx] px-[24rpx] pb-[12rpx]">
+        <text class="i-carbon:arrow-left text-[32rpx] text-primary cursor-pointer" @click="handleBack" />
         <text class="i-carbon:document text-[32rpx] text-primary" />
         <text class="text-[32rpx] font-700 tracking-[1px]" :style="{ color: '#2ED573' }">隐私协议</text>
       </view>

@@ -171,10 +171,6 @@ onMounted(() => {
           <text class="i-carbon:analytics text-[36rpx] text-primary" />
           <text class="text-[32rpx] font-700 tracking-[1px]" :style="{ color: '#2ED573' }">骑行数据</text>
         </view>
-        <view class="flex items-center gap-[8rpx] rounded-[10rpx] bg-card/50 px-[16rpx] py-[10rpx]">
-          <text class="i-carbon:information text-[24rpx] text-primary" />
-          <text class="text-[22rpx] text-white/80 font-500">数据统计</text>
-        </view>
       </view>
 
       <!-- 骑行中横幅 -->
