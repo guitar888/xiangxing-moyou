@@ -242,18 +242,13 @@ function onMapMarkerTap(e: any) {
             <view class="absolute -right-[30rpx] -top-[30rpx] w-[160rpx] h-[160rpx] rounded-full border-[50rpx] border-white/20" />
             <view class="absolute -left-[40rpx] -bottom-[40rpx] w-[140rpx] h-[140rpx] rounded-full border-[40rpx] border-white/10" />
           </view>
-          <view class="relative h-full flex items-center justify-between px-[32rpx]">
-            <view class="flex items-center gap-[16rpx]">
-              <view class="w-[64rpx] h-[64rpx] rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
-                <text class="i-fluent:vehicle-motorcycle-28-filled text-[32rpx] text-white" />
-              </view>
+          <view class="relative h-full flex items-center px-[32rpx]" @click="confirmStartRide">
+            <view class="flex-1 flex items-center justify-between">
               <view>
                 <text class="text-[28rpx] font-600 text-white block">开始骑行</text>
                 <text class="text-[20rpx] text-white/70 mt-[2rpx]">记录你的骑行轨迹</text>
               </view>
-            </view>
-            <view class="w-[64rpx] h-[64rpx] rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
-              <text class="i-carbon:play text-[28rpx] text-white" />
+              <text class="i-carbon:play-filled text-[36rpx] text-white" />
             </view>
           </view>
         </view>
