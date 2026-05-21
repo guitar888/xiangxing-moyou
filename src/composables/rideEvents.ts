@@ -54,6 +54,12 @@ export const POSTER_OPEN_EVENT = 'poster:open'
 export const RECORD_UPDATED_EVENT = 'record:updated'
 
 /**
+ * 展开月份分组事件
+ * data: monthKey (e.g. "2026-05")
+ */
+export const EXPAND_MONTH_EVENT = 'month:expand'
+
+/**
  * 触发海报弹窗
  */
 export function openPosterDialog(record: RideRecord) {
@@ -65,4 +71,11 @@ export function openPosterDialog(record: RideRecord) {
  */
 export function emitRecordUpdated(record: RideRecord, action: 'add' | 'delete' = 'add') {
   rideEvents.emit(RECORD_UPDATED_EVENT, { record, action })
+}
+
+/**
+ * 触发展开月份
+ */
+export function emitExpandMonth(monthKey: string) {
+  rideEvents.emit(EXPAND_MONTH_EVENT, monthKey)
 }

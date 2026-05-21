@@ -5,7 +5,7 @@
  */
 import type { RideRecord, RecordFilter } from '@/types'
 import RideLineChart from '@/subEcharts/echarts/components/RideLineChart.vue'
-import { POSTER_OPEN_EVENT, RECORD_UPDATED_EVENT, rideEvents } from '@/composables/rideEvents'
+import { POSTER_OPEN_EVENT, RECORD_UPDATED_EVENT, EXPAND_MONTH_EVENT, rideEvents } from '@/composables/rideEvents'
 
 defineOptions({
   componentPlaceholder: {
@@ -134,6 +134,14 @@ function handleRecordUpdated() {
   loadRecords()
 }
 
+function handleExpandMonth(monthKey: string) {
+  loadRecords().then(() => {
+    if (monthKey) {
+      expandedMonths.value.add(monthKey)
+    }
+  })
+}
+
 // ================================================
 // 筛选
 // ================================================
@@ -152,11 +160,13 @@ onMounted(() => {
   loadRecords()
   rideEvents.on(POSTER_OPEN_EVENT, handlePosterOpen)
   rideEvents.on(RECORD_UPDATED_EVENT, handleRecordUpdated)
+  rideEvents.on(EXPAND_MONTH_EVENT, handleExpandMonth)
 })
 
 onUnmounted(() => {
   rideEvents.off(POSTER_OPEN_EVENT, handlePosterOpen)
   rideEvents.off(RECORD_UPDATED_EVENT, handleRecordUpdated)
+  rideEvents.off(EXPAND_MONTH_EVENT, handleExpandMonth)
 })
 </script>
 

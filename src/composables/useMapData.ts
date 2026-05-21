@@ -6,7 +6,7 @@
 import type { RideRoute, CheckInSpot, RouteFilter, SpotType, Coordinate, RideRecord, ActiveRide, MapMarker } from '@/types'
 import { getRoutes, getRouteById } from '@/api/services/mapService'
 import { saveRideRecord as apiSaveRideRecord } from '@/api/services/rideService'
-import { openPosterDialog, emitRecordUpdated } from '@/composables/rideEvents'
+import { openPosterDialog, emitRecordUpdated, emitExpandMonth } from '@/composables/rideEvents'
 
 export function useMapData() {
   // ================================================
@@ -321,14 +321,21 @@ export function useMapData() {
     const now = Date.now()
     const duration = Math.round((now - activeRide.value.startTime) / 60000)
     const distance = currentRoute.value?.distance || 0
-    const avgSpeed = distance > 0 && duration > 0 ? Math.round((distance / (duration / 60)) * 10) / 10 : 0
+
+    // 模拟模式：未选路线时按均速 25km/h 生成模拟距离（H5 开发环境）
+    const simulatedDistance = distance === 0 && duration > 0
+      ? Math.round((duration / 60) * 25000)
+      : distance
+    const avgSpeed = simulatedDistance > 0 && duration > 0
+      ? Math.round((simulatedDistance / (duration / 60)) * 10) / 10
+      : 0
 
     const record: RideRecord = {
       id: `ride_${now}`,
       startTime: activeRide.value.startTime,
       endTime: now,
       duration,
-      distance,
+      distance: simulatedDistance,
       avgSpeed,
       maxSpeed: 0,
       routeId: activeRide.value.routeId,
@@ -352,6 +359,9 @@ export function useMapData() {
     try {
       await apiSaveRideRecord(record)
       emitRecordUpdated(record, 'add')
+      const date = new Date(record.startTime)
+      const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
+      emitExpandMonth(monthKey)
     } catch (err) {
       console.error('保存骑行记录失败:', err)
       uni.showToast({ title: '记录保存失败', icon: 'none' })

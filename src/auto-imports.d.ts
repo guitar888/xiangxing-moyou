@@ -8,6 +8,7 @@ declare global {
   const $$userConfigMap: typeof import('./api/index')['$$userConfigMap']
   const Apis: typeof import('./api/index')['Apis']
   const CommonUtil: typeof import('wot-design-uni')['CommonUtil']
+  const EXPAND_MONTH_EVENT: typeof import('./composables/rideEvents')['EXPAND_MONTH_EVENT']
   const EffectScope: typeof import('vue')['EffectScope']
   const POSTER_OPEN_EVENT: typeof import('./composables/rideEvents')['POSTER_OPEN_EVENT']
   const RECORD_UPDATED_EVENT: typeof import('./composables/rideEvents')['RECORD_UPDATED_EVENT']
@@ -48,6 +49,7 @@ declare global {
   const defineStore: typeof import('pinia')['defineStore']
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
+  const emitExpandMonth: typeof import('./composables/rideEvents')['emitExpandMonth']
   const emitRecordUpdated: typeof import('./composables/rideEvents')['emitRecordUpdated']
   const extendRef: typeof import('@vueuse/core')['extendRef']
   const getActivePinia: typeof import('pinia')['getActivePinia']
@@ -385,6 +387,7 @@ declare module 'vue' {
     readonly $$userConfigMap: UnwrapRef<typeof import('./api/index')['$$userConfigMap']>
     readonly Apis: UnwrapRef<typeof import('./api/index')['Apis']>
     readonly CommonUtil: UnwrapRef<typeof import('wot-design-uni')['CommonUtil']>
+    readonly EXPAND_MONTH_EVENT: UnwrapRef<typeof import('./composables/rideEvents')['EXPAND_MONTH_EVENT']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly POSTER_OPEN_EVENT: UnwrapRef<typeof import('./composables/rideEvents')['POSTER_OPEN_EVENT']>
     readonly RECORD_UPDATED_EVENT: UnwrapRef<typeof import('./composables/rideEvents')['RECORD_UPDATED_EVENT']>
@@ -425,6 +428,7 @@ declare module 'vue' {
     readonly defineStore: UnwrapRef<typeof import('pinia')['defineStore']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
+    readonly emitExpandMonth: UnwrapRef<typeof import('./composables/rideEvents')['emitExpandMonth']>
     readonly emitRecordUpdated: UnwrapRef<typeof import('./composables/rideEvents')['emitRecordUpdated']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
     readonly getActivePinia: UnwrapRef<typeof import('pinia')['getActivePinia']>
