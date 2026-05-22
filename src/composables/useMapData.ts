@@ -351,7 +351,7 @@ export function useMapData() {
       id: `ride_${now}`,
       startTime,
       endTime: now,
-      duration: durationSec, // 保存秒数，确保不为0
+      duration: durationSec,
       distance: simulatedDistance,
       avgSpeed,
       maxSpeed: 0,
@@ -364,6 +364,13 @@ export function useMapData() {
       path: activeRide.value.path || [],
       createdAt: now,
     }
+
+    console.log('[endRide] 生成的 record:', {
+      id: record.id,
+      distance: record.distance,
+      duration: record.duration,
+      avgSpeed: record.avgSpeed,
+    })
 
     activeRide.value = {
       status: 'idle',

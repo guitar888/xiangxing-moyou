@@ -63,6 +63,12 @@ export const EXPAND_MONTH_EVENT = 'month:expand'
  * 触发海报弹窗
  */
 export function openPosterDialog(record: RideRecord) {
+  console.log('[rideEvents] openPosterDialog 发出事件:', {
+    id: record.id,
+    distance: record.distance,
+    duration: record.duration,
+    avgSpeed: record.avgSpeed,
+  })
   rideEvents.emit(POSTER_OPEN_EVENT, record)
 }
 

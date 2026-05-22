@@ -14,6 +14,13 @@ const canvasKey = ref(0)
 
 watch(() => props.visible, async (val) => {
   if (val && props.record) {
+    console.log('[RidePoster] 接收到 record:', {
+      distance: props.record.distance,
+      duration: props.record.duration,
+      avgSpeed: props.record.avgSpeed,
+      pathLength: props.record.path?.length,
+      routeName: props.record.routeName,
+    })
     canvasKey.value++
     await nextTick()
     await generatePoster({

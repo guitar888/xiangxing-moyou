@@ -84,6 +84,12 @@ const showPoster = ref(false)
 const completedRecord = ref<RideRecord | null>(null)
 
 function handlePosterOpen(record: RideRecord) {
+  console.log('[map.vue] handlePosterOpen 接收到:', {
+    id: record.id,
+    distance: record.distance,
+    duration: record.duration,
+    avgSpeed: record.avgSpeed,
+  })
   completedRecord.value = record
   showPoster.value = true
 }
