@@ -320,22 +320,38 @@ export function useMapData() {
     stopRideTimer()
 
     const now = Date.now()
-    const duration = Math.round((now - activeRide.value.startTime) / 60000)
+    const startTime = activeRide.value.startTime
+    const durationMs = now - startTime
+    const durationMin = Math.round(durationMs / 60000)
+    const durationSec = Math.round(durationMs / 1000)
     const distance = currentRoute.value?.distance || 0
 
     // 模拟模式：未选路线时按均速 25km/h 生成模拟距离（H5 开发环境）
-    const simulatedDistance = distance === 0 && duration > 0
-      ? Math.round(((duration / 60) * 25) * 10) / 10 // 25km/h * 分钟 -> KM
+    // 使用秒计算，避免分钟四舍五入导致距离为0
+    const simulatedDistance = distance === 0 && durationSec > 0
+      ? Math.round(((durationSec / 3600) * 25) * 100) / 100 // 25km/h * 秒 -> KM
       : distance
-    const avgSpeed = simulatedDistance > 0 && duration > 0
-      ? Math.round((simulatedDistance / (duration / 60)) * 10) / 10
+    const avgSpeed = simulatedDistance > 0 && durationSec > 0
+      ? Math.round((simulatedDistance / (durationSec / 3600)) * 100) / 100
       : 0
+
+    console.log('[endRide] 调试信息:', {
+      startTime,
+      now,
+      durationMs,
+      durationMin,
+      durationSec,
+      distance,
+      simulatedDistance,
+      avgSpeed,
+      pathLength: activeRide.value.path?.length || 0,
+    })
 
     const record: RideRecord = {
       id: `ride_${now}`,
-      startTime: activeRide.value.startTime,
+      startTime,
       endTime: now,
-      duration,
+      duration: durationSec, // 保存秒数，确保不为0
       distance: simulatedDistance,
       avgSpeed,
       maxSpeed: 0,
