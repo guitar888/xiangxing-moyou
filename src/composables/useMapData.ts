@@ -299,6 +299,75 @@ export function useMapData() {
   // 骑行记录 - 操作
   // ================================================
 
+  /**
+   * Haversine 公式计算两点距离（米）
+   */
+  function haversineDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
+    const R = 6371000
+    const dLat = ((lat2 - lat1) * Math.PI) / 180
+    const dLng = ((lng2 - lng1) * Math.PI) / 180
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+      + Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180)
+      * Math.sin(dLng / 2) * Math.sin(dLng / 2)
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+    return R * c
+  }
+
+  /**
+   * 计算路径总距离（米）
+   */
+  function calculatePathDistance(path: Coordinate[]): number {
+    let total = 0
+    for (let i = 1; i < path.length; i++) {
+      total += haversineDistance(
+        path[i - 1].latitude,
+        path[i - 1].longitude,
+        path[i].latitude,
+        path[i].longitude,
+      )
+    }
+    return total
+  }
+
+  /**
+   * 持续定位回调（小程序端）
+   */
+  function startLocationTracking() {
+    // #ifdef MP-WEIXIN
+    uni.startLocationUpdate({
+      success: () => {
+        uni.onLocationChange((res) => {
+          if (activeRide.value.status === 'recording') {
+            const newCoord: Coordinate = {
+              latitude: res.latitude,
+              longitude: res.longitude,
+            }
+            activeRide.value.path = activeRide.value.path || []
+            activeRide.value.path.push(newCoord)
+            activeRide.value.currentLocation = newCoord
+            currentLocation.value = newCoord
+          }
+        })
+      },
+      fail: (err) => {
+        console.error('开启持续定位失败:', err)
+      },
+    })
+    // #endif
+  }
+
+  function stopLocationTracking() {
+    // #ifdef MP-WEIXIN
+    uni.offLocationChange(() => {})
+    uni.stopLocationUpdate({
+      success: () => {},
+      fail: (err) => {
+        console.error('停止持续定位失败:', err)
+      },
+    })
+    // #endif
+  }
+
   function startRide(location: Coordinate, routeId?: string, routeName?: string) {
     activeRide.value = {
       status: 'recording',
@@ -308,59 +377,51 @@ export function useMapData() {
       startLocation: location,
       duration: 0,
       path: [location],
+      currentLocation: location,
     }
 
     startRideTimer()
     saveActiveRideToStorage()
+    startLocationTracking()
   }
 
   async function endRide(): Promise<RideRecord | null> {
     if (activeRide.value.status !== 'recording') return null
 
     stopRideTimer()
+    stopLocationTracking()
 
     const now = Date.now()
     const startTime = activeRide.value.startTime
     const durationMs = now - startTime
-    const durationMin = Math.round(durationMs / 60000)
     const durationSec = Math.round(durationMs / 1000)
-    const distance = currentRoute.value?.distance || 0
+    const path = activeRide.value.path || []
 
-    // 模拟模式：未选路线时按均速 25km/h 生成模拟距离（H5 开发环境）
-    // 使用秒计算，避免分钟四舍五入导致距离为0
-    const simulatedDistance = distance === 0 && durationSec > 0
-      ? Math.round(((durationSec / 3600) * 25) * 100) / 100 // 25km/h * 秒 -> KM
-      : distance
+    // 小程序端：基于真实轨迹计算距离
+    // #ifdef MP-WEIXIN
+    const distanceMeters = path.length >= 2 ? calculatePathDistance(path) : 0
+    const distanceKm = Math.round(distanceMeters / 10) / 100
+    const avgSpeed = distanceKm > 0 && durationSec > 0
+      ? Math.round((distanceKm / (durationSec / 3600)) * 100) / 100
+      : 0
+    // #endif
+
+    // H5 开发环境：模拟距离（无真实 GPS）
+    // #ifndef MP-WEIXIN
+    const simulatedDistance = durationSec > 0
+      ? Math.round(((durationSec / 3600) * 25) * 100) / 100
+      : 0
+    const distanceKm = simulatedDistance
     const avgSpeed = simulatedDistance > 0 && durationSec > 0
       ? Math.round((simulatedDistance / (durationSec / 3600)) * 100) / 100
       : 0
-
-    // 模拟模式：生成合理轨迹（H5 开发环境无真实 GPS）
-    let path = activeRide.value.path || []
-    if (path.length < 2) {
-      const start = activeRide.value.startLocation!
-      const end = currentLocation.value || start
-      const steps = Math.max(Math.floor(durationSec / 2), 5)
-      path = []
-      for (let i = 0; i <= steps; i++) {
-        const t = i / steps
-        path.push({
-          latitude: start.latitude + (end.latitude - start.latitude) * t + (Math.random() - 0.5) * 0.001,
-          longitude: start.longitude + (end.longitude - start.longitude) * t + (Math.random() - 0.5) * 0.001,
-        })
-      }
-    }
+    // #endif
 
     console.log('[endRide] 调试信息:', {
-      startTime,
-      now,
-      durationMs,
-      durationMin,
-      durationSec,
-      distance,
-      simulatedDistance,
-      avgSpeed,
       pathLength: path.length,
+      distanceKm,
+      avgSpeed,
+      durationSec,
     })
 
     const record: RideRecord = {
@@ -368,25 +429,18 @@ export function useMapData() {
       startTime,
       endTime: now,
       duration: durationSec,
-      distance: simulatedDistance,
+      distance: distanceKm,
       avgSpeed,
       maxSpeed: 0,
       routeId: activeRide.value.routeId,
       routeName: activeRide.value.routeName,
       startLocation: activeRide.value.startLocation!,
-      endLocation: currentLocation.value,
+      endLocation: activeRide.value.currentLocation || activeRide.value.startLocation!,
       startLocationName: activeRide.value.startLocationName || '未知起点',
-      endLocationName: currentLocation.value ? '当前位置' : '未知终点',
+      endLocationName: activeRide.value.currentLocation ? '当前位置' : '未知终点',
       path,
       createdAt: now,
     }
-
-    console.log('[endRide] 生成的 record:', {
-      id: record.id,
-      distance: record.distance,
-      duration: record.duration,
-      avgSpeed: record.avgSpeed,
-    })
 
     activeRide.value = {
       status: 'idle',
@@ -412,6 +466,7 @@ export function useMapData() {
 
   function cancelRide() {
     stopRideTimer()
+    stopLocationTracking()
     activeRide.value = {
       status: 'idle',
       startTime: 0,
@@ -561,6 +616,7 @@ export function useMapData() {
 
   onUnmounted(() => {
     stopRideTimer()
+    stopLocationTracking()
   })
 
   // ================================================
