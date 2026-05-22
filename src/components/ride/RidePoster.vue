@@ -14,13 +14,6 @@ const canvasKey = ref(0)
 
 watch(() => props.visible, async (val) => {
   if (val && props.record) {
-    console.log('[RidePoster] 接收到 record:', {
-      distance: props.record.distance,
-      duration: props.record.duration,
-      avgSpeed: props.record.avgSpeed,
-      pathLength: props.record.path?.length,
-      routeName: props.record.routeName,
-    })
     canvasKey.value++
     await nextTick()
     await generatePoster({
@@ -32,6 +25,20 @@ watch(() => props.visible, async (val) => {
     })
   }
 })
+
+async function handleSave() {
+  if (!posterPath.value) return
+  await savePoster(posterPath.value)
+}
+
+async function handleShare() {
+  if (!posterPath.value) return
+  await sharePoster(posterPath.value)
+}
+
+function handleClose() {
+  emit('close')
+}
 </script>
 
 <template>
