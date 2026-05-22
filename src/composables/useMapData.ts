@@ -335,6 +335,22 @@ export function useMapData() {
       ? Math.round((simulatedDistance / (durationSec / 3600)) * 100) / 100
       : 0
 
+    // 模拟模式：生成合理轨迹（H5 开发环境无真实 GPS）
+    let path = activeRide.value.path || []
+    if (path.length < 2) {
+      const start = activeRide.value.startLocation!
+      const end = currentLocation.value || start
+      const steps = Math.max(Math.floor(durationSec / 2), 5)
+      path = []
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps
+        path.push({
+          latitude: start.latitude + (end.latitude - start.latitude) * t + (Math.random() - 0.5) * 0.001,
+          longitude: start.longitude + (end.longitude - start.longitude) * t + (Math.random() - 0.5) * 0.001,
+        })
+      }
+    }
+
     console.log('[endRide] 调试信息:', {
       startTime,
       now,
@@ -344,7 +360,7 @@ export function useMapData() {
       distance,
       simulatedDistance,
       avgSpeed,
-      pathLength: activeRide.value.path?.length || 0,
+      pathLength: path.length,
     })
 
     const record: RideRecord = {
@@ -361,7 +377,7 @@ export function useMapData() {
       endLocation: currentLocation.value,
       startLocationName: activeRide.value.startLocationName || '未知起点',
       endLocationName: currentLocation.value ? '当前位置' : '未知终点',
-      path: activeRide.value.path || [],
+      path,
       createdAt: now,
     }
 
