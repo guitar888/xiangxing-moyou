@@ -102,31 +102,16 @@ export const mockActivities: Activity[] = [
     coverImage: ''
   },
 
-  {
-    id: '6',
-    title: '母亲节绿道休闲骑',
-    date: '2026-05-10',
-    time: '08:00',
-    location: '汉江绿道',
-    organizer: '襄行摩友',
-    description: '母亲节特别活动，沿汉江绿道休闲骑行。路况好，适合各种车型，带妈妈一起体验骑行乐趣。',
-    tags: ['greenway', 'scenic'],
-    isFeatured: true,
-    participantCount: 45,
-    maxParticipants: 100,
-    routeId: '2',
-    routeName: '汉江绿道',
-    coverImage: ''
-  },
+  // 5 月 10 日活动已删除（绿道休闲骑更像自行车活动）
 
   {
     id: '7',
-    title: '520 告白骑行',
+    title: '520 骑行',
     date: '2026-05-20',
     time: '16:00',
     location: '东津新区',
     organizer: '摩方机车俱乐部',
-    description: '520 特别活动，东津新区浪漫骑行。适合情侣参与，沿途打卡拍照，终点有惊喜。',
+    description: '520 特别活动，东津新区骑行。沿途打卡拍照，终点有惊喜。',
     tags: ['scenic', 'gather'],
     participantCount: 52,
     maxParticipants: 60,
@@ -239,12 +224,12 @@ export const mockActivities: Activity[] = [
 
   {
     id: '14',
-    title: '情人节双人骑',
+    title: '二月休闲骑',
     date: '2026-02-14',
     time: '14:00',
     location: '汉江大桥',
     organizer: 'DC 机车俱乐部',
-    description: '情人节特别活动，情侣双人骑行。全程 18 公里，沿途打卡拍照，终点有惊喜礼品。',
+    description: '早春骑行活动，沿汉江大桥骑行。全程 18 公里，沿途打卡拍照。',
     tags: ['scenic', 'gather'],
     participantCount: 36,
     maxParticipants: 40,

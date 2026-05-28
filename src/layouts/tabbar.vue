@@ -16,6 +16,13 @@ function handleTabbarChange({ value }: { value: string }) {
   router.pushTab({ name: value })
 }
 
+// 监听路由变化，同步 tabbar 状态
+watch(() => route.name, (newName) => {
+  if (newName && newName !== activeTabbar.value.name) {
+    setTabbarItemActive(newName)
+  }
+}, { immediate: false })
+
 onMounted(() => {
   // #ifdef APP
   uni.hideTabBar()

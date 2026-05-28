@@ -135,7 +135,7 @@ function handleViewDetail(activity: ActivityItem) {
 }
 
 function handleShareActivity(activity: ActivityItem) {
-  const text = `【${activity.organizer || ''}${activity.organizer ? '】' : ''}${activity.title}
+  const text = `【${activity.organizer}】${activity.title}
 时间：${activity.date} ${activity.time}
 地点：${activity.location}
 详情：${activity.description}`

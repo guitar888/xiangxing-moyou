@@ -29,7 +29,14 @@ function handleImageError(id: string) {
 
 function handleClick(item: BannerData) {
   if (item.url) {
-    router.push(item.url)
+    // 判断是否是 tabbar 页面（根据路径判断）
+    const isTabPath = ['/pages/map/map', '/pages/data/data', '/pages/activity/activity', '/pages/mine/mine'].includes(item.url)
+    if (isTabPath) {
+      router.pushTab(item.url)
+    }
+    else {
+      router.push(item.url)
+    }
   }
   else {
     router.pushTab('/pages/activity/activity')

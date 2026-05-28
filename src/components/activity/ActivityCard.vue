@@ -8,7 +8,7 @@ const props = defineProps<Props>()
 const emit = defineEmits<{
   click: [activity: ActivityItem]
   viewRoute: [activity: ActivityItem]
-  triggerShare: []
+  triggerShare: [activity: ActivityItem]
 }>()
 
 const imageError = ref(false)
@@ -39,7 +39,7 @@ function handleViewRoute() {
 
 function handleShare(e: any) {
   e.stopPropagation()
-  emit('triggerShare')
+  emit('triggerShare', props.activity)
 }
 </script>
 
