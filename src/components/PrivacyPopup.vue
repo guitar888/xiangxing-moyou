@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-
-
 interface Props {
   title?: string // 标题
   desc?: string // 描述
@@ -12,7 +10,7 @@ withDefaults(defineProps<Props>(), {
   title: '用户隐私保护提示',
   desc: '感谢您使用本应用，您使用本应用的服务之前请仔细阅读并同意',
   subDesc: '。当您点击同意并开始时用产品服务时，即表示你已理解并同意该条款内容，该条款将对您产生法律约束力。如您拒绝，将无法使用相应服务。',
-  protocol: '《用户隐私保护指引》',
+  protocol: '《用户隐私保护指引》'
 })
 
 const emit = defineEmits(['agree', 'disagree'])
@@ -44,7 +42,7 @@ function handleAgree() {
   privacyResolves.value.forEach((resolve: any) => {
     resolve({
       event: 'agree',
-      buttonId: 'agree-btn',
+      buttonId: 'agree-btn'
     })
   })
   privacyResolves.value.clear()
@@ -58,7 +56,7 @@ function handleDisagree() {
   showPopup.value = false
   privacyResolves.value.forEach((resolve: any) => {
     resolve({
-      event: 'disagree',
+      event: 'disagree'
     })
   })
   privacyResolves.value.clear()
@@ -84,7 +82,7 @@ export default {
   options: {
     virtualHost: true,
     addGlobalClass: true,
-    styleIsolation: 'shared',
+    styleIsolation: 'shared'
   },
 }
 </script>

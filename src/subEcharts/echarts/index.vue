@@ -14,7 +14,7 @@ import StackedBarChart from './components/StackedBarChart.vue'
 definePage({
   name: 'echarts',
   style: {
-    navigationBarTitleText: 'Echarts 演示',
+    navigationBarTitleText: 'Echarts 演示'
   },
 })
 
@@ -22,7 +22,7 @@ const router = useRouter()
 
 function navigateToAsync() {
   router.push({
-    name: 'echartsAsync',
+    name: 'echartsAsync'
   })
 }
 </script>
@@ -40,7 +40,7 @@ function navigateToAsync() {
     </view>
     <!-- 饼图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         饼图示例
       </view>
       <PieChart />
@@ -48,7 +48,7 @@ function navigateToAsync() {
 
     <!-- 柱状图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         柱状图示例
       </view>
       <BarChart />
@@ -56,7 +56,7 @@ function navigateToAsync() {
 
     <!-- 折线图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         折线图示例
       </view>
       <LineChart />
@@ -64,7 +64,7 @@ function navigateToAsync() {
 
     <!-- 雷达图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         雷达图示例
       </view>
       <RadarChart />
@@ -72,7 +72,7 @@ function navigateToAsync() {
 
     <!-- 散点图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         散点图示例
       </view>
       <ScatterChart />
@@ -80,7 +80,7 @@ function navigateToAsync() {
 
     <!-- 环形图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         环形图示例
       </view>
       <DonutChart />
@@ -88,7 +88,7 @@ function navigateToAsync() {
 
     <!-- 漏斗图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         漏斗图示例
       </view>
       <FunnelChart />
@@ -96,7 +96,7 @@ function navigateToAsync() {
 
     <!-- 仪表盘图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         仪表盘示例
       </view>
       <GaugeChart />
@@ -104,7 +104,7 @@ function navigateToAsync() {
 
     <!-- 迷你折线图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         迷你折线图示例
       </view>
       <MiniLineChart />
@@ -112,7 +112,7 @@ function navigateToAsync() {
 
     <!-- 堆叠柱状图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         堆叠柱状图示例
       </view>
       <StackedBarChart />
@@ -120,7 +120,7 @@ function navigateToAsync() {
 
     <!-- 水球图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         水球图示例
       </view>
       <LiquidFillChart />

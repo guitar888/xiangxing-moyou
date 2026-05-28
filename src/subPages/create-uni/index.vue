@@ -2,7 +2,7 @@
 definePage({
   name: 'create-uni',
   style: {
-    navigationBarTitleText: 'CreateUni 脚手架',
+    navigationBarTitleText: 'CreateUni 脚手架'
   },
 })
 
@@ -12,32 +12,32 @@ const advantages = ref([
   {
     icon: '🚀',
     title: '简单易用',
-    desc: '一行命令即可创建项目，无需手动配置开发环境',
+    desc: '一行命令即可创建项目，无需手动配置开发环境'
   },
   {
     icon: '🔧',
     title: '功能强大',
-    desc: '内置多种实用工具和插件，支持一键集成 WotUI',
+    desc: '内置多种实用工具和插件，支持一键集成 WotUI'
   },
   {
     icon: '🔄',
     title: '持续更新',
-    desc: '由 uni-helper 团队积极维护，及时跟进最新技术栈',
+    desc: '由 uni-helper 团队积极维护，及时跟进最新技术栈'
   },
   {
     icon: '👥',
     title: '社区活跃',
-    desc: 'GitHub 获得众多 star，活跃的开发者社区',
+    desc: 'GitHub 获得众多 star，活跃的开发者社区'
   },
   {
     icon: '🌐',
     title: '网络稳定',
-    desc: '解决官方 CLI 网络不稳定问题，支持国内环境',
+    desc: '解决官方 CLI 网络不稳定问题，支持国内环境'
   },
   {
     icon: '⚡️',
     title: '开发效率',
-    desc: '提升开发效率 100%，快速搭建现代化项目',
+    desc: '提升开发效率 100%，快速搭建现代化项目'
   },
 ])
 
@@ -45,19 +45,19 @@ const advantages = ref([
 const problems = ref([
   {
     problem: '网络问题',
-    desc: 'degit 命令只支持 GitHub，国内网络不稳定',
+    desc: 'degit 命令只支持 GitHub，国内网络不稳定'
   },
   {
     problem: '维护问题',
-    desc: '官方模板维护不够积极，版本往往落后',
+    desc: '官方模板维护不够积极，版本往往落后'
   },
   {
     problem: '工程化问题',
-    desc: '项目配置过于基础，缺少现代工程化支持',
+    desc: '项目配置过于基础，缺少现代工程化支持'
   },
   {
     problem: '集成问题',
-    desc: '需要手动集成组件库，配置过程繁琐',
+    desc: '需要手动集成组件库，配置过程繁琐'
   },
 ])
 
@@ -70,7 +70,7 @@ const wotQuickStart = ref({
     '✅ TypeScript 项目',
     '✅ 集成 Pinia 状态管理',
     '✅ 自动配置 WotUI 组件库',
-    '✅ 添加 ESLint 支持',
+    '✅ 添加 ESLint 支持'
   ],
 })
 
@@ -79,12 +79,12 @@ const quickMethods = ref([
   {
     title: 'GUI 模式',
     command: 'pnpm create uni --gui',
-    desc: '使用图形界面创建项目',
+    desc: '使用图形界面创建项目'
   },
   {
     title: '环境信息',
     command: 'npx @create-uni/info@latest',
-    desc: '获取当前项目环境信息',
+    desc: '获取当前项目环境信息'
   },
 ])
 
@@ -96,9 +96,9 @@ function copyCommand(command: string) {
     success: () => {
       uni.hideToast()
       showSuccess({
-        msg: `${command}已成功复制到剪贴板`,
+        msg: `${command}已成功复制到剪贴板`
       })
-    },
+    }
   })
 }
 
@@ -113,20 +113,20 @@ function handleNavigate(url: string) {
 </script>
 
 <template>
-  <view class="min-h-screen bg-gray-100 py-3 dark:bg-[var(--wot-dark-background)]">
+  <view class="bg-gray-100 min-h-screen py-3 dark:bg-[var(--wot-dark-background)]">
     <!-- 头部介绍 -->
     <view class="mx-3 mb-3">
       <view class="rounded-3 bg-white px-5 py-8 text-center dark:bg-[var(--wot-dark-background2)]">
         <view class="mb-3 text-10">
           🌱
         </view>
-        <view class="mb-2 text-6 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+        <view class="text-gray-800 mb-2 text-6 font-bold dark:text-[var(--wot-dark-color)]">
           CreateUni 脚手架
         </view>
-        <view class="mb-2 text-3.5 text-gray-600 leading-relaxed dark:text-[var(--wot-dark-color2)]">
+        <view class="text-gray-600 mb-2 text-3.5 leading-relaxed dark:text-[var(--wot-dark-color2)]">
           由 uni-helper 团队开发的轻量级脚手架工具
         </view>
-        <view class="text-3 text-gray-500 dark:text-[var(--wot-dark-color2)]">
+        <view class="text-gray-500 text-3 dark:text-[var(--wot-dark-color2)]">
           提升开发效率 100%，告别繁琐配置，一键集成 WotUI 组件库
         </view>
       </view>
@@ -135,7 +135,7 @@ function handleNavigate(url: string) {
     <!-- 为什么选择 create-uni -->
     <demo-block title="为什么选择 create-uni？" transparent>
       <view class="mb-3 rounded-3 bg-white p-3 dark:bg-[var(--wot-dark-background2)]">
-        <text class="text-3.5 text-gray-700 leading-relaxed dark:text-[var(--wot-dark-color)]">
+        <text class="text-gray-700 text-3.5 leading-relaxed dark:text-[var(--wot-dark-color)]">
           在使用 uni-app 官方 CLI 工具时，我们经常会遇到以下问题：
         </text>
       </view>
@@ -148,7 +148,7 @@ function handleNavigate(url: string) {
           <view class="mb-1 text-3.5 text-red-600 font-bold dark:text-red-400">
             ❌ {{ item.problem }}
           </view>
-          <view class="text-3 text-gray-600 leading-snug dark:text-[var(--wot-dark-color2)]">
+          <view class="text-gray-600 text-3 leading-snug dark:text-[var(--wot-dark-color2)]">
             {{ item.desc }}
           </view>
         </view>
@@ -171,10 +171,10 @@ function handleNavigate(url: string) {
           <view class="mb-2 text-6">
             {{ advantage.icon }}
           </view>
-          <view class="mb-1 text-3.5 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+          <view class="text-gray-800 mb-1 text-3.5 font-bold dark:text-[var(--wot-dark-color)]">
             {{ advantage.title }}
           </view>
-          <view class="text-3 text-gray-600 leading-snug dark:text-[var(--wot-dark-color2)]">
+          <view class="text-gray-600 text-3 leading-snug dark:text-[var(--wot-dark-color2)]">
             {{ advantage.desc }}
           </view>
         </view>
@@ -188,27 +188,27 @@ function handleNavigate(url: string) {
           <view class="mr-2 text-7">
             🎨
           </view>
-          <view class="text-4.5 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+          <view class="text-gray-800 text-4.5 font-bold dark:text-[var(--wot-dark-color)]">
             {{ wotQuickStart.title }}
           </view>
         </view>
-        <view class="mb-3 text-3.5 text-gray-600 leading-relaxed dark:text-[var(--wot-dark-color2)]">
+        <view class="text-gray-600 mb-3 text-3.5 leading-relaxed dark:text-[var(--wot-dark-color2)]">
           {{ wotQuickStart.desc }}
         </view>
-        <view class="mb-3 flex items-center justify-between border border-gray-200 rounded-2 bg-gray-50 p-3 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCommand(wotQuickStart.command)">
-          <text class="flex-1 break-all text-3 text-gray-700 font-mono dark:text-[var(--wot-dark-color)]">
+        <view class="border-gray-200 bg-gray-50 mb-3 flex items-center justify-between border rounded-2 p-3 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCommand(wotQuickStart.command)">
+          <text class="text-gray-700 flex-1 break-all text-3 font-mono dark:text-[var(--wot-dark-color)]">
             {{ wotQuickStart.command }}
           </text>
           <wd-icon name="copy" size="16px" color="#666" />
         </view>
         <view>
-          <view class="mb-2 text-3.5 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+          <view class="text-gray-800 mb-2 text-3.5 font-bold dark:text-[var(--wot-dark-color)]">
             这个命令会：
           </view>
           <view
             v-for="feature in wotQuickStart.features"
             :key="feature"
-            class="mb-1 text-3 text-gray-600 leading-snug dark:text-[var(--wot-dark-color2)]"
+            class="text-gray-600 mb-1 text-3 leading-snug dark:text-[var(--wot-dark-color2)]"
           >
             {{ feature }}
           </view>
@@ -223,14 +223,14 @@ function handleNavigate(url: string) {
         :key="method.title"
         class="mb-3 rounded-2 bg-white p-4 last:mb-0 dark:bg-[var(--wot-dark-background2)]"
       >
-        <view class="mb-2 text-4 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+        <view class="text-gray-800 mb-2 text-4 font-bold dark:text-[var(--wot-dark-color)]">
           {{ method.title }}
         </view>
-        <view class="mb-2 text-3.5 text-gray-600 leading-relaxed dark:text-[var(--wot-dark-color2)]">
+        <view class="text-gray-600 mb-2 text-3.5 leading-relaxed dark:text-[var(--wot-dark-color2)]">
           {{ method.desc }}
         </view>
-        <view class="flex items-center justify-between border border-gray-200 rounded-2 bg-gray-50 p-2 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCommand(method.command)">
-          <text class="flex-1 break-all text-3 text-gray-700 font-mono dark:text-[var(--wot-dark-color)]">
+        <view class="border-gray-200 bg-gray-50 flex items-center justify-between border rounded-2 p-2 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCommand(method.command)">
+          <text class="text-gray-700 flex-1 break-all text-3 font-mono dark:text-[var(--wot-dark-color)]">
             {{ method.command }}
           </text>
           <wd-icon name="copy" size="16px" color="#666" />

@@ -3,10 +3,10 @@
  * 职责：管理骑行地图全部业务逻辑
  * 包含：路线管理、定位导航、骑行记录、筛选、导航控制
  */
-import type { RideRoute, CheckInSpot, RouteFilter, SpotType, Coordinate, RideRecord, ActiveRide, MapMarker } from '@/types'
-import { getRoutes, getRouteById } from '@/api/services/mapService'
+import type { ActiveRide, CheckInSpot, Coordinate, MapMarker, RideRecord, RideRoute, RouteFilter, SpotType } from '@/types'
+import { getRouteById, getRoutes } from '@/api/services/mapService'
 import { saveRideRecord as apiSaveRideRecord } from '@/api/services/rideService'
-import { openPosterDialog, emitRecordUpdated, emitExpandMonth } from '@/composables/rideEvents'
+import { emitExpandMonth, emitRecordUpdated, openPosterDialog } from '@/composables/rideEvents'
 
 export function useMapData() {
   // ================================================
@@ -61,8 +61,6 @@ export function useMapData() {
   const listHeight = computed(() => {
     return isRiding.value ? '30vh' : '35vh'
   })
-
-
 
   // ================================================
   // 骑行计算属性
@@ -135,17 +133,14 @@ export function useMapData() {
       if (!setting.authSetting['scope.userLocation']) {
         await uni.authorize({ scope: 'scope.userLocation' })
       }
-    } catch (err) {
+    }
+    catch (err) {
       console.error('请求定位权限失败:', err)
     }
     // #endif
 
     return getLocation()
   }
-
-
-
-
 
   // ================================================
   // 路线/打卡点选择
@@ -173,7 +168,8 @@ export function useMapData() {
     const index = selectedSpotTypes.value.indexOf(type)
     if (index > -1) {
       selectedSpotTypes.value.splice(index, 1)
-    } else {
+    }
+    else {
       selectedSpotTypes.value.push(type)
     }
     loadRoutes()
@@ -182,7 +178,8 @@ export function useMapData() {
   function setDifficulty(difficulty: string) {
     if (selectedDifficulty.value === difficulty) {
       selectedDifficulty.value = ''
-    } else {
+    }
+    else {
       selectedDifficulty.value = difficulty
     }
     loadRoutes()
@@ -191,7 +188,8 @@ export function useMapData() {
   function setRegion(region: string) {
     if (selectedRegion.value === region) {
       selectedRegion.value = ''
-    } else {
+    }
+    else {
       selectedRegion.value = region
     }
     loadRoutes()
@@ -226,10 +224,12 @@ export function useMapData() {
       }
 
       routes.value = await getRoutes(filter)
-    } catch (err) {
+    }
+    catch (err) {
       console.error('加载路线失败:', err)
       error.value = true
-    } finally {
+    }
+    finally {
       loading.value = false
     }
   }
@@ -239,9 +239,11 @@ export function useMapData() {
 
     try {
       currentRoute.value = await getRouteById(id)
-    } catch (err) {
+    }
+    catch (err) {
       console.error('加载路线详情失败:', err)
-    } finally {
+    }
+    finally {
       loading.value = false
     }
   }
@@ -259,7 +261,8 @@ export function useMapData() {
           startRideTimer()
         }
       }
-    } catch (err) {
+    }
+    catch (err) {
       console.error('加载骑行记录失败:', err)
       activeRide.value = {
         status: 'idle',
@@ -279,7 +282,8 @@ export function useMapData() {
   // ================================================
 
   function startRideTimer() {
-    if (rideTimer) return
+    if (rideTimer)
+      return
 
     rideTimer = setInterval(() => {
       if (activeRide.value.status === 'recording') {
@@ -386,7 +390,8 @@ export function useMapData() {
   }
 
   async function endRide(): Promise<RideRecord | null> {
-    if (activeRide.value.status !== 'recording') return null
+    if (activeRide.value.status !== 'recording')
+      return null
 
     stopRideTimer()
     stopLocationTracking()
@@ -456,7 +461,8 @@ export function useMapData() {
       const date = new Date(record.startTime)
       const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
       emitExpandMonth(monthKey)
-    } catch (err) {
+    }
+    catch (err) {
       console.error('保存骑行记录失败:', err)
       uni.showToast({ title: '记录保存失败', icon: 'none' })
     }
@@ -480,7 +486,8 @@ export function useMapData() {
   // ================================================
 
   function confirmStartRide() {
-    if (isRiding.value) return
+    if (isRiding.value)
+      return
 
     uni.showModal({
       title: '开始骑行',
@@ -491,7 +498,8 @@ export function useMapData() {
           const location = await checkAndRequestLocation()
           if (location) {
             handleStartRide()
-          } else {
+          }
+          else {
             uni.showToast({ title: '需要定位权限才能记录骑行', icon: 'none' })
           }
         }
@@ -552,13 +560,9 @@ export function useMapData() {
     confirmCancelRide()
   }
 
-
-
   function handleRouteSelect(route: RideRoute) {
     selectRoute(route)
   }
-
-
 
   function handleSpotClose() {
     currentSpot.value = null
@@ -596,7 +600,8 @@ export function useMapData() {
         }
         currentIndex++
       }
-      if (targetSpot) break
+      if (targetSpot)
+        break
     }
 
     if (targetSpot) {

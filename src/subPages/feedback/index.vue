@@ -2,7 +2,7 @@
 definePage({
   name: 'feedback',
   style: {
-    navigationBarTitleText: '全局反馈',
+    navigationBarTitleText: '全局反馈'
   },
 })
 
@@ -40,7 +40,7 @@ function demoCustomToast() {
   showToast({
     msg: customMessage.value,
     duration: 3000,
-    position: 'middle',
+    position: 'middle'
   })
 }
 
@@ -48,7 +48,7 @@ function demoToastPosition(position: 'top' | 'middle' | 'bottom') {
   showToast({
     msg: `显示在${position === 'top' ? '顶部' : position === 'middle' ? '中间' : '底部'}的提示`,
     position,
-    duration: 2000,
+    duration: 2000
   })
 }
 
@@ -68,7 +68,7 @@ function demoCustomLoading() {
   }
   loading({
     msg: loadingText.value,
-    cover: true,
+    cover: true
   })
   setTimeout(() => {
     closeLoading()
@@ -79,7 +79,7 @@ function demoCustomLoading() {
 function demoLoadingNoCover() {
   loading({
     msg: '无遮罩加载',
-    cover: false,
+    cover: false
   })
   setTimeout(() => {
     closeLoading()
@@ -98,7 +98,7 @@ function demoConfirm() {
       else {
         info({ msg: '用户取消了操作' })
       }
-    },
+    }
   })
 }
 
@@ -108,7 +108,7 @@ function demoAlert() {
     msg: '这是一个重要的提醒信息，请仔细阅读！',
     success: () => {
       success({ msg: '用户已阅读提醒' })
-    },
+    }
   })
 }
 
@@ -128,7 +128,7 @@ function demoPrompt() {
       else {
         info({ msg: '用户取消了输入' })
       }
-    },
+    }
   })
 }
 
@@ -145,7 +145,7 @@ function demoCustomConfirm() {
       else {
         info({ msg: '点击了"算了"' })
       }
-    },
+    }
   })
 }
 
@@ -174,7 +174,7 @@ function demoComplex() {
         else {
           info({ msg: '已取消演示' })
         }
-      },
+      }
     })
   }, 1000)
 }
@@ -231,7 +231,7 @@ confirm({
   success: (res) => {
     // res.action: 'confirm' | 'cancel'
   }
-})`,
+})`
 }
 
 // 复制代码到剪贴板
@@ -242,7 +242,7 @@ function copyCode(code: string) {
     success: () => {
       uni.hideToast()
       showSuccess({ msg: '代码已复制到剪贴板' })
-    },
+    }
   })
 }
 
@@ -258,27 +258,27 @@ function handleNavigate(url: string) {
     success: () => {
       uni.hideToast()
       showSuccess({ msg: `${url} 已复制到剪贴板` })
-    },
+    }
   })
   // #endif
 }
 </script>
 
 <template>
-  <view class="min-h-screen bg-gray-100 py-3 dark:bg-[var(--wot-dark-background)]">
+  <view class="bg-gray-100 min-h-screen py-3 dark:bg-[var(--wot-dark-background)]">
     <!-- 头部介绍 -->
     <view class="mx-3 mb-3">
       <view class="rounded-3 bg-white px-5 py-8 text-center dark:bg-[var(--wot-dark-background2)]">
         <view class="mb-3 text-10">
           💬
         </view>
-        <view class="mb-2 text-6 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+        <view class="text-gray-800 mb-2 text-6 font-bold dark:text-[var(--wot-dark-color)]">
           全局反馈组件
         </view>
-        <view class="mb-2 text-3.5 text-gray-600 leading-relaxed dark:text-[var(--wot-dark-color2)]">
+        <view class="text-gray-600 mb-2 text-3.5 leading-relaxed dark:text-[var(--wot-dark-color2)]">
           GlobalToast / GlobalLoading / GlobalMessage
         </view>
-        <view class="text-3 text-gray-500 dark:text-[var(--wot-dark-color2)]">
+        <view class="text-gray-500 text-3 dark:text-[var(--wot-dark-color2)]">
           统一的用户反馈交互体验，支持在路由导航守卫和网络请求拦截器中使用，扩展 WotUI 交互组件能力。
         </view>
       </view>
@@ -289,7 +289,7 @@ function handleNavigate(url: string) {
       <view class="space-y-4">
         <!-- 基础用法 -->
         <view class="rounded-2 bg-white p-4 dark:bg-[var(--wot-dark-background2)]">
-          <view class="mb-3 text-4 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+          <view class="text-gray-800 mb-3 text-4 font-bold dark:text-[var(--wot-dark-color)]">
             基础用法
           </view>
           <view class="grid grid-cols-2 mb-3 gap-2">
@@ -308,12 +308,12 @@ function handleNavigate(url: string) {
           </view>
 
           <view
-            class="rounded bg-gray-100 p-3 dark:bg-[var(--wot-dark-background3)]" @click="copyCode(codeExamples.basicToast)"
+            class="bg-gray-100 rounded p-3 dark:bg-[var(--wot-dark-background3)]" @click="copyCode(codeExamples.basicToast)"
           >
-            <view class="mb-2 text-3 text-gray-700 font-bold dark:text-[var(--wot-dark-color)]">
+            <view class="text-gray-700 mb-2 text-3 font-bold dark:text-[var(--wot-dark-color)]">
               代码示例:
             </view>
-            <view class="whitespace-pre-line text-2.5 text-gray-600 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">
+            <view class="text-gray-600 whitespace-pre-line text-2.5 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">
               const { success, error, warning, info } = useGlobalToast()
 
               success({ msg: '操作成功！' })
@@ -324,7 +324,7 @@ function handleNavigate(url: string) {
 
         <!-- 自定义用法 -->
         <view class="rounded-2 bg-white p-4 dark:bg-[var(--wot-dark-background2)]">
-          <view class="mb-3 text-4 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+          <view class="text-gray-800 mb-3 text-4 font-bold dark:text-[var(--wot-dark-color)]">
             自定义配置
           </view>
           <view class="mb-3">
@@ -346,12 +346,12 @@ function handleNavigate(url: string) {
           </view>
 
           <view
-            class="rounded bg-gray-100 p-3 dark:bg-[var(--wot-dark-background3)]" @click="copyCode(codeExamples.customToast)"
+            class="bg-gray-100 rounded p-3 dark:bg-[var(--wot-dark-background3)]" @click="copyCode(codeExamples.customToast)"
           >
-            <view class="mb-2 text-3 text-gray-700 font-bold dark:text-[var(--wot-dark-color)]">
+            <view class="text-gray-700 mb-2 text-3 font-bold dark:text-[var(--wot-dark-color)]">
               自定义配置:
             </view>
-            <view class="whitespace-pre-line text-2.5 text-gray-600 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">
+            <view class="text-gray-600 whitespace-pre-line text-2.5 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">
               show({
               msg: '自定义消息',
               duration: 3000,
@@ -368,7 +368,7 @@ function handleNavigate(url: string) {
       <view class="space-y-4">
         <!-- 基础用法 -->
         <view class="rounded-2 bg-white p-4 dark:bg-[var(--wot-dark-background2)]">
-          <view class="mb-3 text-4 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+          <view class="text-gray-800 mb-3 text-4 font-bold dark:text-[var(--wot-dark-color)]">
             基础用法
           </view>
           <view class="grid grid-cols-2 mb-3 gap-2">
@@ -387,12 +387,12 @@ function handleNavigate(url: string) {
           </view>
 
           <view
-            class="rounded bg-gray-100 p-3 dark:bg-[var(--wot-dark-background3)]" @click="copyCode(codeExamples.basicLoading)"
+            class="bg-gray-100 rounded p-3 dark:bg-[var(--wot-dark-background3)]" @click="copyCode(codeExamples.basicLoading)"
           >
-            <view class="mb-2 text-3 text-gray-700 font-bold dark:text-[var(--wot-dark-color)]">
+            <view class="text-gray-700 mb-2 text-3 font-bold dark:text-[var(--wot-dark-color)]">
               代码示例:
             </view>
-            <view class="whitespace-pre-line text-2.5 text-gray-600 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">
+            <view class="text-gray-600 whitespace-pre-line text-2.5 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">
               const { loading, close } = useGlobalLoading()
 
               loading('加载中...')
@@ -403,7 +403,7 @@ function handleNavigate(url: string) {
 
         <!-- 自定义用法 -->
         <view class="rounded-2 bg-white p-4 dark:bg-[var(--wot-dark-background2)]">
-          <view class="mb-3 text-4 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+          <view class="text-gray-800 mb-3 text-4 font-bold dark:text-[var(--wot-dark-color)]">
             自定义配置
           </view>
           <view class="mb-3">
@@ -416,12 +416,12 @@ function handleNavigate(url: string) {
           </view>
 
           <view
-            class="rounded bg-gray-100 p-3 dark:bg-[var(--wot-dark-background3)]" @click="copyCode(codeExamples.customLoading)"
+            class="bg-gray-100 rounded p-3 dark:bg-[var(--wot-dark-background3)]" @click="copyCode(codeExamples.customLoading)"
           >
-            <view class="mb-2 text-3 text-gray-700 font-bold dark:text-[var(--wot-dark-color)]">
+            <view class="text-gray-700 mb-2 text-3 font-bold dark:text-[var(--wot-dark-color)]">
               自定义配置:
             </view>
-            <view class="whitespace-pre-line text-2.5 text-gray-600 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">
+            <view class="text-gray-600 whitespace-pre-line text-2.5 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">
               loading({
               msg: '正在处理中...',
               cover: true // 是否显示遮罩
@@ -437,7 +437,7 @@ function handleNavigate(url: string) {
       <view class="space-y-4">
         <!-- 基础用法 -->
         <view class="rounded-2 bg-white p-4 dark:bg-[var(--wot-dark-background2)]">
-          <view class="mb-3 text-4 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+          <view class="text-gray-800 mb-3 text-4 font-bold dark:text-[var(--wot-dark-color)]">
             基础用法
           </view>
           <view class="grid grid-cols-3 mb-3 gap-2">
@@ -453,12 +453,12 @@ function handleNavigate(url: string) {
           </view>
 
           <view
-            class="rounded bg-gray-100 p-3 dark:bg-[var(--wot-dark-background3)]" @click="copyCode(codeExamples.basicMessage)"
+            class="bg-gray-100 rounded p-3 dark:bg-[var(--wot-dark-background3)]" @click="copyCode(codeExamples.basicMessage)"
           >
-            <view class="mb-2 text-3 text-gray-700 font-bold dark:text-[var(--wot-dark-color)]">
+            <view class="text-gray-700 mb-2 text-3 font-bold dark:text-[var(--wot-dark-color)]">
               代码示例:
             </view>
-            <view class="whitespace-pre-line text-2.5 text-gray-600 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">
+            <view class="text-gray-600 whitespace-pre-line text-2.5 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">
               confirm({
               title: '确认操作',
               msg: '您确定要执行此操作吗？',
@@ -470,7 +470,7 @@ function handleNavigate(url: string) {
 
         <!-- 自定义用法 -->
         <view class="rounded-2 bg-white p-4 dark:bg-[var(--wot-dark-background2)]">
-          <view class="mb-3 text-4 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+          <view class="text-gray-800 mb-3 text-4 font-bold dark:text-[var(--wot-dark-color)]">
             自定义配置
           </view>
           <view class="mb-3">
@@ -480,12 +480,12 @@ function handleNavigate(url: string) {
           </view>
 
           <view
-            class="rounded bg-gray-100 p-3 dark:bg-[var(--wot-dark-background3)]" @click="copyCode(codeExamples.customMessage)"
+            class="bg-gray-100 rounded p-3 dark:bg-[var(--wot-dark-background3)]" @click="copyCode(codeExamples.customMessage)"
           >
-            <view class="mb-2 text-3 text-gray-700 font-bold dark:text-[var(--wot-dark-color)]">
+            <view class="text-gray-700 mb-2 text-3 font-bold dark:text-[var(--wot-dark-color)]">
               自定义按钮:
             </view>
-            <view class="whitespace-pre-line text-2.5 text-gray-600 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">
+            <view class="text-gray-600 whitespace-pre-line text-2.5 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">
               confirm({
               confirmButtonText: '好的',
               cancelButtonText: '算了'
@@ -504,11 +504,11 @@ function handleNavigate(url: string) {
             <view class="mr-2 text-6">
               🎯
             </view>
-            <view class="text-4 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+            <view class="text-gray-800 text-4 font-bold dark:text-[var(--wot-dark-color)]">
               设计理念
             </view>
           </view>
-          <view class="text-3 text-gray-600 leading-relaxed space-y-2 dark:text-[var(--wot-dark-color2)]">
+          <view class="text-gray-600 text-3 leading-relaxed space-y-2 dark:text-[var(--wot-dark-color2)]">
             <view>
               • <text class="text-blue-600 font-bold dark:text-blue-400">
                 全局单例
@@ -537,11 +537,11 @@ function handleNavigate(url: string) {
             <view class="mr-2 text-6">
               ⚡
             </view>
-            <view class="text-4 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+            <view class="text-gray-800 text-4 font-bold dark:text-[var(--wot-dark-color)]">
               使用优势
             </view>
           </view>
-          <view class="text-3 text-gray-600 leading-relaxed space-y-2 dark:text-[var(--wot-dark-color2)]">
+          <view class="text-gray-600 text-3 leading-relaxed space-y-2 dark:text-[var(--wot-dark-color2)]">
             <view>• 统一的用户反馈体验</view>
             <view>• 避免组件重复创建和销毁</view>
             <view>• 支持深色模式自动适配</view>
@@ -554,11 +554,11 @@ function handleNavigate(url: string) {
             <view class="mr-2 text-6">
               📝
             </view>
-            <view class="text-4 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+            <view class="text-gray-800 text-4 font-bold dark:text-[var(--wot-dark-color)]">
               最佳实践
             </view>
           </view>
-          <view class="text-3 text-gray-600 leading-relaxed space-y-2 dark:text-[var(--wot-dark-color2)]">
+          <view class="text-gray-600 text-3 leading-relaxed space-y-2 dark:text-[var(--wot-dark-color2)]">
             <view>• Toast：用于简短的状态反馈，不打断用户操作</view>
             <view>• Loading：用于异步操作的等待提示</view>
             <view>• Message：用于重要信息确认和用户输入</view>

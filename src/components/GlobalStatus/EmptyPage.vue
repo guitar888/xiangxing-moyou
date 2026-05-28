@@ -1,16 +1,9 @@
 <script setup lang="ts">
 defineOptions({
   options: {
-    virtualHost: true,
+    virtualHost: true
   },
 })
-
-interface Props {
-  title?: string
-  subtitle?: string
-  icon?: string
-  showBack?: boolean
-}
 
 withDefaults(defineProps<Props>(), {
   title: '页面建设中',
@@ -22,6 +15,13 @@ withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   back: []
 }>()
+
+interface Props {
+  title?: string
+  subtitle?: string
+  icon?: string
+  showBack?: boolean
+}
 
 function handleBack() {
   emit('back')
@@ -36,8 +36,8 @@ function handleBack() {
       <view class="absolute left-0 top-0 h-full w-full bg-[repeating-linear-gradient(45deg,transparent,transparent_40rpx,var(--wot-color-theme)40rpx,var(--wot-color-theme)80rpx)]" />
     </view>
 
-    <view class="max-w-[80%] animate-fade-in-up text-center">
-      <view class="mb-[40rpx] animate-float-slow text-[120rpx]">
+    <view class="animate-fade-in-up max-w-[80%] text-center">
+      <view class="animate-float-slow mb-[40rpx] text-[120rpx]">
         {{ icon }}
       </view>
 
@@ -70,18 +70,18 @@ function handleBack() {
 
   <!-- #ifndef H5 -->
   <view class="mini-empty-page relative min-h-screen flex flex-col items-center justify-center p-[40rpx]">
-    <view class="pointer-events-none absolute inset-0 mini-empty-bg" />
+    <view class="mini-empty-bg pointer-events-none absolute inset-0" />
 
     <view class="max-w-[80%] text-center">
       <view class="mb-[40rpx] text-[120rpx]">
         {{ icon }}
       </view>
 
-      <text class="mb-[20rpx] block mini-empty-title">
+      <text class="mini-empty-title mb-[20rpx] block">
         {{ title }}
       </text>
 
-      <text class="mb-[40rpx] block mini-empty-subtitle">
+      <text class="mini-empty-subtitle mb-[40rpx] block">
         {{ subtitle }}
       </text>
 

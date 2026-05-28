@@ -2,7 +2,7 @@
 definePage({
   name: 'ci',
   style: {
-    navigationBarTitleText: 'CI 持续集成',
+    navigationBarTitleText: 'CI 持续集成'
   },
 })
 
@@ -48,32 +48,32 @@ const features = ref([
   {
     icon: '📱',
     title: '多平台支持',
-    desc: '支持微信、支付宝、钉钉小程序的上传',
+    desc: '支持微信、支付宝、钉钉小程序的上传'
   },
   {
     icon: '🔢',
     title: '版本管理',
-    desc: '支持指定版本号和版本号自增',
+    desc: '支持指定版本号和版本号自增'
   },
   {
     icon: '⚙️',
     title: '简单配置',
-    desc: '通过配置文件轻松管理多平台参数',
+    desc: '通过配置文件轻松管理多平台参数'
   },
   {
     icon: '🔄',
     title: 'CI/CD集成',
-    desc: '完美集成持续集成和持续部署流程',
+    desc: '完美集成持续集成和持续部署流程'
   },
   {
     icon: '🛠️',
     title: '命令行工具',
-    desc: '支持全局和局部安装，灵活使用',
+    desc: '支持全局和局部安装，灵活使用'
   },
   {
     icon: '📦',
     title: '打包上传',
-    desc: '支持打包和上传命令组合使用',
+    desc: '支持打包和上传命令组合使用'
   },
 ])
 
@@ -86,7 +86,7 @@ const platforms = ref([
     color: 'text-green-600',
     bgColor: 'bg-green-50',
     borderColor: 'border-green-200',
-    features: ['支持企业微信', 'CI机器人选择', '编译设置', '代码压缩保护'],
+    features: ['支持企业微信', 'CI机器人选择', '编译设置', '代码压缩保护']
   },
   {
     name: 'alipay',
@@ -95,7 +95,7 @@ const platforms = ref([
     color: 'text-blue-600',
     bgColor: 'bg-blue-50',
     borderColor: 'border-blue-200',
-    features: ['多终端支持', '版本号自增', '私钥认证', '开放平台集成'],
+    features: ['多终端支持', '版本号自增', '私钥认证', '开放平台集成']
   },
   {
     name: 'dd',
@@ -104,7 +104,7 @@ const platforms = ref([
     color: 'text-purple-600',
     bgColor: 'bg-purple-50',
     borderColor: 'border-purple-200',
-    features: ['企业应用', '版本号自增', 'Token认证', '多应用类型'],
+    features: ['企业应用', '版本号自增', 'Token认证', '多应用类型']
   },
 ])
 
@@ -116,7 +116,7 @@ function copyCode(code: string) {
     success: () => {
       uni.hideToast()
       showSuccess({ msg: '代码已复制到剪贴板' })
-    },
+    }
   })
 }
 
@@ -132,27 +132,27 @@ function handleNavigate(url: string) {
     success: () => {
       uni.hideToast()
       showSuccess({ msg: `${url} 已复制到剪贴板` })
-    },
+    }
   })
   // #endif
 }
 </script>
 
 <template>
-  <view class="min-h-screen bg-gray-100 py-3 dark:bg-[var(--wot-dark-background)]">
+  <view class="bg-gray-100 min-h-screen py-3 dark:bg-[var(--wot-dark-background)]">
     <!-- 头部介绍 -->
     <view class="mx-3 mb-3">
       <view class="rounded-3 bg-white px-5 py-8 text-center dark:bg-[var(--wot-dark-background2)]">
         <view class="mb-3 text-10">
           🚀
         </view>
-        <view class="mb-2 text-6 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+        <view class="text-gray-800 mb-2 text-6 font-bold dark:text-[var(--wot-dark-color)]">
           uni-mini-ci
         </view>
-        <view class="mb-2 text-3.5 text-gray-600 leading-relaxed dark:text-[var(--wot-dark-color2)]">
+        <view class="text-gray-600 mb-2 text-3.5 leading-relaxed dark:text-[var(--wot-dark-color2)]">
           小程序持续集成的插件
         </view>
-        <view class="text-3 text-gray-500 dark:text-[var(--wot-dark-color2)]">
+        <view class="text-gray-500 text-3 dark:text-[var(--wot-dark-color2)]">
           支持上传微信、企业微信、钉钉、支付宝平台的小程序
         </view>
       </view>
@@ -169,10 +169,10 @@ function handleNavigate(url: string) {
           <view class="mb-2 text-6">
             {{ feature.icon }}
           </view>
-          <view class="mb-1 text-3.5 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+          <view class="text-gray-800 mb-1 text-3.5 font-bold dark:text-[var(--wot-dark-color)]">
             {{ feature.title }}
           </view>
-          <view class="text-3 text-gray-600 leading-snug dark:text-[var(--wot-dark-color2)]">
+          <view class="text-gray-600 text-3 leading-snug dark:text-[var(--wot-dark-color2)]">
             {{ feature.desc }}
           </view>
         </view>
@@ -184,15 +184,15 @@ function handleNavigate(url: string) {
       <view class="space-y-4">
         <!-- 全局安装 -->
         <view class="rounded-2 bg-white p-4 dark:bg-[var(--wot-dark-background2)]">
-          <view class="mb-3 text-4 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+          <view class="text-gray-800 mb-3 text-4 font-bold dark:text-[var(--wot-dark-color)]">
             全局安装
           </view>
-          <view class="mb-3 text-3 text-gray-600 dark:text-[var(--wot-dark-color2)]">
+          <view class="text-gray-600 mb-3 text-3 dark:text-[var(--wot-dark-color2)]">
             推荐在开发环境中全局安装，方便在任何项目中使用
           </view>
           <view class="space-y-2">
-            <view class="flex items-center justify-between border border-gray-200 rounded-2 bg-gray-50 p-3 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCode('npm i uni-mini-ci -g')">
-              <text class="flex-1 text-3 text-gray-700 font-mono dark:text-[var(--wot-dark-color)]">
+            <view class="border-gray-200 bg-gray-50 flex items-center justify-between border rounded-2 p-3 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCode('npm i uni-mini-ci -g')">
+              <text class="text-gray-700 flex-1 text-3 font-mono dark:text-[var(--wot-dark-color)]">
                 npm i uni-mini-ci -g
               </text>
               <wd-icon name="copy" size="16px" color="#666" />
@@ -202,21 +202,21 @@ function handleNavigate(url: string) {
 
         <!-- 局部安装 -->
         <view class="rounded-2 bg-white p-4 dark:bg-[var(--wot-dark-background2)]">
-          <view class="mb-3 text-4 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+          <view class="text-gray-800 mb-3 text-4 font-bold dark:text-[var(--wot-dark-color)]">
             局部安装
           </view>
-          <view class="mb-3 text-3 text-gray-600 dark:text-[var(--wot-dark-color2)]">
+          <view class="text-gray-600 mb-3 text-3 dark:text-[var(--wot-dark-color2)]">
             在项目中作为开发依赖安装，适合团队协作
           </view>
           <view class="space-y-2">
-            <view class="flex items-center justify-between border border-gray-200 rounded-2 bg-gray-50 p-3 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCode('npm i uni-mini-ci --save-dev')">
-              <text class="flex-1 text-3 text-gray-700 font-mono dark:text-[var(--wot-dark-color)]">
+            <view class="border-gray-200 bg-gray-50 flex items-center justify-between border rounded-2 p-3 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCode('npm i uni-mini-ci --save-dev')">
+              <text class="text-gray-700 flex-1 text-3 font-mono dark:text-[var(--wot-dark-color)]">
                 npm i uni-mini-ci --save-dev
               </text>
               <wd-icon name="copy" size="16px" color="#666" />
             </view>
-            <view class="flex items-center justify-between border border-gray-200 rounded-2 bg-gray-50 p-3 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCode('pnpm add uni-mini-ci -D')">
-              <text class="flex-1 text-3 text-gray-700 font-mono dark:text-[var(--wot-dark-color)]">
+            <view class="border-gray-200 bg-gray-50 flex items-center justify-between border rounded-2 p-3 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCode('pnpm add uni-mini-ci -D')">
+              <text class="text-gray-700 flex-1 text-3 font-mono dark:text-[var(--wot-dark-color)]">
                 pnpm add uni-mini-ci -D
               </text>
               <wd-icon name="copy" size="16px" color="#666" />
@@ -229,24 +229,24 @@ function handleNavigate(url: string) {
     <!-- 配置文件 -->
     <demo-block title="配置文件" transparent>
       <view class="rounded-2 bg-white p-4 dark:bg-[var(--wot-dark-background2)]">
-        <view class="mb-3 text-4 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+        <view class="text-gray-800 mb-3 text-4 font-bold dark:text-[var(--wot-dark-color)]">
           .minicirc 配置文件
         </view>
-        <view class="mb-3 text-3 text-gray-600 leading-relaxed dark:text-[var(--wot-dark-color2)]">
-          在项目根目录创建 <text class="rounded bg-gray-100 px-1 font-mono dark:bg-[var(--wot-dark-background3)]">
+        <view class="text-gray-600 mb-3 text-3 leading-relaxed dark:text-[var(--wot-dark-color2)]">
+          在项目根目录创建 <text class="bg-gray-100 rounded px-1 font-mono dark:bg-[var(--wot-dark-background3)]">
             .minicirc
           </text> 文件，配置各平台的上传参数
         </view>
 
-        <view class="mb-3 border border-gray-200 rounded-2 bg-gray-50 p-3 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCode(configExample)">
+        <view class="border-gray-200 bg-gray-50 mb-3 border rounded-2 p-3 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCode(configExample)">
           <view class="mb-2 flex items-center justify-between">
-            <text class="text-3 text-gray-700 font-bold dark:text-[var(--wot-dark-color)]">
+            <text class="text-gray-700 text-3 font-bold dark:text-[var(--wot-dark-color)]">
               配置示例:
             </text>
             <wd-icon name="copy" size="16px" color="#666" />
           </view>
           <view class="max-h-60 overflow-y-auto">
-            <pre class="whitespace-pre-wrap text-2.5 text-gray-600 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">{{ configExample }}</pre>
+            <pre class="text-gray-600 whitespace-pre-wrap text-2.5 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">{{ configExample }}</pre>
           </view>
         </view>
 
@@ -275,7 +275,7 @@ function handleNavigate(url: string) {
             <view class="mr-2 text-6">
               {{ platform.icon }}
             </view>
-            <view class="text-4 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+            <view class="text-gray-800 text-4 font-bold dark:text-[var(--wot-dark-color)]">
               {{ platform.title }}
             </view>
           </view>
@@ -283,13 +283,13 @@ function handleNavigate(url: string) {
             <view
               v-for="feature in platform.features"
               :key="feature"
-              class="rounded bg-gray-100 px-2 py-1 text-center text-2.5 text-gray-600 dark:bg-[var(--wot-dark-background3)] dark:text-[var(--wot-dark-color2)]"
+              class="bg-gray-100 text-gray-600 rounded px-2 py-1 text-center text-2.5 dark:bg-[var(--wot-dark-background3)] dark:text-[var(--wot-dark-color2)]"
             >
               {{ feature }}
             </view>
           </view>
-          <view class="flex items-center justify-between border border-gray-200 rounded-2 bg-gray-50 p-3 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCode(`minici --platform ${platform.name}`)">
-            <text class="flex-1 text-3 text-gray-700 font-mono dark:text-[var(--wot-dark-color)]">
+          <view class="border-gray-200 bg-gray-50 flex items-center justify-between border rounded-2 p-3 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCode(`minici --platform ${platform.name}`)">
+            <text class="text-gray-700 flex-1 text-3 font-mono dark:text-[var(--wot-dark-color)]">
               minici --platform {{ platform.name }}
             </text>
             <wd-icon name="copy" size="16px" color="#666" />
@@ -301,38 +301,38 @@ function handleNavigate(url: string) {
     <!-- 添加命令 -->
     <demo-block title="添加命令" transparent>
       <view class="rounded-2 bg-white p-4 dark:bg-[var(--wot-dark-background2)]">
-        <view class="mb-3 text-4 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+        <view class="text-gray-800 mb-3 text-4 font-bold dark:text-[var(--wot-dark-color)]">
           package.json 脚本配置
         </view>
-        <view class="mb-3 text-3 text-gray-600 leading-relaxed dark:text-[var(--wot-dark-color2)]">
+        <view class="text-gray-600 mb-3 text-3 leading-relaxed dark:text-[var(--wot-dark-color2)]">
           在 package.json 中添加上传脚本，支持单独上传和打包上传组合
         </view>
 
-        <view class="mb-3 border border-gray-200 rounded-2 bg-gray-50 p-3 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCode(packageScripts)">
+        <view class="border-gray-200 bg-gray-50 mb-3 border rounded-2 p-3 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCode(packageScripts)">
           <view class="mb-2 flex items-center justify-between">
-            <text class="text-3 text-gray-700 font-bold dark:text-[var(--wot-dark-color)]">
+            <text class="text-gray-700 text-3 font-bold dark:text-[var(--wot-dark-color)]">
               脚本配置:
             </text>
             <wd-icon name="copy" size="16px" color="#666" />
           </view>
           <view class="max-h-60 overflow-y-auto">
-            <pre class="whitespace-pre-wrap text-2.5 text-gray-600 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">{{ packageScripts }}</pre>
+            <pre class="text-gray-600 whitespace-pre-wrap text-2.5 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">{{ packageScripts }}</pre>
           </view>
         </view>
 
         <view class="space-y-2">
-          <view class="text-3.5 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+          <view class="text-gray-800 text-3.5 font-bold dark:text-[var(--wot-dark-color)]">
             使用命令:
           </view>
           <view class="grid grid-cols-1 gap-2">
-            <view class="flex items-center justify-between border border-gray-200 rounded-2 bg-gray-50 p-3 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCode('pnpm upload:weixin')">
-              <text class="flex-1 text-3 text-gray-700 font-mono dark:text-[var(--wot-dark-color)]">
+            <view class="border-gray-200 bg-gray-50 flex items-center justify-between border rounded-2 p-3 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCode('pnpm upload:weixin')">
+              <text class="text-gray-700 flex-1 text-3 font-mono dark:text-[var(--wot-dark-color)]">
                 pnpm upload:weixin
               </text>
               <wd-icon name="copy" size="16px" color="#666" />
             </view>
-            <view class="flex items-center justify-between border border-gray-200 rounded-2 bg-gray-50 p-3 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCode('pnpm upload:mp-weixin')">
-              <text class="flex-1 text-3 text-gray-700 font-mono dark:text-[var(--wot-dark-color)]">
+            <view class="border-gray-200 bg-gray-50 flex items-center justify-between border rounded-2 p-3 dark:border-[var(--wot-dark-border)] dark:bg-[var(--wot-dark-background3)]" @click="copyCode('pnpm upload:mp-weixin')">
+              <text class="text-gray-700 flex-1 text-3 font-mono dark:text-[var(--wot-dark-color)]">
                 pnpm upload:mp-weixin
               </text>
               <wd-icon name="copy" size="16px" color="#666" />
@@ -364,10 +364,10 @@ function handleNavigate(url: string) {
               {{ step.icon }}
             </view>
             <view class="flex-1">
-              <view class="text-3.5 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+              <view class="text-gray-800 text-3.5 font-bold dark:text-[var(--wot-dark-color)]">
                 {{ step.title }}
               </view>
-              <view class="text-3 text-gray-600 dark:text-[var(--wot-dark-color2)]">
+              <view class="text-gray-600 text-3 dark:text-[var(--wot-dark-color2)]">
                 {{ step.desc }}
               </view>
             </view>

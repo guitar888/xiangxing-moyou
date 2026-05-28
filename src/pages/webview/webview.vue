@@ -17,6 +17,6 @@ onMounted(() => {
 
 <template>
   <view class="min-h-screen bg-base">
-    <web-view :src="url"></web-view>
+    <web-view :src="url" />
   </view>
 </template>

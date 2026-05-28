@@ -171,8 +171,8 @@ export const mockRoutes: RideRoute[] = [
   },
   {
     id: '4',
-    name: '唐城夜游',
-    description: '穿越盛唐夜景，灯光璀璨，适合拍照',
+    name: '唐城景区骑行',
+    description: '穿越盛唐风光，灯光璀璨，适合拍照',
     region: 'xiangcheng',
     path: [
       { latitude: 32.0603, longitude: 112.1401 },
@@ -188,8 +188,8 @@ export const mockRoutes: RideRoute[] = [
         name: '唐城朱雀门',
         type: 'photo',
         coordinates: { latitude: 32.0470, longitude: 112.1180 },
-        description: '最佳夜景拍摄点',
-        tags: ['夜景', '打卡'],
+        description: '最佳拍摄点',
+        tags: ['打卡', '古风'],
       },
       {
         id: 's4-2',

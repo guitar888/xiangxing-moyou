@@ -23,7 +23,7 @@ function getTagBgColor(tag: string) {
 function handleActivityClick(activity: ActivityItem) {
   router.push({
     path: '/subPages/activity/detail',
-    query: { id: activity.id },
+    query: { id: activity.id }
   })
 }
 
@@ -34,7 +34,7 @@ function handleGoToActivity() {
 
 <template>
   <!-- #ifdef H5 -->
-  <view class="relative z-10 animate-fade-in-up px-[24rpx] py-[16rpx]">
+  <view class="animate-fade-in-up relative z-10 px-[24rpx] py-[16rpx]">
     <view class="mb-[16rpx] flex items-center justify-between">
       <text class="text-[28rpx] text-white font-600">
         活动公告
@@ -47,12 +47,12 @@ function handleGoToActivity() {
       <view
         v-for="(activity, index) in activityList"
         :key="index"
-        class="relative flex animate-fade-in-up items-start gap-[20rpx] rounded-[16rpx] bg-card p-[16rpx] shadow-card transition-all duration-100"
+        class="animate-fade-in-up relative flex items-start gap-[20rpx] rounded-[16rpx] bg-card p-[16rpx] shadow-card transition-all duration-100"
         :style="{ animationDelay: `${index * 100}ms` }"
         :class="{ 'border-[1.5rpx] border-[rgba(46,213,115,0.5)]': activity.isUpcoming }"
         @click="handleActivityClick(activity)"
       >
-        <view v-if="activity.isUpcoming && activity.countdownText" class="absolute right-[16rpx] top-[16rpx] z-2 flex animate-pulse items-center gap-[4rpx] rounded-[8rpx] bg-primary px-[12rpx] py-[6rpx]">
+        <view v-if="activity.isUpcoming && activity.countdownText" class="animate-pulse absolute right-[16rpx] top-[16rpx] z-2 flex items-center gap-[4rpx] rounded-[8rpx] bg-primary px-[12rpx] py-[6rpx]">
           <text class="text-[18rpx]">
             ⏰
           </text>
@@ -115,10 +115,10 @@ function handleGoToActivity() {
       <view
         v-for="(activity, index) in activityList"
         :key="index"
-        :class="['mini-activity-card', activity.isUpcoming ? 'mini-activity-upcoming' : '']"
+        class="mini-activity-card" :class="[activity.isUpcoming ? 'mini-activity-upcoming' : '']"
         @click="handleActivityClick(activity)"
       >
-        <view v-if="activity.isUpcoming && activity.countdownText" :class="['mini-activity-badge', 'mini-activity-badge-upcoming']">
+        <view v-if="activity.isUpcoming && activity.countdownText" class="mini-activity-badge mini-activity-badge-upcoming">
           <text class="text-[18rpx]">
             ⏰
           </text>
@@ -126,7 +126,7 @@ function handleGoToActivity() {
             {{ activity.countdownText }}
           </text>
         </view>
-        <view v-else-if="!activity.isUpcoming" :class="['mini-activity-badge', 'mini-activity-badge-ended']">
+        <view v-else-if="!activity.isUpcoming" class="mini-activity-badge mini-activity-badge-ended">
           <text class="text-[18rpx]">
             ✅
           </text>

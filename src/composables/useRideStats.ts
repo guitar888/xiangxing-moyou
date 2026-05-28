@@ -2,7 +2,7 @@
  * 骑行统计 composable
  * 职责：计算骑行统计数据
  */
-import type { RideRecord, RideStats, MonthlyStats, RecordFilter } from '@/types'
+import type { MonthlyStats, RecordFilter, RideRecord, RideStats } from '@/types'
 import { getRideRecords, getRideStats } from '@/api/services/rideService'
 
 export function useRideStats() {
@@ -48,9 +48,11 @@ export function useRideStats() {
       records.value = await getRideRecords(filter || currentFilter.value)
       calculateStats()
       calculateMonthlyStats()
-    } catch (err) {
+    }
+    catch (err) {
       console.error('加载骑行记录失败:', err)
-    } finally {
+    }
+    finally {
       loading.value = false
     }
   }
@@ -61,7 +63,8 @@ export function useRideStats() {
   async function loadStats() {
     try {
       stats.value = await getRideStats()
-    } catch (err) {
+    }
+    catch (err) {
       console.error('加载统计数据失败:', err)
     }
   }
@@ -118,7 +121,7 @@ export function useRideStats() {
    * 计算月度统计
    */
   function calculateMonthlyStats() {
-    const monthlyMap = new Map<string, { rides: number; distance: number; duration: number }>()
+    const monthlyMap = new Map<string, { rides: number, distance: number, duration: number }>()
 
     for (const record of records.value) {
       const date = new Date(record.startTime)

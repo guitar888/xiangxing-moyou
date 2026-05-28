@@ -66,7 +66,8 @@ export function usePoster() {
     width: number,
     height: number
   ) {
-    if (!path || path.length < 2) return
+    if (!path || path.length < 2)
+      return
 
     // 计算边界
     let minLat = path[0].latitude
@@ -74,7 +75,7 @@ export function usePoster() {
     let minLng = path[0].longitude
     let maxLng = path[0].longitude
 
-    path.forEach(point => {
+    path.forEach((point) => {
       minLat = Math.min(minLat, point.latitude)
       maxLat = Math.max(maxLat, point.latitude)
       minLng = Math.min(minLng, point.longitude)
@@ -107,7 +108,8 @@ export function usePoster() {
       const py = toY(point.latitude)
       if (index === 0) {
         ctx.moveTo(px, py)
-      } else {
+      }
+      else {
         ctx.lineTo(px, py)
       }
     })
@@ -441,7 +443,8 @@ export function usePoster() {
           }, 150)
         })
       })
-    } catch (err) {
+    }
+    catch (err) {
       generating.value = false
       console.error('海报生成失败', err)
       throw err
@@ -486,7 +489,8 @@ export function usePoster() {
         type: 2,
         imageUrl: path,
       })
-    } catch (err) {
+    }
+    catch (err) {
       uni.showToast({ title: '分享失败', icon: 'none' })
     }
   }

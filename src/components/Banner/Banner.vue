@@ -7,11 +7,11 @@ defineOptions({
   },
 })
 
+defineProps<Props>()
+
 interface Props {
   list: BannerData[]
 }
-
-defineProps<Props>()
 
 const router = useRouter()
 const currentIndex = ref(0)
@@ -30,7 +30,8 @@ function handleImageError(id: string) {
 function handleClick(item: BannerData) {
   if (item.url) {
     router.push(item.url)
-  } else {
+  }
+  else {
     router.pushTab('/pages/activity/activity')
   }
 }
@@ -42,7 +43,7 @@ function onSwiperChange(e: any) {
 
 <template>
   <!-- #ifdef H5 -->
-  <view class="relative z-1 animate-float-slow animate-scale-in px-[24rpx] pt-[20rpx]">
+  <view class="animate-float-slow animate-scale-in relative z-1 px-[24rpx] pt-[20rpx]">
     <swiper
       class="h-[480rpx] overflow-hidden rounded-[16rpx]"
       :indicator-dots="false"
@@ -72,7 +73,7 @@ function onSwiperChange(e: any) {
           <view class="pointer-events-none absolute inset-0 from-black/40 via-black/20 to-black/60 bg-gradient-to-t" />
           <!-- 文字内容 -->
           <view class="absolute bottom-0 left-0 right-0 z-2 flex flex-col gap-[8rpx] p-[32rpx]">
-            <text class="text-[36rpx] font-700 text-[#FFFFFF] text-shadow">
+            <text class="text-[36rpx] text-[#FFFFFF] font-700 text-shadow">
               {{ banner.title }}
             </text>
             <text v-if="banner.desc" class="text-[24rpx] text-[#E0E0E0] text-shadow-sm">
@@ -128,7 +129,7 @@ function onSwiperChange(e: any) {
             mode="aspectFill"
           />
           <!-- 渐变叠加层 -->
-          <view class="pointer-events-none absolute inset-0 mini-banner-gradient" />
+          <view class="mini-banner-gradient pointer-events-none absolute inset-0" />
           <!-- 文字内容 -->
           <view class="absolute bottom-0 left-0 right-0 z-2 flex flex-col gap-[8rpx] p-[32rpx]">
             <text class="mini-banner-title">

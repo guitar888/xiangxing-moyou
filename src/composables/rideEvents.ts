@@ -8,9 +8,9 @@ type RideEventHandler = (data: any) => void
 
 interface RideEvents {
   listeners: Map<string, RideEventHandler[]>
-  emit(event: string, data: any): void
-  on(event: string, handler: RideEventHandler): void
-  off(event: string, handler: RideEventHandler): void
+  emit: (event: string, data: any) => void
+  on: (event: string, handler: RideEventHandler) => void
+  off: (event: string, handler: RideEventHandler) => void
 }
 
 export const rideEvents: RideEvents = {
@@ -38,7 +38,7 @@ export const rideEvents: RideEvents = {
         handlers.splice(index, 1)
       }
     }
-  },
+  }
 }
 
 /**
@@ -67,7 +67,7 @@ export function openPosterDialog(record: RideRecord) {
     id: record.id,
     distance: record.distance,
     duration: record.duration,
-    avgSpeed: record.avgSpeed,
+    avgSpeed: record.avgSpeed
   })
   rideEvents.emit(POSTER_OPEN_EVENT, record)
 }

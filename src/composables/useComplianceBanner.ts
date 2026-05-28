@@ -27,7 +27,8 @@ function initComplianceBanner() {
     if (closed) {
       visible.value = false
     }
-  } catch (err) {
+  }
+  catch (err) {
     console.error('读取合规提示状态失败:', err)
   }
 }
@@ -40,7 +41,8 @@ function closeComplianceBanner() {
   visible.value = false
   try {
     uni.setStorageSync(STORAGE_KEY, true)
-  } catch (err) {
+  }
+  catch (err) {
     console.error('保存合规提示状态失败:', err)
   }
 }
@@ -52,7 +54,8 @@ function showComplianceBanner() {
   visible.value = true
   try {
     uni.removeStorageSync(STORAGE_KEY)
-  } catch (err) {
+  }
+  catch (err) {
     console.error('清除合规提示状态失败:', err)
   }
 }
@@ -64,7 +67,8 @@ function resetComplianceBanner() {
   visible.value = true
   try {
     uni.removeStorageSync(STORAGE_KEY)
-  } catch (err) {
+  }
+  catch (err) {
     console.error('重置合规提示状态失败:', err)
   }
 }

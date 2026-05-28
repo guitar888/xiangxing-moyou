@@ -125,14 +125,14 @@ function toggleItem(index: number) {
 </script>
 
 <template>
-  <view class="min-h-screen bg-gradient-to-br from-base via-[var(--wot-color-bg-hover)] to-[var(--wot-color-bg-card)]">
+  <view class="min-h-screen from-base via-[var(--wot-color-bg-hover)] to-[var(--wot-color-bg-card)] bg-gradient-to-br">
     <view class="px-[24rpx] pt-[24rpx]">
       <view v-for="(section, sIndex) in helpSections" :key="sIndex" class="mb-[24rpx]">
-        <view class="text-[28rpx] font-600 text-white mb-[16rpx] flex items-center gap-[8rpx]">
+        <view class="mb-[16rpx] flex items-center gap-[8rpx] text-[28rpx] text-white font-600">
           <text class="i-carbon:catalog text-[24rpx] text-primary" />
           {{ section.title }}
         </view>
-        <view class="bg-card rounded-[16rpx] overflow-hidden border border-white/10">
+        <view class="overflow-hidden border border-white/10 rounded-[16rpx] bg-card">
           <view
             v-for="(item, iIndex) in section.items"
             :key="iIndex"
@@ -142,7 +142,9 @@ function toggleItem(index: number) {
               class="flex items-center justify-between p-[24rpx] active:bg-white/5"
               @click="toggleItem(sIndex * 100 + iIndex)"
             >
-              <text class="text-[24rpx] text-white">{{ item.question }}</text>
+              <text class="text-[24rpx] text-white">
+                {{ item.question }}
+              </text>
               <text
                 class="text-[20rpx] text-gray transition-transform duration-200"
                 :class="expandedItems.has(sIndex * 100 + iIndex) ? 'i-carbon:chevron-up' : 'i-carbon:chevron-down'"
@@ -152,7 +154,9 @@ function toggleItem(index: number) {
               v-if="expandedItems.has(sIndex * 100 + iIndex)"
               class="px-[24rpx] pb-[24rpx] pt-0"
             >
-              <text class="text-[22rpx] text-gray leading-relaxed">{{ item.answer }}</text>
+              <text class="text-[22rpx] text-gray leading-relaxed">
+                {{ item.answer }}
+              </text>
             </view>
           </view>
         </view>
@@ -160,7 +164,7 @@ function toggleItem(index: number) {
 
       <!-- 底部提示 -->
       <view class="py-[40rpx]">
-        <text class="text-[18rpx] text-gray text-center block">
+        <text class="block text-center text-[18rpx] text-gray">
           如有其他问题，请在"关于我们"中添加管理员微信联系
         </text>
       </view>

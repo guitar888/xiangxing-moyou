@@ -2,7 +2,7 @@
  * 地图服务 API
  * 预留 Bmob 接口，方便后续对接后端
  */
-import type { RideRoute, CheckInSpot, RouteFilter } from '@/types'
+import type { CheckInSpot, RideRoute, RouteFilter } from '@/types'
 import { mockRoutes } from '@/api/mock/mapMock'
 
 /**
@@ -24,7 +24,7 @@ export async function getRoutes(filter?: RouteFilter): Promise<RideRoute[]> {
       }
       if (filter?.spotTypes?.length) {
         routes = routes.filter(r =>
-          r.spots.some(s => filter.spotTypes!.includes(s.type))
+          r.spots.some(s => filter.spotTypes!.includes(s.type)),
         )
       }
       if (filter?.region && filter.region !== 'all') {

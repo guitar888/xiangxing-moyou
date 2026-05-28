@@ -126,7 +126,8 @@ export function useMapNavigation() {
           setTimeout(() => {
             window.location.href = schemaUrl
           }, 500)
-        } else {
+        }
+        else {
           // Android 使用 uni.openLocation
           uni.openLocation({
             latitude: options.latitude,
@@ -171,7 +172,8 @@ export function useMapNavigation() {
           setTimeout(() => {
             window.location.href = schemaUrl
           }, 500)
-        } else {
+        }
+        else {
           // Android 使用 uni.openLocation
           uni.openLocation({
             latitude: options.latitude,
@@ -216,7 +218,8 @@ export function useMapNavigation() {
           setTimeout(() => {
             window.location.href = schemaUrl
           }, 500)
-        } else {
+        }
+        else {
           // Android 使用 uni.openLocation
           uni.openLocation({
             latitude: options.latitude,

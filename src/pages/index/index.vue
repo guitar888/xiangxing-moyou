@@ -7,7 +7,7 @@ definePage({
   layout: 'tabbar',
   style: {
     navigationBarTitleText: '襄行摩友',
-    navigationStyle: 'custom',
+    navigationStyle: 'custom'
   },
 })
 
@@ -16,7 +16,6 @@ const { statusBarHeight } = useSystemInfo()
 
 // 首页数据
 const {
-  currentCity,
   bannerList,
   quickEntries,
   rideData,
@@ -25,10 +24,8 @@ const {
   displayRoutes,
   showBadge,
   isLoaded,
-  activityList,
+  activityList
 } = useHomeData()
-
-
 </script>
 
 <template>
@@ -45,7 +42,7 @@ const {
 
     <!-- 页面内容（GlobalPageStatus 组件控制 loading/error 叠加层显示） -->
     <view class="relative z-10">
-      <home-HeaderHome :status-bar-height="statusBarHeight" :current-city="currentCity" />
+      <home-HeaderHome :status-bar-height="statusBarHeight" />
       <Banner :list="bannerList" />
       <home-QuickEntry :entries="quickEntries" />
       <home-RideDataCard

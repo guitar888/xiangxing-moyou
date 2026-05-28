@@ -2,8 +2,8 @@
  * 骑行记录 composable
  * 职责：管理骑行记录、开始/结束骑行、本地存储
  */
-import type { RideRecord, ActiveRide, Coordinate } from '@/types'
-import { saveRideRecord, deleteRideRecord } from '@/api/services/rideService'
+import type { ActiveRide, Coordinate, RideRecord } from '@/types'
+import { deleteRideRecord, saveRideRecord } from '@/api/services/rideService'
 
 export function useRideRecord() {
   // ================================================
@@ -109,7 +109,8 @@ export function useRideRecord() {
    * @returns 生成的骑行记录
    */
   async function endRide(endLocation?: Coordinate): Promise<RideRecord | null> {
-    if (activeRide.value.status !== 'recording') return null
+    if (activeRide.value.status !== 'recording')
+      return null
 
     stopRideTimer()
 
@@ -146,7 +147,8 @@ export function useRideRecord() {
 
     try {
       await saveRideRecord(record)
-    } catch (err) {
+    }
+    catch (err) {
       console.error('保存骑行记录失败:', err)
     }
 
@@ -172,7 +174,8 @@ export function useRideRecord() {
   // ================================================
 
   function startRideTimer() {
-    if (rideTimer) return
+    if (rideTimer)
+      return
 
     rideTimer = setInterval(() => {
       if (activeRide.value.status === 'recording') {

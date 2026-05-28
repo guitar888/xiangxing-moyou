@@ -74,7 +74,8 @@ export function useLocation() {
       if (!setting.authSetting['scope.userLocation']) {
         await uni.authorize({ scope: 'scope.userLocation' })
       }
-    } catch (err) {
+    }
+    catch (err) {
       console.error('请求定位权限失败:', err)
     }
     // #endif

@@ -31,12 +31,20 @@ export interface Activity {
   tags: ActivityTag[]
   coverImage: string
   status: ActivityStatus
+  isFeatured?: boolean
+  organizer?: string
   participantCount?: number
   maxParticipants?: number
   contact?: string
   notice?: string
   routeId?: string
   routeName?: string
+  gatherTime?: string
+  gatherLocation?: string
+  route?: string
+  mealInfo?: string
+  safetyNotice?: string
+  disclaimer?: string
 }
 
 /**
@@ -58,10 +66,20 @@ export interface ActivityItem {
   tags: string[]
   image: string
   status: ActivityStatus
+  isFeatured: boolean
+  organizer?: string
   routeId?: string
   routeName?: string
   isUpcoming: boolean
   countdownText?: string
+  gatherTime?: string
+  gatherLocation?: string
+  route?: string
+  mealInfo?: string
+  safetyNotice?: string
+  disclaimer?: string
+  participantCount?: number
+  maxParticipants?: number
 }
 
 /**
@@ -76,11 +94,11 @@ export interface AdminContact {
 /**
  * 活动标签配置
  */
-export const ACTIVITY_TAG_CONFIG: Record<ActivityTag, { color: string; bgColor: string; label: string }> = {
-  'photo': { color: '#9945FF', bgColor: 'rgba(153, 69, 255, 0.15)', label: '摄影' },
-  'morning': { color: '#2ED573', bgColor: 'rgba(46, 213, 115, 0.15)', label: '晨骑' },
-  'free': { color: '#FF7A00', bgColor: 'rgba(255, 122, 0, 0.15)', label: '免费' },
-  'gather': { color: '#FF4757', bgColor: 'rgba(255, 71, 87, 0.15)', label: '聚会' },
-  'scenic': { color: '#00BCD4', bgColor: 'rgba(0, 188, 212, 0.15)', label: '景区' },
-  'greenway': { color: '#4CAF50', bgColor: 'rgba(76, 175, 80, 0.15)', label: '绿道' },
+export const ACTIVITY_TAG_CONFIG: Record<ActivityTag, { color: string, bgColor: string, label: string }> = {
+  photo: { color: '#9945FF', bgColor: 'rgba(153, 69, 255, 0.15)', label: '摄影' },
+  morning: { color: '#2ED573', bgColor: 'rgba(46, 213, 115, 0.15)', label: '晨骑' },
+  free: { color: '#FF7A00', bgColor: 'rgba(255, 122, 0, 0.15)', label: '免费' },
+  gather: { color: '#FF4757', bgColor: 'rgba(255, 71, 87, 0.15)', label: '聚会' },
+  scenic: { color: '#00BCD4', bgColor: 'rgba(0, 188, 212, 0.15)', label: '景区' },
+  greenway: { color: '#4CAF50', bgColor: 'rgba(76, 175, 80, 0.15)', label: '绿道' }
 }

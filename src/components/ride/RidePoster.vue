@@ -34,12 +34,14 @@ watch(() => props.visible, async (val) => {
 })
 
 async function handleSave() {
-  if (!posterPath.value) return
+  if (!posterPath.value)
+    return
   await savePoster(posterPath.value)
 }
 
 async function handleShare() {
-  if (!posterPath.value) return
+  if (!posterPath.value)
+    return
   await sharePoster(posterPath.value)
 }
 
@@ -54,12 +56,12 @@ function handleClose() {
 
   <!-- 弹窗内容 -->
   <view v-if="visible && record" class="fixed inset-0 z-[999] flex flex-col items-center justify-center px-[32rpx]">
-    <view class="flex flex-col items-center w-full max-w-[320px]">
+    <view class="max-w-[320px] w-full flex flex-col items-center">
       <!-- 海报容器：固定尺寸防止缩放影响布局 -->
       <view
-        class="relative bg-card rounded-[24rpx] shadow-lg overflow-hidden flex-shrink-0"
-        style="width: 280px; height: 415px;"
         :key="canvasKey"
+        class="relative flex-shrink-0 overflow-hidden rounded-[24rpx] bg-card shadow-lg"
+        style="width: 280px; height: 415px;"
       >
         <!-- Canvas 使用 2 倍尺寸绘制，CSS 缩放至显示尺寸 -->
         <view class="absolute inset-0 origin-top-left" style="transform: scale(0.5); width: 200%; height: 200%;">
@@ -68,16 +70,18 @@ function handleClose() {
             style="width: 560px; height: 830px;"
           />
         </view>
-        
+
         <!-- 生成中遮罩 -->
-        <view v-if="generating" class="absolute inset-0 bg-black/60 flex flex-col items-center justify-center backdrop-blur-sm rounded-[24rpx]">
+        <view v-if="generating" class="absolute inset-0 flex flex-col items-center justify-center rounded-[24rpx] bg-black/60 backdrop-blur-sm">
           <wd-loading type="ring" />
-          <text class="text-[24rpx] text-white mt-[16rpx]">正在生成海报...</text>
+          <text class="mt-[16rpx] text-[24rpx] text-white">
+            正在生成海报...
+          </text>
         </view>
       </view>
 
       <!-- 按钮组：增加间距，防止与海报重叠 -->
-      <view class="flex gap-[16rpx] mt-[48rpx] w-full justify-center flex-shrink-0">
+      <view class="mt-[48rpx] w-full flex flex-shrink-0 justify-center gap-[16rpx]">
         <wd-button
           type="info"
           size="small"

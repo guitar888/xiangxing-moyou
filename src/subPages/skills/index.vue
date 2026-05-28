@@ -7,7 +7,7 @@ definePage({
   style: {
     navigationBarTitleText: 'Agent Skills',
     navigationBarBackgroundColor: '#f9fafb',
-    navigationBarTextStyle: 'black',
+    navigationBarTextStyle: 'black'
   },
 })
 
@@ -18,43 +18,43 @@ const skills = [
     name: 'alova-api-module',
     desc: '快速创建 Alova 请求模块和 Mock 数据',
     icon: 'swap',
-    color: '#007AFF',
+    color: '#007AFF'
   },
   {
     name: 'global-feedback',
     desc: '全局反馈组件（Toast/Message/Loading）使用指南',
     icon: 'chat',
-    color: '#34C759',
+    color: '#34C759'
   },
   {
     name: 'pinia-store-generator',
     desc: '创建符合项目规范的 Pinia Store',
     icon: 'folder',
-    color: '#FFCC00',
+    color: '#FFCC00'
   },
   {
     name: 'uni-page-generator',
     desc: '基于项目规范快速生成 uni-app 页面',
     icon: 'file',
-    color: '#FF9500',
+    color: '#FF9500'
   },
   {
     name: 'vue-composable-creator',
     desc: '快速创建 Vue 3 组合式函数',
     icon: 'setting',
-    color: '#5856D6',
+    color: '#5856D6'
   },
   {
     name: 'wot-router-usage',
     desc: '@wot-ui/router 轻量级路由库使用指南',
     icon: 'location',
-    color: '#FF2D55',
+    color: '#FF2D55'
   },
   {
     name: 'wot-ui',
     desc: 'wot-ui uni-app 组件库开发指南',
     icon: 'app',
-    color: '#FE5900',
+    color: '#FE5900'
   },
 ]
 
@@ -75,10 +75,10 @@ function getIconBg(color: string) {
   <view class="pb-safe box-border min-h-screen bg-[#f9fafb]">
     <!-- Header -->
     <view class="px-6 pb-6 pt-8">
-      <view class="mb-2 text-3xl text-gray-900 font-bold leading-tight">
+      <view class="text-gray-900 mb-2 text-3xl font-bold leading-tight">
         Agent Skills
       </view>
-      <view class="text-base text-gray-500 leading-relaxed">
+      <view class="text-gray-500 text-base leading-relaxed">
         利用智能工具赋能开发效率，<br>打造极致开发体验。
       </view>
     </view>
@@ -88,7 +88,7 @@ function getIconBg(color: string) {
       <view
         v-for="(skill, index) in skills"
         :key="skill.name"
-        class="group relative animate-fade-in-up overflow-hidden rounded-[24px] bg-white p-5 shadow-sm transition-all duration-300 active:scale-[0.98]"
+        class="group animate-fade-in-up relative overflow-hidden rounded-[24px] bg-white p-5 shadow-sm transition-all duration-300 active:scale-[0.98]"
         :style="{ animationDelay: `${index * 100}ms` }"
         @click="handleClick(skill.name)"
       >
@@ -109,12 +109,12 @@ function getIconBg(color: string) {
           <!-- Text Content -->
           <view class="min-w-0 flex-1 pt-0.5">
             <view class="flex items-center justify-between">
-              <view class="truncate pr-2 text-lg text-gray-900 font-bold">
+              <view class="text-gray-900 truncate pr-2 text-lg font-bold">
                 {{ skill.name }}
               </view>
               <wd-icon name="arrow-right" color="#E5E7EB" size="20px" />
             </view>
-            <view class="line-clamp-2 mt-1 text-sm text-gray-500 leading-relaxed">
+            <view class="text-gray-500 line-clamp-2 mt-1 text-sm leading-relaxed">
               {{ skill.desc }}
             </view>
           </view>

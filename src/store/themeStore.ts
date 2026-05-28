@@ -1,6 +1,5 @@
 import type { SystemThemeState, ThemeMode } from '@/composables/types/theme'
 import { defineStore } from 'pinia'
-import { themeColorOptions } from '@/composables/types/theme'
 
 const PRIMARY_COLOR = '#2ED573'
 
@@ -15,7 +14,7 @@ const themeVars = {
   darkColor: '#FFFFFF',
   darkColor2: '#CCCCCC',
   darkColor3: '#8D99AE',
-  colorTheme: PRIMARY_COLOR,
+  colorTheme: PRIMARY_COLOR
 }
 
 const cssVars = {
@@ -32,7 +31,7 @@ const cssVars = {
   '--wot-color-border-light': '#444444',
   '--wot-color-warning': '#FF7A00',
   '--wot-color-danger': '#FF4757',
-  '--wot-color-success': PRIMARY_COLOR,
+  '--wot-color-success': PRIMARY_COLOR
 }
 
 Object.assign(themeVars, cssVars)
@@ -45,13 +44,13 @@ Object.assign(themeVars, cssVars)
 export const useThemeStore = defineStore('theme', {
   state: (): SystemThemeState => ({
     theme: 'dark',
-    themeVars: { ...themeVars },
+    themeVars: { ...themeVars }
   }),
 
   getters: {
     isDark: state => state.theme === 'dark',
     primaryColor: () => PRIMARY_COLOR,
-    cssVars: () => cssVars,
+    cssVars: () => cssVars
   },
 
   actions: {
@@ -67,6 +66,6 @@ export const useThemeStore = defineStore('theme', {
     initSystemTheme() {
       this.theme = 'dark'
       console.log('初始化系统主题:', this.theme)
-    },
+    }
   },
 })

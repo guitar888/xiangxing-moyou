@@ -1,7 +1,5 @@
 代码变更
 
-
-
 tabbar.vue
 /Users/winter/Desktop/tech/襄阳摩友助手/2.0version/moyou2.0/xiangxingmoyou/src/layouts
 +79
@@ -35,7 +33,7 @@ export default {
   options: {
     addGlobalClass: true,
     virtualHost: true,
-    styleIsolation: 'shared',
+    styleIsolation: 'shared'
   },
 }
 </script>
@@ -45,8 +43,8 @@ export default {
   <wd-gap safe-area-bottom height="var(--wot-tabbar-height, 50px)" />
   <wd-tabbar
     :model-value="activeTabbar.name" bordered safe-area-inset-bottom fixed
-    @change="handleTabbarChange"
     inactive-color="#A0AEC0"
+    @change="handleTabbarChange"
   >
     <wd-tabbar-item
       v-for="(item, index) in tabbarList" :key="index" :name="item.name"

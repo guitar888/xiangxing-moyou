@@ -80,21 +80,25 @@ const lastUpdate = '2026年5月19日'
       :style="{ paddingTop: `${statusBarHeight + 12}px` }"
     >
       <view class="flex items-center gap-[12rpx] px-[24rpx] pb-[12rpx]">
-        <text class="i-carbon:arrow-left text-[32rpx] text-primary cursor-pointer" @click="handleBack" />
+        <text class="i-carbon:arrow-left cursor-pointer text-[32rpx] text-primary" @click="handleBack" />
         <text class="i-carbon:document text-[32rpx] text-primary" />
-        <text class="text-[32rpx] font-700 tracking-[1px]" :style="{ color: '#2ED573' }">隐私协议</text>
+        <text class="text-[32rpx] font-700 tracking-[1px]" :style="{ color: '#2ED573' }">
+          隐私协议
+        </text>
       </view>
     </view>
 
     <!-- 内容 -->
     <view class="p-[24rpx]">
       <!-- 声明 -->
-      <view class="mb-[24rpx] rounded-[16rpx] border border-white/10 p-[20rpx]" :style="{ background: 'rgba(46, 213, 115, 0.08)' }">
+      <view class="mb-[24rpx] border border-white/10 rounded-[16rpx] p-[20rpx]" :style="{ background: 'rgba(46, 213, 115, 0.08)' }">
         <view class="flex items-start gap-[12rpx]">
-          <text class="i-carbon:shield text-[36rpx] text-primary mt-[4rpx]" />
+          <text class="i-carbon:shield mt-[4rpx] text-[36rpx] text-primary" />
           <view>
-            <text class="text-[26rpx] text-white font-600">数据安全承诺</text>
-            <text class="text-[22rpx] text-white/70 mt-[8rpx] block leading-[1.6]">
+            <text class="text-[26rpx] text-white font-600">
+              数据安全承诺
+            </text>
+            <text class="mt-[8rpx] block text-[22rpx] text-white/70 leading-[1.6]">
               您的骑行数据仅保存在本地设备，我们严格遵守相关法规，保护您的隐私安全。本小程序为非盈利公益工具，不收集个人身份信息。
             </text>
           </view>
@@ -106,19 +110,25 @@ const lastUpdate = '2026年5月19日'
         <view
           v-for="(section, index) in sections"
           :key="index"
-          class="rounded-[16rpx] bg-card border border-white/10 p-[20rpx]"
+          class="border border-white/10 rounded-[16rpx] bg-card p-[20rpx]"
         >
-          <view class="flex items-center gap-[8rpx] mb-[12rpx]">
+          <view class="mb-[12rpx] flex items-center gap-[8rpx]">
             <text class="i-carbon:policy text-[24rpx] text-primary" />
-            <text class="text-[26rpx] text-white font-600">{{ section.title }}</text>
+            <text class="text-[26rpx] text-white font-600">
+              {{ section.title }}
+            </text>
           </view>
-          <text class="text-[22rpx] text-white/60 leading-[1.8] whitespace-pre-line">{{ section.content }}</text>
+          <text class="whitespace-pre-line text-[22rpx] text-white/60 leading-[1.8]">
+            {{ section.content }}
+          </text>
         </view>
       </view>
 
       <!-- 底部 -->
       <view class="mt-[32rpx] text-center">
-        <text class="text-[20rpx] text-white/40">最后更新：{{ lastUpdate }}</text>
+        <text class="text-[20rpx] text-white/40">
+          最后更新：{{ lastUpdate }}
+        </text>
       </view>
     </view>
   </view>

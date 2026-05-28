@@ -2,7 +2,7 @@
 definePage({
   name: 'demo-protected',
   style: {
-    navigationBarTitleText: '受保护页面',
+    navigationBarTitleText: '受保护页面'
   },
 })
 
@@ -14,17 +14,17 @@ function goBack() {
 </script>
 
 <template>
-  <view class="min-h-screen bg-gray-100 py-3 dark:bg-[var(--wot-dark-background)]">
+  <view class="bg-gray-100 min-h-screen py-3 dark:bg-[var(--wot-dark-background)]">
     <!-- 头部 -->
     <view class="mx-3 mb-3">
       <view class="rounded-3 bg-white px-5 py-6 text-center dark:bg-[var(--wot-dark-background2)]">
         <view class="mb-3 text-8">
           🔒
         </view>
-        <view class="mb-2 text-5 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+        <view class="text-gray-800 mb-2 text-5 font-bold dark:text-[var(--wot-dark-color)]">
           受保护的页面
         </view>
-        <view class="text-3.5 text-gray-600 dark:text-[var(--wot-dark-color2)]">
+        <view class="text-gray-600 text-3.5 dark:text-[var(--wot-dark-color2)]">
           这个页面被路由守卫保护，只有登录用户才能访问
         </view>
       </view>

@@ -23,14 +23,14 @@ defineOptions({
     PieChart: 'view',
     RadarChart: 'view',
     ScatterChart: 'view',
-    StackedBarChart: 'view',
+    StackedBarChart: 'view'
   },
 })
 
 definePage({
   name: 'echartsAsync',
   style: {
-    navigationBarTitleText: 'echarts 异步跨包示例',
+    navigationBarTitleText: 'echarts 异步跨包示例'
   },
 })
 </script>
@@ -39,7 +39,7 @@ definePage({
   <view class="bg-gray-50 p-5">
     <!-- 饼图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         饼图示例
       </view>
       <PieChart />
@@ -47,7 +47,7 @@ definePage({
 
     <!-- 柱状图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         柱状图示例
       </view>
       <BarChart />
@@ -55,7 +55,7 @@ definePage({
 
     <!-- 折线图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         折线图示例
       </view>
       <LineChart />
@@ -63,7 +63,7 @@ definePage({
 
     <!-- 雷达图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         雷达图示例
       </view>
       <RadarChart />
@@ -71,7 +71,7 @@ definePage({
 
     <!-- 散点图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         散点图示例
       </view>
       <ScatterChart />
@@ -79,7 +79,7 @@ definePage({
 
     <!-- 环形图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         环形图示例
       </view>
       <DonutChart />
@@ -87,7 +87,7 @@ definePage({
 
     <!-- 漏斗图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         漏斗图示例
       </view>
       <FunnelChart />
@@ -95,7 +95,7 @@ definePage({
 
     <!-- 仪表盘图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         仪表盘示例
       </view>
       <GaugeChart />
@@ -103,7 +103,7 @@ definePage({
 
     <!-- 迷你折线图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         迷你折线图示例
       </view>
       <MiniLineChart />
@@ -111,7 +111,7 @@ definePage({
 
     <!-- 堆叠柱状图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         堆叠柱状图示例
       </view>
       <StackedBarChart />
@@ -119,7 +119,7 @@ definePage({
 
     <!-- 水球图 -->
     <view class="mb-5 rounded-3 bg-white p-5 shadow-sm">
-      <view class="mb-5 text-center text-base text-gray-800 font-medium">
+      <view class="text-gray-800 mb-5 text-center text-base font-medium">
         水球图示例
       </view>
       <LiquidFillChart />

@@ -2,7 +2,7 @@
 definePage({
   name: 'request',
   style: {
-    navigationBarTitleText: '网络请求',
+    navigationBarTitleText: '网络请求'
   },
 })
 
@@ -15,42 +15,42 @@ const alovaFeatures = [
     title: '简单易用',
     description: '观看视频5分钟上手',
     details: '极简的API设计，直观的使用方式，让开发者快速掌握并投入使用',
-    color: 'blue',
+    color: 'blue'
   },
   {
     icon: '🔧',
     title: '完美兼容',
     description: '兼容你最喜欢的技术栈',
     details: '支持Vue、React、Angular等主流框架，以及各种HTTP客户端库',
-    color: 'green',
+    color: 'green'
   },
   {
     icon: '🚀',
     title: '高性能模块',
     description: '20+ 高性能的业务模块',
     details: '提供分页、实时数据、文件上传下载等开箱即用的高性能解决方案',
-    color: 'purple',
+    color: 'purple'
   },
   {
     icon: '🔗',
     title: 'OpenAPI 解决方案',
     description: '更先进的 openAPI 解决方案',
     details: '在代码中和API信息高效交互，自动生成类型定义和请求函数',
-    color: 'orange',
+    color: 'orange'
   },
   {
     icon: '📦',
     title: '请求共享缓存',
     description: '请求共享和响应缓存',
     details: '智能的请求去重和响应缓存机制，显著提升应用性能',
-    color: 'cyan',
+    color: 'cyan'
   },
   {
     icon: '🛡️',
     title: '类型安全',
     description: '完整的 TypeScript 支持',
     details: '从请求到响应的全链路类型安全，减少运行时错误',
-    color: 'red',
+    color: 'red'
   },
 ]
 
@@ -59,13 +59,13 @@ const {
   data: petData,
   loading: petLoading,
   error: petError,
-  send: loadPetData,
+  send: loadPetData
 } = useRequest(
   (status: 'available' | 'pending' | 'sold' = 'available') => Apis.pet.findPetsByStatus({
-    params: { status },
+    params: { status }
   }),
   {
-    immediate: false,
+    immediate: false
   },
 ).onError((error) => {
   GlobalToast.error(error.error?.message || '获取宠物列表失败')
@@ -76,16 +76,16 @@ const {
   data: loginData,
   loading: loginLoading,
   error: loginError,
-  send: performLogin,
+  send: performLogin
 } = useRequest(
   (username: string, password: string) => Apis.user.loginUser({
     params: {
       username,
-      password,
+      password
     },
   }),
   {
-    immediate: false,
+    immediate: false
   },
 ).onError((error) => {
   GlobalToast.error(error.error?.message || '用户登录失败')
@@ -112,27 +112,27 @@ function handleNavigate(url: string) {
     success: () => {
       uni.hideToast()
       GlobalToast.success(`${url} 已复制到剪贴板`)
-    },
+    }
   })
   // #endif
 }
 </script>
 
 <template>
-  <view class="min-h-screen bg-gray-100 py-3 dark:bg-[var(--wot-dark-background)]">
+  <view class="bg-gray-100 min-h-screen py-3 dark:bg-[var(--wot-dark-background)]">
     <!-- 头部介绍 -->
     <view class="mx-3 mb-3">
       <view class="rounded-3 bg-white px-5 py-8 text-center dark:bg-[var(--wot-dark-background2)]">
         <view class="mb-3 text-10">
           🌐
         </view>
-        <view class="mb-2 text-6 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+        <view class="text-gray-800 mb-2 text-6 font-bold dark:text-[var(--wot-dark-color)]">
           Alova 网络请求
         </view>
-        <view class="mb-2 text-3.5 text-gray-600 leading-relaxed dark:text-[var(--wot-dark-color2)]">
+        <view class="text-gray-600 mb-2 text-3.5 leading-relaxed dark:text-[var(--wot-dark-color2)]">
           极致高效的请求工具集
         </view>
-        <view class="text-3 text-gray-500 leading-relaxed dark:text-[var(--wot-dark-color2)]">
+        <view class="text-gray-500 text-3 leading-relaxed dark:text-[var(--wot-dark-color2)]">
           alova完美兼容你最喜欢的HTTP client和UI框架，快速开发客户端和服务的应用的业务逻辑，同时让API信息与代码进行交互，像虫洞一样拉近后端协作距离，极致高效地集成你的APIs
         </view>
       </view>
@@ -151,10 +151,10 @@ function handleNavigate(url: string) {
               {{ feature.icon }}
             </view>
             <view class="flex-1">
-              <view class="text-3.5 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+              <view class="text-gray-800 text-3.5 font-bold dark:text-[var(--wot-dark-color)]">
                 {{ feature.title }}
               </view>
-              <view class="text-2.5 text-gray-600 dark:text-[var(--wot-dark-color2)]">
+              <view class="text-gray-600 text-2.5 dark:text-[var(--wot-dark-color2)]">
                 {{ feature.description }}
               </view>
             </view>
@@ -172,11 +172,11 @@ function handleNavigate(url: string) {
             <view class="mr-2 text-5">
               🐾
             </view>
-            <view class="text-4 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+            <view class="text-gray-800 text-4 font-bold dark:text-[var(--wot-dark-color)]">
               宠物列表请求
             </view>
           </view>
-          <view class="mb-3 text-3 text-gray-600 leading-relaxed dark:text-[var(--wot-dark-color2)]">
+          <view class="text-gray-600 mb-3 text-3 leading-relaxed dark:text-[var(--wot-dark-color2)]">
             使用 useRequest 获取宠物列表，支持参数传递和错误处理
           </view>
 
@@ -206,11 +206,11 @@ function handleNavigate(url: string) {
           </view>
 
           <!-- 代码示例 -->
-          <view class="mt-3 rounded-2 bg-gray-50 p-3 dark:bg-[var(--wot-dark-background3)]">
-            <view class="mb-2 text-3 text-gray-700 font-bold dark:text-[var(--wot-dark-color)]">
+          <view class="bg-gray-50 mt-3 rounded-2 p-3 dark:bg-[var(--wot-dark-background3)]">
+            <view class="text-gray-700 mb-2 text-3 font-bold dark:text-[var(--wot-dark-color)]">
               代码示例:
             </view>
-            <view class="text-2.5 text-gray-600 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">
+            <view class="text-gray-600 text-2.5 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">
               const { data, loading, send } = useRequest(\n
               &nbsp;&nbsp;(status) => Apis.pet.findPetsByStatus({ params: { status } }),\n
               &nbsp;&nbsp;{ immediate: false }\n
@@ -225,11 +225,11 @@ function handleNavigate(url: string) {
             <view class="mr-2 text-5">
               👤
             </view>
-            <view class="text-4 text-gray-800 font-bold dark:text-[var(--wot-dark-color)]">
+            <view class="text-gray-800 text-4 font-bold dark:text-[var(--wot-dark-color)]">
               用户登录请求
             </view>
           </view>
-          <view class="mb-3 text-3 text-gray-600 leading-relaxed dark:text-[var(--wot-dark-color2)]">
+          <view class="text-gray-600 mb-3 text-3 leading-relaxed dark:text-[var(--wot-dark-color2)]">
             演示多参数传递和POST请求处理
           </view>
 
@@ -259,11 +259,11 @@ function handleNavigate(url: string) {
           </view>
 
           <!-- 代码示例 -->
-          <view class="mt-3 rounded-2 bg-gray-50 p-3 dark:bg-[var(--wot-dark-background3)]">
-            <view class="mb-2 text-3 text-gray-700 font-bold dark:text-[var(--wot-dark-color)]">
+          <view class="bg-gray-50 mt-3 rounded-2 p-3 dark:bg-[var(--wot-dark-background3)]">
+            <view class="text-gray-700 mb-2 text-3 font-bold dark:text-[var(--wot-dark-color)]">
               代码示例:
             </view>
-            <view class="text-2.5 text-gray-600 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">
+            <view class="text-gray-600 text-2.5 leading-relaxed font-mono dark:text-[var(--wot-dark-color2)]">
               const { data, loading, send } = useRequest(\n
               &nbsp;&nbsp;(username, password) => Apis.user.loginUser({\n
               &nbsp;&nbsp;&nbsp;&nbsp;params: { username, password }\n

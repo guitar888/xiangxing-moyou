@@ -4,7 +4,7 @@
  * 统一封装类型筛选和区域筛选弹窗
  */
 import type { SpotType } from '@/types'
-import { SPOT_TYPE_CONFIG, REGION_CONFIG } from '@/types'
+import { REGION_CONFIG, SPOT_TYPE_CONFIG } from '@/types'
 
 export interface FilterOption {
   key: string
@@ -37,7 +37,7 @@ const popupRef = ref()
 
 const showPopup = computed({
   get: () => props.modelValue,
-  set: (val) => emit('update:modelValue', val),
+  set: val => emit('update:modelValue', val),
 })
 
 const currentValues = ref<string[]>([...props.activeValues])
@@ -106,11 +106,13 @@ function toggleOption(key: string) {
     emit('update:modelValue', false)
     emit('confirm-values', [key])
     emit('confirm')
-  } else {
+  }
+  else {
     const index = currentValues.value.indexOf(key)
     if (index > -1) {
       currentValues.value.splice(index, 1)
-    } else {
+    }
+    else {
       currentValues.value.push(key)
     }
     emit('change', [...currentValues.value])
@@ -145,36 +147,40 @@ function handleClose() {
       lazy-render
     >
       <view class="bg-[var(--wot-color-bg-card)] px-[32rpx] py-[24rpx]">
-      <view class="flex items-center justify-between mb-[24rpx]">
-        <text class="text-[32rpx] font-700 text-white">{{ title }}</text>
-        <view class="flex items-center gap-[16rpx]">
-          <text
-            v-if="hasFilter"
-            class="text-[24rpx] text-gray"
-            @click="handleClear"
-          >
-            一键清空
+        <view class="mb-[24rpx] flex items-center justify-between">
+          <text class="text-[32rpx] text-white font-700">
+            {{ title }}
           </text>
-          <text class="i-carbon:close text-[32rpx] text-gray" @click="handleClose" />
+          <view class="flex items-center gap-[16rpx]">
+            <text
+              v-if="hasFilter"
+              class="text-[24rpx] text-gray"
+              @click="handleClear"
+            >
+              一键清空
+            </text>
+            <text class="i-carbon:close text-[32rpx] text-gray" @click="handleClose" />
+          </view>
+        </view>
+
+        <view class="flex flex-wrap gap-[22rpx]">
+          <wd-button
+            v-for="option in options"
+            :key="option.key"
+            :type="isActive(option.key) ? (type === 'region' ? 'warning' : 'primary') : 'info'"
+            size="small"
+            custom-class="rounded-[24rpx] font-500 px-[24rpx] py-[16rpx]"
+            @click="toggleOption(option.key)"
+          >
+            <view class="flex items-center gap-[8rpx]">
+              <text v-if="option.icon" :class="option.icon" class="text-[24rpx]" />
+              <text class="text-[24rpx]">
+                {{ option.label }}
+              </text>
+            </view>
+          </wd-button>
         </view>
       </view>
-
-      <view class="flex flex-wrap gap-[22rpx]">
-        <wd-button
-          v-for="option in options"
-          :key="option.key"
-          :type="isActive(option.key) ? (type === 'region' ? 'warning' : 'primary') : 'info'"
-          size="small"
-          custom-class="rounded-[24rpx] font-500 px-[24rpx] py-[16rpx]"
-          @click="toggleOption(option.key)"
-        >
-          <view class="flex items-center gap-[8rpx]">
-            <text v-if="option.icon" :class="option.icon" class="text-[24rpx]" />
-            <text class="text-[24rpx]">{{ option.label }}</text>
-          </view>
-        </wd-button>
-      </view>
-    </view>
-  </wd-popup>
+    </wd-popup>
   </wd-root-portal>
 </template>

@@ -5,25 +5,25 @@ defineOptions({
   },
 })
 
-interface Props {
-  visible: boolean
-  title?: string
-  buttonText?: string
-}
-
 withDefaults(defineProps<Props>(), {
   title: '加载失败',
-  buttonText: '重新加载',
+  buttonText: '重新加载'
 })
 
 const emit = defineEmits<{
   retry: []
 }>()
+
+interface Props {
+  visible: boolean
+  title?: string
+  buttonText?: string
+}
 </script>
 
 <template>
   <!-- #ifdef H5 -->
-  <view v-if="visible" class="bg-base/90 fixed inset-0 z-[9999] flex items-center justify-center backdrop-blur-sm">
+  <view v-if="visible" class="fixed inset-0 z-[9999] flex items-center justify-center bg-base/90 backdrop-blur-sm">
     <view class="text-center">
       <view class="mb-[20rpx] text-[80rpx] drop-shadow-[0_0_20px_var(--wot-color-warning)] filter">
         ⚠️
@@ -32,7 +32,7 @@ const emit = defineEmits<{
         {{ title }}
       </text>
       <view
-        class="from-primary mx-auto cursor-pointer rounded-[12rpx] to-[var(--wot-color-theme-dark)] bg-gradient-to-r px-[40rpx] py-[20rpx] shadow-[0_4rpx_16px_var(--wot-color-theme)] transition-all duration-100 active:scale-95 active:shadow-none"
+        class="mx-auto cursor-pointer rounded-[12rpx] from-primary to-[var(--wot-color-theme-dark)] bg-gradient-to-r px-[40rpx] py-[20rpx] shadow-[0_4rpx_16px_var(--wot-color-theme)] transition-all duration-100 active:scale-95 active:shadow-none"
         @click="emit('retry')"
       >
         <text class="text-[26rpx] text-base font-600">
@@ -46,10 +46,10 @@ const emit = defineEmits<{
   <!-- #ifndef H5 -->
   <view v-if="visible" class="mini-error-page fixed inset-0 z-[9999] flex items-center justify-center">
     <view class="text-center">
-      <view class="mb-[20rpx] text-[80rpx] mini-error-icon">
+      <view class="mini-error-icon mb-[20rpx] text-[80rpx]">
         ⚠️
       </view>
-      <text class="mb-[40rpx] block mini-error-title">
+      <text class="mini-error-title mb-[40rpx] block">
         {{ title }}
       </text>
       <view class="mini-error-button" @click="emit('retry')">

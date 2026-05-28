@@ -4,6 +4,10 @@ import { GridComponent, LegendComponent, TooltipComponent } from 'echarts/compon
 import * as echarts from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 
+const props = withDefaults(defineProps<Props>(), {
+  data: () => [],
+})
+
 echarts.use([
   GridComponent,
   LegendComponent,
@@ -22,10 +26,6 @@ interface Props {
   data?: MonthData[]
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  data: () => [],
-})
-
 const option = computed(() => {
   const sortedData = [...props.data].sort((a, b) => a.month.localeCompare(b.month))
 
@@ -35,21 +35,21 @@ const option = computed(() => {
       backgroundColor: 'rgba(18, 18, 18, 0.9)',
       borderColor: '#2ED573',
       textStyle: {
-        color: '#FFFFFF'
+        color: '#FFFFFF',
       }
     },
     legend: {
       data: ['骑行距离', '骑行次数'],
       top: 10,
       textStyle: {
-        color: '#8D99AE'
+        color: '#8D99AE',
       }
     },
     grid: {
       left: '3%',
       right: '4%',
       bottom: '3%',
-      containLabel: true
+      containLabel: true,
     },
     xAxis: {
       type: 'category',
@@ -57,11 +57,11 @@ const option = computed(() => {
       data: sortedData.map(item => item.month),
       axisLine: {
         lineStyle: {
-          color: '#333333'
+          color: '#333333',
         }
       },
       axisLabel: {
-        color: '#8D99AE'
+        color: '#8D99AE',
       }
     },
     yAxis: [
@@ -71,17 +71,17 @@ const option = computed(() => {
         position: 'left',
         axisLine: {
           lineStyle: {
-            color: '#2ED573'
+            color: '#2ED573',
           }
         },
         axisLabel: {
-          color: '#8D99AE'
+          color: '#8D99AE',
         },
         splitLine: {
           lineStyle: {
-            color: '#333333'
+            color: '#333333',
           }
-        }
+        },
       },
       {
         type: 'value',
@@ -89,16 +89,16 @@ const option = computed(() => {
         position: 'right',
         axisLine: {
           lineStyle: {
-            color: '#FF7A00'
+            color: '#FF7A00',
           }
         },
         axisLabel: {
-          color: '#8D99AE'
+          color: '#8D99AE',
         },
         splitLine: {
-          show: false
+          show: false,
         }
-      }
+      },
     ],
     series: [
       {
@@ -108,7 +108,7 @@ const option = computed(() => {
         data: sortedData.map(item => item.totalDistance),
         smooth: true,
         itemStyle: {
-          color: '#2ED573'
+          color: '#2ED573',
         },
         areaStyle: {
           color: {
@@ -119,9 +119,9 @@ const option = computed(() => {
             y2: 1,
             colorStops: [
               { offset: 0, color: 'rgba(46, 213, 115, 0.3)' },
-              { offset: 1, color: 'rgba(46, 213, 115, 0.1)' }
+              { offset: 1, color: 'rgba(46, 213, 115, 0.1)' },
             ]
-          }
+          },
         }
       },
       {
@@ -131,7 +131,7 @@ const option = computed(() => {
         data: sortedData.map(item => item.totalRides),
         smooth: true,
         itemStyle: {
-          color: '#FF7A00'
+          color: '#FF7A00',
         },
         areaStyle: {
           color: {
@@ -142,11 +142,11 @@ const option = computed(() => {
             y2: 1,
             colorStops: [
               { offset: 0, color: 'rgba(255, 122, 0, 0.3)' },
-              { offset: 1, color: 'rgba(255, 122, 0, 0.1)' }
+              { offset: 1, color: 'rgba(255, 122, 0, 0.1)' },
             ]
-          }
+          },
         }
-      }
+      },
     ]
   }
 })

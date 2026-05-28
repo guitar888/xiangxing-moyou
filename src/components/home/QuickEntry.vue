@@ -58,7 +58,7 @@ function handleEntryClick(entry: QuickEntry) {
           :class="entry.highlight ? 'bg-[rgba(46,213,115,0.2)] shadow-[0_2rpx_8rpx_rgba(46,213,115,0.2)]' : 'bg-hover'"
         >
           <wd-icon v-if="entry.icon && !entry.icon.startsWith('i-')" :name="entry.icon" size="48rpx" :color="entry.highlight ? 'var(--wot-color-theme)' : 'var(--wot-color-warning)'" />
-          <text v-else-if="entry.icon" class="text-[40rpx] leading-[40rpx] flex items-center justify-center" :class="[entry.icon, entry.highlight ? 'text-[var(--wot-color-theme)]' : 'text-[var(--wot-color-warning)]']" />
+          <text v-else-if="entry.icon" class="flex items-center justify-center text-[40rpx] leading-[40rpx]" :class="[entry.icon, entry.highlight ? 'text-[var(--wot-color-theme)]' : 'text-[var(--wot-color-warning)]']" />
         </view>
         <text class="mb-[4rpx] text-[24rpx] text-white font-500">
           {{ entry.name }}
@@ -82,14 +82,14 @@ function handleEntryClick(entry: QuickEntry) {
       <view
         v-for="(entry, index) in entries"
         :key="index"
-        :class="['mini-entry-container', entry.highlight ? 'mini-entry-highlight' : '']"
+        class="mini-entry-container" :class="[entry.highlight ? 'mini-entry-highlight' : '']"
         @click="handleEntryClick(entry)"
       >
-        <view :class="['mini-icon-container', entry.highlight ? 'mini-icon-highlight' : '']">
+        <view class="mini-icon-container" :class="[entry.highlight ? 'mini-icon-highlight' : '']">
           <wd-icon v-if="entry.icon && !entry.icon.startsWith('i-')" :name="entry.icon" size="48rpx" :color="entry.highlight ? '#2ED573' : '#FF7A00'" />
           <!-- 小程序端Carbon图标：静态class用view包裹 -->
-          <text v-else-if="entry.icon.includes('map')" class="i-carbon:map text-[40rpx] leading-[40rpx] flex items-center justify-center" :class="entry.highlight ? 'mini-icon-theme' : 'mini-icon-warning'"></text>
-          <text v-else-if="entry.icon.includes('cloud')" class="i-carbon:cloud text-[40rpx] leading-[40rpx] flex items-center justify-center" :class="entry.highlight ? 'mini-icon-theme' : 'mini-icon-warning'"></text>
+          <text v-else-if="entry.icon.includes('map')" class="i-carbon:map flex items-center justify-center text-[40rpx] leading-[40rpx]" :class="entry.highlight ? 'mini-icon-theme' : 'mini-icon-warning'" />
+          <text v-else-if="entry.icon.includes('cloud')" class="i-carbon:cloud flex items-center justify-center text-[40rpx] leading-[40rpx]" :class="entry.highlight ? 'mini-icon-theme' : 'mini-icon-warning'" />
           <view v-else-if="entry.icon" class="mini-icon-wrap" :class="[entry.icon, entry.highlight ? 'mini-icon-theme' : 'mini-icon-warning']" />
         </view>
         <text class="mb-[4rpx] text-[24rpx] text-white font-500">

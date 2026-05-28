@@ -5,7 +5,8 @@ export function useSystemInfo() {
     try {
       const windowInfo = uni.getWindowInfo()
       statusBarHeight.value = windowInfo.statusBarHeight || 20
-    } catch (e) {
+    }
+    catch (e) {
       const systemInfo = uni.getSystemInfoSync()
       statusBarHeight.value = systemInfo.statusBarHeight || 20
     }

@@ -2,7 +2,7 @@
  * 骑行服务 API
  * 预留 Bmob 接口，方便后续对接后端
  */
-import type { RideRecord, RecordFilter, RideStats } from '@/types'
+import type { RecordFilter, RideRecord, RideStats } from '@/types'
 import { mockRideRecords } from '@/api/mock/rideMock'
 
 /**
@@ -23,7 +23,8 @@ export async function getRideRecords(filter?: RecordFilter): Promise<RideRecord[
 
       if (filter === 'week') {
         records = records.filter(r => r.startTime >= weekAgo)
-      } else if (filter === 'month') {
+      }
+      else if (filter === 'month') {
         records = records.filter(r => r.startTime >= monthAgo)
       }
 

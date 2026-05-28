@@ -14,7 +14,7 @@ export async function bmobRequest<T>(
   data?: any
 ): Promise<T> {
   const url = `${BmobConfig.apiUrl}${endpoint}`
-  
+
   const headers = {
     'X-Bmob-Application-Id': BmobConfig.appId,
     'X-Bmob-REST-API-Key': BmobConfig.restKey,
@@ -29,7 +29,7 @@ export async function bmobRequest<T>(
 
   try {
     const response = await fetch(url, config)
-    
+
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}))
       throw new Error(errorData.error || `Bmob API error: ${response.status}`)
@@ -37,7 +37,8 @@ export async function bmobRequest<T>(
 
     const result = await response.json()
     return result as T
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Bmob request failed:', error)
     throw error
   }
@@ -55,7 +56,7 @@ export async function bmobCloudFunction<T>(
 export async function bmobUploadFile(
   filePath: string,
   fileName: string
-): Promise<{ file: { url: string; name: string } }> {
+): Promise<{ file: { url: string, name: string } }> {
   const formData = new FormData()
   formData.append('file', {
     uri: filePath,
@@ -64,7 +65,7 @@ export async function bmobUploadFile(
   } as any)
 
   const url = `${BmobConfig.apiUrl}/files/${fileName}`
-  
+
   const headers = {
     'X-Bmob-Application-Id': BmobConfig.appId,
     'X-Bmob-REST-API-Key': BmobConfig.restKey,
@@ -77,14 +78,15 @@ export async function bmobUploadFile(
       headers,
       body: formData,
     })
-    
+
     if (!response.ok) {
       throw new Error(`File upload failed: ${response.status}`)
     }
 
     const result = await response.json()
     return result
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Bmob file upload failed:', error)
     throw error
   }

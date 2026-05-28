@@ -74,6 +74,15 @@ export default defineConfig({
       }, {
         from: 'alova/client',
         imports: ['usePagination', 'useRequest'],
+      }, {
+        from: '@/api/mock/activityMock',
+        imports: ['mockActivities'],
+      }, {
+        from: '@/api/services/homeService',
+        imports: ['ACTIVITY_COVER_IMAGES'],
+      }, {
+        from: '@/types',
+        imports: ['ACTIVITY_TAG_CONFIG'],
       }],
       dts: 'src/auto-imports.d.ts',
       dirs: ['src/composables', 'src/store', 'src/utils', 'src/api'],

@@ -4,15 +4,15 @@ definePage({
   style: {
     navigationBarTitleText: '工具合集',
     navigationBarBackgroundColor: '#121212',
-    navigationBarTextStyle: 'white',
+    navigationBarTextStyle: 'white'
   },
 })
 </script>
 
 <template>
-  <GlobalStatusEmptyPage 
-    title="工具合集" 
-    subtitle="工具合集功能正在开发中，敬请期待！" 
+  <GlobalStatusEmptyPage
+    title="工具合集"
+    subtitle="工具合集功能正在开发中，敬请期待！"
     icon="🔧"
   />
 </template>

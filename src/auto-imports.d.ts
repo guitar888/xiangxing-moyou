@@ -6,6 +6,8 @@
 export {}
 declare global {
   const $$userConfigMap: typeof import('./api/index')['$$userConfigMap']
+  const ACTIVITY_COVER_IMAGES: typeof import('@/api/services/homeService')['ACTIVITY_COVER_IMAGES']
+  const ACTIVITY_TAG_CONFIG: typeof import('@/types')['ACTIVITY_TAG_CONFIG']
   const Apis: typeof import('./api/index')['Apis']
   const CommonUtil: typeof import('wot-design-uni')['CommonUtil']
   const EXPAND_MONTH_EVENT: typeof import('./composables/rideEvents')['EXPAND_MONTH_EVENT']
@@ -72,6 +74,7 @@ declare global {
   const mapStores: typeof import('pinia')['mapStores']
   const mapWritableState: typeof import('pinia')['mapWritableState']
   const markRaw: typeof import('vue')['markRaw']
+  const mockActivities: typeof import('@/api/mock/activityMock')['mockActivities']
   const mountApis: typeof import('./api/createApis')['mountApis']
   const nextTick: typeof import('vue')['nextTick']
   const onActivated: typeof import('vue')['onActivated']
@@ -385,6 +388,8 @@ declare module 'vue' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly $$userConfigMap: UnwrapRef<typeof import('./api/index')['$$userConfigMap']>
+    readonly ACTIVITY_COVER_IMAGES: UnwrapRef<typeof import('@/api/services/homeService')['ACTIVITY_COVER_IMAGES']>
+    readonly ACTIVITY_TAG_CONFIG: UnwrapRef<typeof import('@/types')['ACTIVITY_TAG_CONFIG']>
     readonly Apis: UnwrapRef<typeof import('./api/index')['Apis']>
     readonly CommonUtil: UnwrapRef<typeof import('wot-design-uni')['CommonUtil']>
     readonly EXPAND_MONTH_EVENT: UnwrapRef<typeof import('./composables/rideEvents')['EXPAND_MONTH_EVENT']>
@@ -451,6 +456,7 @@ declare module 'vue' {
     readonly mapStores: UnwrapRef<typeof import('pinia')['mapStores']>
     readonly mapWritableState: UnwrapRef<typeof import('pinia')['mapWritableState']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
+    readonly mockActivities: UnwrapRef<typeof import('@/api/mock/activityMock')['mockActivities']>
     readonly mountApis: UnwrapRef<typeof import('./api/createApis')['mountApis']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>

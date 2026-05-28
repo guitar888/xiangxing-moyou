@@ -46,9 +46,9 @@ export function useNavigation() {
         console.error('导航失败:', err)
         uni.showToast({
           title: '打开地图失败',
-          icon: 'none',
+          icon: 'none'
         })
-      },
+      }
     })
     // #endif
 
@@ -66,7 +66,7 @@ export function useNavigation() {
    * 导航到打卡点
    * @param spot 打卡点对象
    */
-  function navigateToSpot(spot: { coordinates: Coordinate; name: string }) {
+  function navigateToSpot(spot: { coordinates: Coordinate, name: string }) {
     navigateTo(spot.coordinates, spot.name)
   }
 
@@ -78,7 +78,7 @@ export function useNavigation() {
   function moveToLocation(mapContext: any, coordinate: Coordinate) {
     mapContext?.moveToLocation({
       latitude: coordinate.latitude,
-      longitude: coordinate.longitude,
+      longitude: coordinate.longitude
     })
   }
 
@@ -87,6 +87,6 @@ export function useNavigation() {
     errorMsg,
     navigateTo,
     navigateToSpot,
-    moveToLocation,
+    moveToLocation
   }
 }
