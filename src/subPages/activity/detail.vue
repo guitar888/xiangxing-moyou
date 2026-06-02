@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { ACTIVITY_DISCLAIMER, ACTIVITY_SAFETY_NOTICE } from '@/config/activity'
+import { ACTIVITY_TAG_CONFIG, RIDE_TYPE_CONFIG } from '@/types'
+
 definePage({
   name: 'activityDetail',
   style: {
@@ -94,6 +97,22 @@ function handleShare() {
           <text class="text-[24rpx] text-primary font-500">
             {{ detail.organizer }}
           </text>
+        </view>
+
+        <!-- 骑行类型 -->
+        <view v-if="detail.rideType" class="mb-[24rpx] flex items-center gap-[12rpx]">
+          <text class="text-[32rpx]">
+            {{ RIDE_TYPE_CONFIG[detail.rideType]?.icon }}
+          </text>
+          <view
+            class="rounded-[8rpx] px-[16rpx] py-[8rpx] text-[20rpx] font-500"
+            :style="{
+              backgroundColor: RIDE_TYPE_CONFIG[detail.rideType]?.bgColor,
+              color: RIDE_TYPE_CONFIG[detail.rideType]?.color,
+            }"
+          >
+            {{ RIDE_TYPE_CONFIG[detail.rideType]?.label }}
+          </view>
         </view>
 
         <!-- 标签 -->
@@ -201,21 +220,21 @@ function handleShare() {
 
       <!-- 安全须知 -->
       <view class="mx-[24rpx] mt-[24rpx] rounded-[24rpx] bg-card p-[32rpx]">
-        <text class="mb-[20rpx] block text-[32rpx] text-warning font-600">
+        <text class="mb-[20rpx] block text-[32rpx] text-primary font-600">
           安全须知
         </text>
         <text class="whitespace-pre-wrap text-[26rpx] text-gray leading-relaxed">
-          {{ detail.safetyNotice || '骑行请遵守交通规则，注意安全' }}
+          {{ detail.safetyNotice || ACTIVITY_SAFETY_NOTICE }}
         </text>
       </view>
 
-      <!-- 免责声明 -->
+      <!-- 免责声明（强制显示，优先使用活动自带文案，否则使用全局默认） -->
       <view class="mx-[24rpx] mt-[24rpx] rounded-[24rpx] bg-card p-[32rpx]">
         <text class="mb-[20rpx] block text-[32rpx] text-[#FF4757] font-600">
           免责声明
         </text>
         <text class="whitespace-pre-wrap text-[24rpx] text-gray leading-relaxed">
-          {{ detail.disclaimer || '参与者需对自己的安全负责' }}
+          {{ detail.disclaimer || ACTIVITY_DISCLAIMER }}
         </text>
       </view>
     </template>

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ACTIVITY_TAG_CONFIG, RIDE_TYPE_CONFIG } from '@/types'
+
 interface Props {
   activity: ActivityItem
 }
@@ -86,6 +88,22 @@ function handleShare(e: any) {
           <text class="i-carbon:share text-[16rpx]" />
           <text>分享</text>
         </button>
+      </view>
+
+      <!-- 骑行类型标签 -->
+      <view v-if="activity.rideType" class="mb-[10rpx] flex items-center gap-[6rpx]">
+        <text class="text-[20rpx]">
+          {{ RIDE_TYPE_CONFIG[activity.rideType]?.icon }}
+        </text>
+        <view
+          class="rounded-[6rpx] px-[12rpx] py-[6rpx] text-[18rpx] font-500"
+          :style="{
+            backgroundColor: RIDE_TYPE_CONFIG[activity.rideType]?.bgColor,
+            color: RIDE_TYPE_CONFIG[activity.rideType]?.color,
+          }"
+        >
+          {{ RIDE_TYPE_CONFIG[activity.rideType]?.label }}
+        </view>
       </view>
 
       <!-- 组织者 -->

@@ -179,6 +179,7 @@ export class HomeService {
           mealInfo: activity.mealInfo,
           safetyNotice: activity.safetyNotice,
           disclaimer: activity.disclaimer,
+          rideType: activity.rideType,
         }
       })
     }

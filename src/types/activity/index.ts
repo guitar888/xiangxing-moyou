@@ -19,6 +19,13 @@ export type ActivityStatusTab = 'upcoming' | 'ongoing' | 'ended' | 'all'
 export type ActivityTag = 'photo' | 'morning' | 'free' | 'gather' | 'scenic' | 'greenway'
 
 /**
+ * 骑行类型
+ * city: 市区短途休闲骑（一日往返）
+ * long: 跨市跨省长途摩旅（多日）
+ */
+export type RideType = 'city' | 'long'
+
+/**
  * 活动详情
  */
 export interface Activity {
@@ -45,50 +52,30 @@ export interface Activity {
   mealInfo?: string
   safetyNotice?: string
   disclaimer?: string
+  rideType?: RideType
 }
 
 /**
  * 活动筛选条件
  */
-export type ActivityFilter = ActivityTag | 'all'
+export type ActivityFilter = ActivityTag | 'all' | 'city' | 'long'
 
 /**
- * 活动列表项（用于首页和活动页展示，统一数据源）
+ * 骑行类型配置
  */
-export interface ActivityItem {
-  id: string
-  title: string
-  date: string
-  time: string
-  location: string
-  info: string
-  description: string
-  tags: string[]
-  image: string
-  status: ActivityStatus
-  isFeatured: boolean
-  organizer?: string
-  routeId?: string
-  routeName?: string
-  isUpcoming: boolean
-  countdownText?: string
-  gatherTime?: string
-  gatherLocation?: string
-  route?: string
-  mealInfo?: string
-  safetyNotice?: string
-  disclaimer?: string
-  participantCount?: number
-  maxParticipants?: number
-}
-
-/**
- * 管理员联系方式
- */
-export interface AdminContact {
-  wechatId?: string
-  description?: string
-  available?: boolean
+export const RIDE_TYPE_CONFIG: Record<RideType, { color: string, bgColor: string, label: string, icon: string }> = {
+  city: {
+    color: '#2ED573',
+    bgColor: 'rgba(46, 213, 115, 0.15)',
+    label: '短途休闲',
+    icon: '🏍️',
+  },
+  long: {
+    color: '#FF7A00',
+    bgColor: 'rgba(255, 122, 0, 0.15)',
+    label: '长途摩旅',
+    icon: '🗺️',
+  }
 }
 
 /**
@@ -100,5 +87,14 @@ export const ACTIVITY_TAG_CONFIG: Record<ActivityTag, { color: string, bgColor: 
   free: { color: '#FF7A00', bgColor: 'rgba(255, 122, 0, 0.15)', label: '免费' },
   gather: { color: '#FF4757', bgColor: 'rgba(255, 71, 87, 0.15)', label: '聚会' },
   scenic: { color: '#00BCD4', bgColor: 'rgba(0, 188, 212, 0.15)', label: '景区' },
-  greenway: { color: '#4CAF50', bgColor: 'rgba(76, 175, 80, 0.15)', label: '绿道' }
+  greenway: { color: '#4CAF50', bgColor: 'rgba(76, 175, 80, 0.15)', label: '绿道' },
+}
+
+/**
+ * 管理员联系方式
+ */
+export interface AdminContact {
+  wechatId?: string
+  description?: string
+  available?: boolean
 }

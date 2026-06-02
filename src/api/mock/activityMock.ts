@@ -1,6 +1,10 @@
 /**
  * 活动模块 Mock 数据
  * 注意：status 字段已废弃，由前端根据 date 动态计算
+ *
+ * 骑行类型说明：
+ * - city: 市区短途休闲骑（一日往返，机车俱乐部组织）
+ * - long: 跨市跨省长途摩旅（多日，襄骑大队组织）
  */
 import type { Activity } from '@/types'
 
@@ -17,7 +21,8 @@ export const mockActivities: Activity[] = [
     location: '汉江大桥北岸',
     organizer: '襄行摩友',
     description: '端午节前骑行活动，沿汉江大桥两岸骑行，欣赏汉江美景。全程 20 公里，难度简单，适合所有车友。',
-    tags: ['greenway', 'free'],
+    tags: ['greenway', 'free', 'scenic'],
+    rideType: 'city',
     participantCount: 12,
     maxParticipants: 30,
     gatherTime: '19:00 准时出发',
@@ -25,24 +30,8 @@ export const mockActivities: Activity[] = [
     route: '汉江大桥北岸 → 长虹大桥 → 东津大桥 → 返回',
     mealInfo: '活动结束后自愿聚餐 AA',
     safetyNotice: '请确保车灯完好，佩戴头盔，文明驾驶',
-    disclaimer: '本次活动非盈利，安全责任自负，建议购买保险',
-    coverImage: ''
-  },
-
-  {
-    id: '2',
-    title: '六月避暑薤山行',
-    date: '2026-06-07',
-    time: '08:00',
-    location: '谷城县薤山森林公园',
-    organizer: '襄阳摩协',
-    description: '夏季避暑专线，森林覆盖率 95%，天然氧吧。山路平缓适合休闲骑，山顶避暑山庄品茶休息。全程 32 公里，难度简单。',
-    tags: ['scenic', 'morning', 'free'],
-    participantCount: 18,
-    maxParticipants: 50,
-    routeId: '9',
-    routeName: '薤山森林公园线',
-    coverImage: ''
+    disclaimer: '本小程序仅展示襄阳地区俱乐部或团体自发组织的娱乐性骑行活动，供摩友参考。参加活动前请自行购买意外保险，确保佩戴头盔及必要防护用品。参与者需对自身安全负责，出现任何安全事故，本小程序及开发者不承担任何责任。请根据自身体能、技术水平和防护能力，谨慎评估风险后再参与。',
+    coverImage: '',
   },
 
   {
@@ -53,7 +42,8 @@ export const mockActivities: Activity[] = [
     location: '摩方机车俱乐部',
     organizer: '摩方机车俱乐部',
     description: '摩方机车俱乐部组织的南漳春秋寨骑行活动，沿途风景秀丽，适合中级骑手。',
-    tags: ['scenic', 'gather'],
+    tags: ['scenic', 'gather', 'photo'],
+    rideType: 'city',
     participantCount: 25,
     maxParticipants: 50,
     gatherTime: '上午 8:30 集合，准时出发',
@@ -61,8 +51,8 @@ export const mockActivities: Activity[] = [
     route: '摩方机车俱乐部 → 胜利街 → 宜城 → 春秋寨 → 南漳 → 襄阳',
     mealInfo: '中餐 AA，每人预估 50 元',
     safetyNotice: '注意安全，遵守交规',
-    disclaimer: '非盈利活动，安全责任自负',
-    coverImage: ''
+    disclaimer: '本小程序仅展示襄阳地区俱乐部或团体自发组织的娱乐性骑行活动，供摩友参考。参加活动前请自行购买意外保险，确保佩戴头盔及必要防护用品。参与者需对自身安全负责，出现任何安全事故，本小程序及开发者不承担任何责任。请根据自身体能、技术水平和防护能力，谨慎评估风险后再参与。',
+    coverImage: '',
   },
 
   {
@@ -73,12 +63,153 @@ export const mockActivities: Activity[] = [
     location: '谷城县赵湾乡',
     organizer: '襄骑大队',
     description: '高山公路挑战，海拔落差大，连续弯道驾驶乐趣。适合进阶骑手，全程 52 公里，难度较高。需自备护具，购买保险。',
-    tags: ['scenic'],
+    tags: ['scenic', 'morning', 'gather'],
+    rideType: 'city',
     participantCount: 15,
     maxParticipants: 30,
     routeId: '8',
     routeName: '赵湾天路挑战线',
-    coverImage: ''
+    coverImage: '',
+  },
+
+  {
+    id: '18',
+    title: '夏至汉江夜骑',
+    date: '2026-06-21',
+    time: '19:00',
+    location: '汉江大桥北岸',
+    organizer: '摩方机车俱乐部',
+    description: '夏至日晚骑行活动，沿汉江绿道骑行，享受夏日凉风。全程 18 公里，路况平坦，适合所有车友。',
+    tags: ['greenway', 'free', 'photo'],
+    rideType: 'city',
+    participantCount: 20,
+    maxParticipants: 40,
+    gatherTime: '19:00 准时出发',
+    gatherLocation: '汉江大桥北岸停车场',
+    route: '汉江大桥北岸 → 长虹大桥 → 返回',
+    mealInfo: '活动结束后自愿聚餐 AA',
+    safetyNotice: '请确保车灯完好，佩戴头盔，文明驾驶',
+    disclaimer: '本小程序仅展示襄阳地区俱乐部或团体自发组织的娱乐性骑行活动，供摩友参考。参加活动前请自行购买意外保险，确保佩戴头盔及必要防护用品。参与者需对自身安全负责，出现任何安全事故，本小程序及开发者不承担任何责任。请根据自身体能、技术水平和防护能力，谨慎评估风险后再参与。',
+    coverImage: '',
+  },
+
+  {
+    id: '19',
+    title: '端午节骑行',
+    date: '2026-06-25',
+    time: '09:00',
+    location: '襄阳古城墙',
+    organizer: 'DC 机车俱乐部',
+    description: '端午节特别活动，古城墙环线骑行。全程约 25 公里，感受古城魅力，路况平坦，适合新手。',
+    tags: ['morning', 'free', 'scenic'],
+    rideType: 'city',
+    participantCount: 30,
+    maxParticipants: 60,
+    routeId: '1',
+    routeName: '古城环线',
+    coverImage: '',
+  },
+
+  {
+    id: '20',
+    title: '建党节红色骑行',
+    date: '2026-07-01',
+    time: '08:00',
+    location: '襄阳市体育馆',
+    organizer: '襄行摩友',
+    description: '建党节特别活动，参观红色景点，全程 30 公里。沿途参观襄阳革命纪念馆，了解革命历史。',
+    tags: ['gather', 'scenic', 'morning'],
+    rideType: 'city',
+    participantCount: 45,
+    maxParticipants: 80,
+    gatherTime: '上午 8 点集合，准时出发',
+    gatherLocation: '襄阳市体育馆',
+    route: '体育馆 → 革命纪念馆 → 古城墙 → 返回',
+    mealInfo: '中餐 AA，每人预估 40 元',
+    safetyNotice: '请着统一服装，佩戴头盔，遵守交规',
+    disclaimer: '本小程序仅展示襄阳地区俱乐部或团体自发组织的娱乐性骑行活动，供摩友参考。参加活动前请自行购买意外保险，确保佩戴头盔及必要防护用品。参与者需对自身安全负责，出现任何安全事故，本小程序及开发者不承担任何责任。请根据自身体能、技术水平和防护能力，谨慎评估风险后再参与。',
+    coverImage: '',
+  },
+
+  {
+    id: '21',
+    title: '周末绿道休闲骑',
+    date: '2026-07-05',
+    time: '15:00',
+    location: '汉江湿地公园',
+    organizer: '襄行摩友',
+    description: '周末休闲骑行活动，沿汉江绿道骑行。全程 15 公里，难度简单，适合全家参与。',
+    tags: ['greenway', 'free', 'gather'],
+    rideType: 'city',
+    participantCount: 25,
+    maxParticipants: 50,
+    gatherTime: '下午 3 点集合',
+    gatherLocation: '汉江湿地公园入口',
+    route: '湿地公园 → 鱼梁洲 → 返回',
+    mealInfo: '活动结束后自愿聚餐',
+    coverImage: '',
+  },
+
+  {
+    id: '22',
+    title: '摄影主题骑行',
+    date: '2026-07-12',
+    time: '16:00',
+    location: '东津新区',
+    organizer: '摩方机车俱乐部',
+    description: '摄影爱好者专场骑行，沿途打卡拍照。全程 20 公里，终点有摄影作品分享环节。',
+    tags: ['photo', 'gather', 'scenic'],
+    rideType: 'city',
+    participantCount: 18,
+    maxParticipants: 30,
+    gatherTime: '下午 4 点集合',
+    gatherLocation: '东津新区会展中心',
+    route: '会展中心 → 汉江大桥 → 鱼梁洲 → 返回',
+    mealInfo: '活动现场有茶歇，结束后自愿聚餐',
+    safetyNotice: '骑行途中注意安全，拍照时靠边停车',
+    coverImage: '',
+  },
+
+  {
+    id: '16',
+    title: '川藏线 G318 摩旅',
+    date: '2026-07-15',
+    time: '08:00',
+    location: '襄阳体育馆集合',
+    organizer: '襄骑大队',
+    description: '襄骑大队年度川藏线摩旅活动，成都→拉萨，全程 2100 公里，历时 15 天。翻越折多山、东达山等 14 座高山垭口，体验 318 国道的壮美与艰辛。需大排量 ADV，购买专业保险，有高原骑行经验。',
+    tags: ['scenic', 'gather'],
+    rideType: 'long',
+    participantCount: 8,
+    maxParticipants: 12,
+    gatherTime: '出发前 1 小时集合',
+    gatherLocation: '襄阳市体育馆',
+    route: '襄阳 → 成都 → 雅安 → 康定 → 理塘 → 巴塘 → 八宿 → 波密 → 林芝 → 拉萨',
+    mealInfo: '沿途住宿 + 餐饮 AA，预估费用 8000 元/人',
+    safetyNotice: '高原骑行风险高，需准备氧气瓶、抗高反药物，全程佩戴护具',
+    disclaimer: '本小程序仅展示襄阳地区俱乐部或团体自发组织的娱乐性骑行活动，供摩友参考。参加活动前请自行购买意外保险，确保佩戴头盔及必要防护用品。参与者需对自身安全负责，出现任何安全事故，本小程序及开发者不承担任何责任。请根据自身体能、技术水平和防护能力，谨慎评估风险后再参与。',
+    coverImage: '',
+  },
+
+  {
+    id: '17',
+    title: '西北大环线摩旅',
+    date: '2026-08-10',
+    time: '06:00',
+    location: '襄阳体育馆集合',
+    organizer: '襄骑大队',
+    description: '西北大环线 7 日摩旅，穿越青海、甘肃两省。途经青海湖、茶卡盐湖、敦煌莫高窟、嘉峪关等著名景点，体验大西北的苍茫与壮阔。全程约 2800 公里，适合大排量机车。',
+    tags: ['scenic', 'photo'],
+    rideType: 'long',
+    participantCount: 6,
+    maxParticipants: 10,
+    gatherTime: '早上 6 点准时出发',
+    gatherLocation: '襄阳市体育馆',
+    route: '襄阳 → 西安 → 兰州 → 西宁 → 青海湖 → 茶卡 → 大柴旦 → 敦煌 → 嘉峪关 → 张掖 → 西安 → 襄阳',
+    mealInfo: '沿途住宿 + 餐饮 AA，预估费用 6000 元/人',
+    safetyNotice: '西北昼夜温差大，请准备保暖衣物，注意防晒和补水',
+    disclaimer: '本小程序仅展示襄阳地区俱乐部或团体自发组织的娱乐性骑行活动，供摩友参考。参加活动前请自行购买意外保险，确保佩戴头盔及必要防护用品。参与者需对自身安全负责，出现任何安全事故，本小程序及开发者不承担任何责任。请根据自身体能、技术水平和防护能力，谨慎评估风险后再参与。',
+    coverImage: '',
   },
 
   // ================================================
@@ -93,16 +224,15 @@ export const mockActivities: Activity[] = [
     location: '襄阳古城墙',
     organizer: 'DC 机车俱乐部',
     description: '青年节特别活动，古城墙环线骑行。全程约 25 公里，感受古城魅力，路况平坦，适合新手。',
-    tags: ['morning', 'free'],
+    tags: ['morning', 'free', 'scenic'],
+    rideType: 'city',
     isFeatured: true,
     participantCount: 38,
     maxParticipants: 80,
     routeId: '1',
     routeName: '古城环线',
-    coverImage: ''
+    coverImage: '',
   },
-
-  // 5 月 10 日活动已删除（绿道休闲骑更像自行车活动）
 
   {
     id: '7',
@@ -112,31 +242,16 @@ export const mockActivities: Activity[] = [
     location: '东津新区',
     organizer: '摩方机车俱乐部',
     description: '520 特别活动，东津新区骑行。沿途打卡拍照，终点有惊喜。',
-    tags: ['scenic', 'gather'],
+    tags: ['scenic', 'gather', 'photo'],
+    rideType: 'city',
     participantCount: 52,
     maxParticipants: 60,
-    coverImage: ''
+    coverImage: '',
   },
 
   // ================================================
   // 历史记录 - 4 月
   // ================================================
-
-  {
-    id: '8',
-    title: '清明踏青骑行',
-    date: '2026-04-05',
-    time: '09:00',
-    location: '隆中景区',
-    organizer: '襄阳摩协',
-    description: '清明节踏青活动，前往隆中景区的经典路线，山路风景秀丽。全程 35 公里，难度中等。',
-    tags: ['scenic', 'morning'],
-    participantCount: 56,
-    maxParticipants: 80,
-    routeId: '3',
-    routeName: '隆中探幽',
-    coverImage: ''
-  },
 
   {
     id: '9',
@@ -146,14 +261,15 @@ export const mockActivities: Activity[] = [
     location: '扁山西侧荷花草堂',
     organizer: '襄行摩友',
     description: '谷雨有雨，风调雨顺。春天的最后一个节气，寻一处安静，沏一壶新茶，听一场雨落。',
-    tags: ['scenic', 'free'],
+    tags: ['scenic', 'free', 'photo'],
+    rideType: 'city',
     participantCount: 22,
     maxParticipants: 30,
     gatherTime: '午时三刻（12:00）',
     gatherLocation: '襄城车管所路口集合',
     route: '襄城车管所路口 → 扁山西侧荷花草堂',
     mealInfo: '现场品茶，自备茶点',
-    coverImage: ''
+    coverImage: '',
   },
 
   {
@@ -164,12 +280,13 @@ export const mockActivities: Activity[] = [
     location: '襄阳古城墙',
     organizer: 'DC 机车俱乐部',
     description: '春季古城墙环线，全程约 25 公里。感受古城魅力，路况平坦，适合新手。',
-    tags: ['morning', 'free'],
+    tags: ['morning', 'free', 'greenway'],
+    rideType: 'city',
     participantCount: 34,
     maxParticipants: 80,
     routeId: '1',
     routeName: '古城环线',
-    coverImage: ''
+    coverImage: '',
   },
 
   // ================================================
@@ -184,10 +301,11 @@ export const mockActivities: Activity[] = [
     location: '汉江湿地公园',
     organizer: '襄行摩友',
     description: '植树节特别活动，骑行 + 植树公益行动。全程 20 公里，适合全家参与。',
-    tags: ['greenway', 'gather'],
+    tags: ['greenway', 'gather', 'free'],
+    rideType: 'city',
     participantCount: 68,
     maxParticipants: 100,
-    coverImage: ''
+    coverImage: '',
   },
 
   {
@@ -198,29 +316,16 @@ export const mockActivities: Activity[] = [
     location: '襄阳市体育馆',
     organizer: '摩方机车俱乐部',
     description: '女神节特别活动，邀请女性车友参与。全程 15 公里，休闲骑，终点有礼品。',
-    tags: ['gather', 'free'],
+    tags: ['gather', 'free', 'photo'],
+    rideType: 'city',
     participantCount: 42,
     maxParticipants: 50,
-    coverImage: ''
+    coverImage: '',
   },
 
   // ================================================
   // 历史记录 - 2 月
   // ================================================
-
-  {
-    id: '13',
-    title: '元宵灯会骑行',
-    date: '2026-02-22',
-    time: '18:00',
-    location: '襄阳古城墙环城路',
-    organizer: '襄阳摩协',
-    description: '元宵节特别活动，环襄阳古城墙骑行赏灯会。全程 12 公里，休闲骑，适合全家参与。',
-    tags: ['gather'],
-    participantCount: 85,
-    maxParticipants: 120,
-    coverImage: ''
-  },
 
   {
     id: '14',
@@ -230,10 +335,11 @@ export const mockActivities: Activity[] = [
     location: '汉江大桥',
     organizer: 'DC 机车俱乐部',
     description: '早春骑行活动，沿汉江大桥骑行。全程 18 公里，沿途打卡拍照。',
-    tags: ['scenic', 'gather'],
+    tags: ['scenic', 'gather', 'photo'],
+    rideType: 'city',
     participantCount: 36,
     maxParticipants: 40,
-    coverImage: ''
+    coverImage: '',
   },
 
   {
@@ -244,10 +350,11 @@ export const mockActivities: Activity[] = [
     location: '襄阳市体育馆',
     organizer: '襄行摩友',
     description: '春节后首场团拜活动，摩友聚会，分享新年计划。现场有抽奖环节。',
-    tags: ['gather'],
+    tags: ['gather', 'free'],
+    rideType: 'city',
     participantCount: 95,
     maxParticipants: 150,
-    coverImage: ''
+    coverImage: '',
   },
 ]
 
@@ -255,5 +362,5 @@ export const mockActivities: Activity[] = [
 export const mockAdminContact = {
   wechatId: 'MingChen202Y',
   description: '加群请注明"摩友加群"，管理员会邀请您加入微信群',
-  available: true
+  available: true,
 }

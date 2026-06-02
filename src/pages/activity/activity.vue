@@ -56,6 +56,8 @@ const statusTabs: { key: ActivityStatusTab, label: string, icon: string }[] = [
 // 活动类型筛选标签
 const filters: { key: ActivityFilter, label: string }[] = [
   { key: 'all', label: '全部' },
+  { key: 'city', label: '短途' },
+  { key: 'long', label: '长途' },
   { key: 'morning', label: '晨骑' },
   { key: 'gather', label: '聚会' },
   { key: 'scenic', label: '景区' },
@@ -80,7 +82,14 @@ const finalFilteredActivities = computed(() => {
 
   // 类型过滤
   if (currentFilter.value !== 'all') {
-    data = data.filter(a => a.tags.includes(currentFilter.value))
+    // 短途/长途筛选
+    if (currentFilter.value === 'city' || currentFilter.value === 'long') {
+      data = data.filter(a => a.rideType === currentFilter.value)
+    }
+    // 其他标签筛选
+    else {
+      data = data.filter(a => a.tags.includes(currentFilter.value))
+    }
   }
 
   return data

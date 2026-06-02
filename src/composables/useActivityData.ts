@@ -34,7 +34,7 @@ export function useActivityData() {
     scenic: '景区',
     greenway: '绿道',
     free: '免费',
-    photo: '摄影'
+    photo: '摄影',
   }
 
   // ================================================
@@ -51,7 +51,7 @@ export function useActivityData() {
         return exists
       })
       expandedMonths.value = new Set(monthKeys)
-    },
+    }
   )
 
   // ================================================
@@ -62,14 +62,8 @@ export function useActivityData() {
     error.value = false
 
     try {
-      const filterToUse = filter || currentFilter.value
-      let data = await HomeService.getActivities()
-
-      if (filterToUse !== 'all') {
-        const tagName = filterMap[filterToUse]
-        data = data.filter(a => a.tags.includes(tagName))
-      }
-
+      // 始终加载全部数据，过滤在页面 computed 中处理
+      const data = await HomeService.getActivities()
       activities.value = data
     }
     catch (err) {
@@ -120,15 +114,15 @@ export function useActivityData() {
   // ================================================
 
   const upcomingActivities = computed(() =>
-    activities.value.filter(a => a.status === 'upcoming'),
+    activities.value.filter(a => a.status === 'upcoming')
   )
 
   const ongoingActivities = computed(() =>
-    activities.value.filter(a => a.status === 'ongoing'),
+    activities.value.filter(a => a.status === 'ongoing')
   )
 
   const endedActivities = computed(() =>
-    activities.value.filter(a => a.status === 'ended'),
+    activities.value.filter(a => a.status === 'ended')
   )
 
   /** 当前 Tab 对应的活动列表（未分组） */
@@ -169,7 +163,7 @@ export function useActivityData() {
           month: monthLabel,
           monthKey,
           activities: groups[monthKey],
-          expanded: expandedMonths.value.has(monthKey)
+          expanded: expandedMonths.value.has(monthKey),
         }
       })
   })
@@ -196,6 +190,6 @@ export function useActivityData() {
     loadActivities,
     setFilter,
     setStatusTab,
-    toggleMonth
+    toggleMonth,
   }
 }

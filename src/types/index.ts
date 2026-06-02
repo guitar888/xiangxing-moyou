@@ -4,8 +4,8 @@
  */
 
 // 活动模块
-export type { Activity, ActivityFilter, ActivityItem, ActivityStatus, ActivityStatusTab, ActivityTag, AdminContact } from './activity'
-export { ACTIVITY_TAG_CONFIG } from './activity'
+export type { Activity, ActivityFilter, ActivityItem, ActivityStatus, ActivityStatusTab, ActivityTag, AdminContact, RideType } from './activity'
+export { ACTIVITY_TAG_CONFIG, RIDE_TYPE_CONFIG } from './activity'
 
 // 轮播图模块
 export type { BannerData } from './banner'
