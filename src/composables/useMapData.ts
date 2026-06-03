@@ -76,13 +76,8 @@ export function useMapData() {
     return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
   })
 
-  // 热门路线（取前4条）
-  const hotRoutes = computed(() => {
-    return routes.value.slice(0, 4)
-  })
-
-  // 智能分类（包含露营）
-  const spotTypes: SpotType[] = ['scenic', 'food', 'coffee', 'photo', 'drone', 'camp']
+  // 智能分类（去掉无人机）
+  const spotTypes: SpotType[] = ['scenic', 'food', 'coffee', 'photo', 'camp']
 
   // ================================================
   // 定位方法
@@ -651,8 +646,6 @@ export function useMapData() {
     // 状态 - 视图
     mapViewHeight,
     listHeight,
-    // 热门路线
-    hotRoutes,
     // 地图标记
     markers,
     // 定位方法

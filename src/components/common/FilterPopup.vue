@@ -57,7 +57,6 @@ const SPOT_TYPE_ICONS: Record<SpotType, string> = {
   food: 'i-carbon:restaurant',
   coffee: 'i-carbon:cafe',
   photo: 'i-carbon:camera',
-  drone: 'i-carbon:drone',
   camp: 'i-carbon:military-camp',
 }
 

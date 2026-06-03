@@ -11,21 +11,29 @@ definePage({
 
 const { success: showToast } = useGlobalToast()
 
-// 提车日期：2024 年 6 月 19 日
-const deliveryDate = new Date('2024-06-19')
+// 摩托车提车日期：2024 年 6 月 19 日
+const motoDeliveryDate = new Date('2024-06-19')
+
+// 自行车提车日期：2026 年 6 月 3 日（新手入坑）
+const bikeDeliveryDate = new Date('2026-06-03')
+
 const today = new Date()
 
-// 精确计算骑行年限（小数）
-const ridingYearsDecimal = (today.getTime() - deliveryDate.getTime()) / (365.25 * 24 * 60 * 60 * 1000)
-const ridingYears = ridingYearsDecimal.toFixed(1)
+// 精确计算摩托车骑行年限（小数）
+const motoRidingYearsDecimal = (today.getTime() - motoDeliveryDate.getTime()) / (365.25 * 24 * 60 * 60 * 1000)
+const motoRidingYears = motoRidingYearsDecimal.toFixed(1)
 
-// 13 年强制报废进度计算
+// 自行车入坑天数
+const bikeDaysDecimal = (today.getTime() - bikeDeliveryDate.getTime()) / (24 * 60 * 60 * 1000)
+const bikeDays = Math.max(0, Math.floor(bikeDaysDecimal))
+
+// 13 年强制报废进度计算（仅摩托车）
 const maxYears = 13
-const expiryDate = new Date(deliveryDate)
-expiryDate.setFullYear(deliveryDate.getFullYear() + maxYears)
+const expiryDate = new Date(motoDeliveryDate)
+expiryDate.setFullYear(motoDeliveryDate.getFullYear() + maxYears)
 const daysRemaining = Math.floor((expiryDate.getTime() - today.getTime()) / (24 * 60 * 60 * 1000))
 const yearsRemaining = (expiryDate.getTime() - today.getTime()) / (365.25 * 24 * 60 * 60 * 1000)
-const progressPercent = (ridingYearsDecimal / maxYears) * 100
+const progressPercent = (motoRidingYearsDecimal / maxYears) * 100
 
 // 幽默文案
 function getHumorousMessage() {
@@ -46,21 +54,37 @@ const adminInfo = {
   wechatId: mockAdminContact.wechatId,
   wechatDescription: mockAdminContact.description,
   qrCodeImage: '/static/qrcode.jpeg',
-  description: '野生摄影师 | 巡航车主 | 机电/软件/AI 工程师',
-  bikeInfo: `2024.06.19 提车 | 奔达灰石 250cc 复古巡航`,
-  ridingYears,
+  description: '野生摄影师 | 双修车主 | 跨界技术人',
+  motoInfo: `2024.06.19 提车 | 奔达灰石 250cc 复古巡航`,
+  bikeInfo: `2026.06.03 入坑 | RADON X 爱马仕橙公路车`,
+  motoRidingYears: motoRidingYears,
+  bikeDays,
   expiryDate: expiryDate.toISOString().split('T')[0],
   daysRemaining,
   yearsRemaining: yearsRemaining.toFixed(1),
   progressPercent,
   humorousMessage: getHumorousMessage(),
-  intro: `在襄阳骑了${ridingYears}年车，拍过无数日出日落。
+  intro: `在襄阳骑了${motoRidingYears}年摩托车，最近刚入坑公路车${bikeDays > 0 ? bikeDays + '天' : ''}。
 
-喜欢用镜头记录摩友们的帅气身影，
-也喜欢在汉江边蹲守夕阳下的机车大片。
+技术圈里会拍照的，摄影师里最懂代码的。
 
-如果你也爱摄影、爱骑行，
-欢迎来聊~ 🏍️📷`
+15 年技术生涯，从医疗设备到金融终端，
+带过项目、熬过交付、搞过跨界。
+22 岁当项目经理，什么场面都见过。
+30 岁转软件开发，36 岁又拿起相机。
+
+现在时间完全由自己掌控：
+想写代码就写代码，想拍照就拍照，
+偶尔接点小单，主要看心情和档期😎
+
+左手拧油门（机动车），右脚踩踏板（人动车），
+双手敲键盘（保持手感）。
+
+承接：软件开发 | 活动跟拍 | 视频剪辑
+（欢迎撩我，价格好商量~）
+
+无论你是摩友、骑友还是甲方，
+只要爱轮子、爱生活、爱折腾，都是好朋友~ 🏍️🚴📷`
 }
 
 function copyWechatId() {
@@ -119,10 +143,19 @@ function copyWechatId() {
             </view>
           </view>
           <!-- 座驾信息 -->
-          <view class="mt-[16rpx] border-t border-white/10 pt-[16rpx]">
-            <text class="text-[22rpx] text-white/80">
-              {{ adminInfo.bikeInfo }}
-            </text>
+          <view class="mt-[16rpx] border-t border-white/10 pt-[16rpx] space-y-[8rpx]">
+            <view class="flex items-center gap-[12rpx]">
+              <text class="i-carbon:motorcycle text-[20rpx] text-primary" />
+              <text class="text-[20rpx] text-white/80">
+                {{ adminInfo.motoInfo }}
+              </text>
+            </view>
+            <view class="flex items-center gap-[12rpx]">
+              <text class="i-carbon:directions-bike text-[20rpx] text-primary" />
+              <text class="text-[20rpx] text-white/80">
+                {{ adminInfo.bikeInfo }}
+              </text>
+            </view>
           </view>
         </view>
 
@@ -144,22 +177,30 @@ function copyWechatId() {
               巡航车主
             </text>
           </view>
+          <view class="flex items-center gap-[8rpx] rounded-[20rpx] bg-primary/20 px-[24rpx] py-[12rpx]">
+            <text class="text-[24rpx]">
+              🚴
+            </text>
+            <text class="text-[24rpx] text-white font-600">
+              公路车萌新
+            </text>
+          </view>
         </view>
 
         <!-- 骑行时长 & 报废倒计时 -->
         <view class="mb-[24rpx] border border-primary/20 rounded-[24rpx] from-primary/10 via-primary/5 to-transparent bg-gradient-to-br p-[32rpx]">
-          <!-- 骑行时长 -->
+          <!-- 摩托车骑行时长 -->
           <view class="mb-[24rpx] flex items-center justify-between">
             <view class="flex items-center gap-[12rpx]">
               <view class="h-[48rpx] w-[48rpx] flex items-center justify-center rounded-[12rpx] bg-primary/20">
-                <text class="i-carbon:time text-[28rpx] text-white" />
+                <text class="i-carbon:motorcycle text-[28rpx] text-white" />
               </view>
               <view>
                 <text class="block text-[20rpx] text-white/70">
-                  已陪伴你
+                  摩托车已陪伴
                 </text>
                 <text class="text-[32rpx] text-white font-800">
-                  {{ adminInfo.ridingYears }}<text class="ml-[4rpx] text-[20rpx] font-500">
+                  {{ adminInfo.motoRidingYears }}<text class="ml-[4rpx] text-[20rpx] font-500">
                     年
                   </text>
                 </text>
@@ -170,16 +211,43 @@ function copyWechatId() {
                 提车日期
               </text>
               <text class="text-[22rpx] text-white font-600">
-                {{ deliveryDate.toLocaleDateString('zh-CN') }}
+                {{ motoDeliveryDate.toLocaleDateString('zh-CN') }}
               </text>
             </view>
           </view>
 
-          <!-- 报废进度条 -->
+          <!-- 自行车入坑天数 -->
+          <view class="mb-[24rpx] border-t border-white/10 pt-[20rpx] flex items-center justify-between">
+            <view class="flex items-center gap-[12rpx]">
+              <view class="h-[48rpx] w-[48rpx] flex items-center justify-center rounded-[12rpx] bg-primary/20">
+                <text class="i-carbon:directions-bike text-[28rpx] text-white" />
+              </view>
+              <view>
+                <text class="block text-[20rpx] text-white/70">
+                  自行车入坑
+                </text>
+                <text class="text-[32rpx] text-white font-800">
+                  {{ adminInfo.bikeDays }}<text class="ml-[4rpx] text-[20rpx] font-500">
+                    天
+                  </text>
+                </text>
+              </view>
+            </view>
+            <view class="text-right">
+              <text class="block text-[20rpx] text-white/70">
+                入坑日期
+              </text>
+              <text class="text-[22rpx] text-white font-600">
+                {{ bikeDeliveryDate.toLocaleDateString('zh-CN') }}
+              </text>
+            </view>
+          </view>
+
+          <!-- 摩托车报废进度条 -->
           <view class="mb-[16rpx]">
             <view class="mb-[12rpx] flex items-center justify-between">
               <text class="text-[20rpx] text-white/70">
-                13 年强制报废倒计时
+                13 年强制报废倒计时（仅摩托）
               </text>
               <text class="text-[20rpx] text-white/70">
                 已用{{ (adminInfo.progressPercent).toFixed(0) }}%
@@ -302,11 +370,28 @@ function copyWechatId() {
             <view class="h-[2rpx] w-[40rpx] rounded-full from-transparent to-primary/50 bg-gradient-to-l" />
           </view>
           <text class="block text-center text-[20rpx] text-white/40">
-            襄阳本地摩友公益工具
+            襄阳本地骑行爱好者的公益工具
           </text>
           <text class="mt-[8rpx] block text-center text-[18rpx] text-white/30">
             非盈利 · 无交易 · 本地存储
           </text>
+        </view>
+
+        <!-- 路线说明 -->
+        <view class="mb-[40rpx] mt-[24rpx] border border-primary/20 rounded-[16rpx] bg-primary/5 p-[20rpx]">
+          <view class="flex items-start gap-[12rpx]">
+            <text class="i-carbon:map mt-[4rpx] text-[24rpx] text-primary" />
+            <view>
+              <text class="mb-[8rpx] block text-[22rpx] text-white font-600">
+                💡 路线说明
+              </text>
+              <text class="block text-[18rpx] text-white/70 leading-[1.6]">
+                本小程序的骑行路线虽然为摩托车设计，
+                但公路车、山地车也可以参考使用~
+                （部分山路坡度较大，请量力而行）
+              </text>
+            </view>
+          </view>
         </view>
 
         <!-- 合规声明 -->

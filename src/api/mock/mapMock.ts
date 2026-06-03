@@ -5,271 +5,230 @@
 import type { RideRoute } from '@/types'
 
 export const mockRoutes: RideRoute[] = [
+  // ================================================
+  // 摩友实测路线（2026.05.28 明辰玩摄影车队实测）
+  // ================================================
+
   {
-    id: '1',
-    name: '古城环线',
-    description: '穿越襄阳古城墙，感受千年历史底蕴，路线平坦，适合休闲骑行',
-    region: 'xiangcheng',
+    id: '0',
+    name: '赵湾最美天路探险环线',
+    description: '襄阳版"318 天路"完整环线！从谷城旺恒广场出发，经谷栗路到盛康镇补给，深入赵湾乡八里荒冲坡探险（废弃滑雪场坡道），游玩后经竹缘民宿到赵湾乡，再走小路到渔坪村（两河口区域），最后经紫金镇、石花镇返回县城。全程约 160km，途经赵湾天路、八里荒云雾山巅、两河口南河风光，风光媲美贵州 + 秦岭结合体。',
+    shortDescription: '襄阳版 318 天路环线！赵湾天路 + 八里荒冲坡 + 渔坪南河风光，全程 160km 媲美贵州 + 秦岭',
+    region: 'gucheng',
+    loopType: 'loop',
     path: [
-      { latitude: 32.0603, longitude: 112.1401 },
-      { latitude: 32.0550, longitude: 112.1350 },
-      { latitude: 32.0500, longitude: 112.1450 },
-      { latitude: 32.0650, longitude: 112.1500 },
-      { latitude: 32.0603, longitude: 112.1401 },
+      // 【第一段】旺恒广场 → 盛康镇（补给）
+      { latitude: 32.2550, longitude: 111.6450 }, // 旺恒广场（起点）
+      { latitude: 32.2480, longitude: 111.6380 }, // 谷栗路起点
+      { latitude: 32.2180, longitude: 111.5920 }, // 盛康镇中心
+      { latitude: 32.2160, longitude: 111.5900 }, // 盛康镇超市（补给点）
+      
+      // 【第二段】盛康镇 → 八里荒（冲坡探险）
+      { latitude: 32.2080, longitude: 111.5780 }, // 进山点
+      { latitude: 32.1980, longitude: 111.5620 }, // 谷栗路中段
+      { latitude: 32.1880, longitude: 111.5480 }, // 弯道风光
+      { latitude: 32.1780, longitude: 111.5350 }, // 政府观景台
+      { latitude: 32.1680, longitude: 111.5180 }, // 进入赵湾乡
+      { latitude: 32.1620, longitude: 111.5050 }, // 赵湾天路起点
+      { latitude: 32.1520, longitude: 111.4920 }, // 八里荒坡道（冲坡点）
+      { latitude: 32.1480, longitude: 111.4880 }, // 八里荒山顶（游玩点）
+      
+      // 【第三段】八里荒 → 竹缘民宿 → 赵湾乡 → 渔坪村
+      { latitude: 32.1450, longitude: 111.4850 }, // 下山（往竹缘民宿方向）
+      { latitude: 32.1380, longitude: 111.4780 }, // 竹缘民宿（路过）
+      { latitude: 32.1320, longitude: 111.4680 }, // 赵湾乡
+      { latitude: 32.1250, longitude: 111.4580 }, // 小路起点（往渔坪）
+      { latitude: 32.1180, longitude: 111.4450 }, // 山路途中
+      { latitude: 32.1080, longitude: 111.4320 }, // 渔坪村（南河小三峡）
+      { latitude: 32.1020, longitude: 111.4220 }, // 渔坪观景台
+      
+      // 【第四段】渔坪 → 紫金镇 → 石花镇 → 返回县城
+      { latitude: 32.1150, longitude: 111.4380 }, // 离开渔坪
+      { latitude: 32.1280, longitude: 111.4550 }, // 紫金镇
+      { latitude: 32.1450, longitude: 111.4850 }, // 241 国道
+      { latitude: 32.1680, longitude: 111.5280 }, // 石花镇
+      { latitude: 32.1950, longitude: 111.5680 }, // 返回途中
+      { latitude: 32.2280, longitude: 111.6150 }, // 接近县城
+      { latitude: 32.2550, longitude: 111.6450 }, // 旺恒广场（终点）
     ],
-    difficulty: 'easy',
-    distance: 25,
-    duration: 90,
-    spots: [
+    segments: [
       {
-        id: 's1-1',
-        name: '汉江边观景台',
-        type: 'scenic',
-        coordinates: { latitude: 32.0580, longitude: 112.1420 },
-        description: '汉江日落绝佳位置，适合拍照',
-        tags: ['日落', '江景'],
+        name: '旺恒广场 → 盛康镇',
+        description: '县城出发，经谷栗路到盛康镇中心超市补给',
+        path: [
+          { latitude: 32.2550, longitude: 111.6450 },
+          { latitude: 32.2160, longitude: 111.5900 },
+        ],
+        distance: 18,
+        duration: 45,
+        roadType: 'paved',
       },
       {
-        id: 's1-2',
-        name: '老贾农家菜',
-        type: 'food',
-        coordinates: { latitude: 32.0560, longitude: 112.1380 },
-        description: '地道的襄阳农家菜，分量足味道好',
-        tags: ['农家菜', '实惠'],
+        name: '盛康镇 → 赵湾天路 → 八里荒',
+        description: '进山路段，谷栗路弯道连绵，途经襄阳最美公路"赵湾天路"，抵达八里荒冲坡探险',
+        path: [
+          { latitude: 32.2160, longitude: 111.5900 },
+          { latitude: 32.1480, longitude: 111.4880 },
+        ],
+        distance: 35,
+        duration: 90,
+        roadType: 'paved',
+        highlights: ['谷栗路弯道风光', '赵湾天路', '八里荒冲坡'],
       },
       {
-        id: 's1-3',
-        name: '古城墙北门',
-        type: 'scenic',
-        coordinates: { latitude: 32.0620, longitude: 112.1400 },
-        description: '保存最完整的古城门，夜景很美',
-        tags: ['历史', '夜景'],
+        name: '八里荒 → 渔坪村',
+        description: '游玩后经竹缘民宿、赵湾乡，走小路到渔坪村（两河口区域），南河沿岸风光媲美贵州 + 秦岭',
+        path: [
+          { latitude: 32.1480, longitude: 111.4880 },
+          { latitude: 32.1020, longitude: 111.4220 },
+        ],
+        distance: 28,
+        duration: 75,
+        roadType: 'mixed',
+        highlights: ['竹缘民宿', '赵湾乡', '渔坪村', '两河口', '南河沿岸风光'],
       },
       {
-        id: 's1-4',
-        name: '护城河畔',
-        type: 'scenic',
-        coordinates: { latitude: 32.0610, longitude: 112.1390 },
-        description: '古城护城河，风景秀丽',
-        tags: ['风景', '休闲'],
+        name: '渔坪村 → 县城',
+        description: '经紫金镇、石花镇，走 241 国道返回县城，高等级沥青路，骑行舒适',
+        path: [
+          { latitude: 32.1020, longitude: 111.4220 },
+          { latitude: 32.2550, longitude: 111.6450 },
+        ],
+        distance: 79,
+        duration: 120,
+        roadType: 'paved',
       },
-      {
-        id: 's1-5',
-        name: '小观台咖啡',
-        type: 'coffee',
-        coordinates: { latitude: 32.0585, longitude: 112.1410 },
-        description: '骑行途中休息的好去处',
-        tags: ['咖啡', '休息'],
-      },
-    ],
-  },
-  {
-    id: '2',
-    name: '汉江绿道',
-    description: '沿汉江堤顶路骑行，江风拂面，视野开阔',
-    region: 'fancheng',
-    path: [
-      { latitude: 32.0603, longitude: 112.1401 },
-      { latitude: 32.0700, longitude: 112.1500 },
-      { latitude: 32.0800, longitude: 112.1600 },
-      { latitude: 32.0900, longitude: 112.1700 },
-    ],
-    difficulty: 'easy',
-    distance: 30,
-    duration: 120,
-    spots: [
-      {
-        id: 's2-1',
-        name: '汉江二桥下',
-        type: 'drone',
-        coordinates: { latitude: 32.0750, longitude: 112.1550 },
-        description: '桥墩结构震撼，适合航拍',
-        tags: ['航拍', '建筑'],
-      },
-      {
-        id: 's2-2',
-        name: '江滩公园',
-        type: 'scenic',
-        coordinates: { latitude: 32.0820, longitude: 112.1620 },
-        description: '江边草地，可以休息拍照',
-        tags: ['休闲', '草地'],
-      },
-      {
-        id: 's2-3',
-        name: '堤顶路观景点',
-        type: 'drone',
-        coordinates: { latitude: 32.0780, longitude: 112.1580 },
-        description: '俯拍汉江最佳位置',
-        tags: ['俯拍', '江景'],
-      },
-      {
-        id: 's2-4',
-        name: '江岸人家',
-        type: 'food',
-        coordinates: { latitude: 32.0760, longitude: 112.1560 },
-        description: '地道江鱼农家菜',
-        tags: ['美食', '江鱼'],
-      },
-      {
-        id: 's2-5',
-        name: '滨江摄影点',
-        type: 'photo',
-        coordinates: { latitude: 32.0790, longitude: 112.1590 },
-        description: '日落晚霞绝佳机位',
-        tags: ['摄影', '日落'],
-      },
-    ],
-  },
-  {
-    id: '3',
-    name: '隆中探幽',
-    description: '前往古隆中景区，山路蜿蜒，风景秀丽',
-    region: 'xiangcheng',
-    path: [
-      { latitude: 32.0603, longitude: 112.1401 },
-      { latitude: 32.0400, longitude: 112.1000 },
-      { latitude: 32.0300, longitude: 112.0800 },
-      { latitude: 32.0100, longitude: 112.0500 },
     ],
     difficulty: 'medium',
-    distance: 40,
-    duration: 150,
+    distance: 160,
+    duration: 330,  // 5.5 小时（含游玩时间）
+    meetupPoint: {
+      name: '旺恒广场',
+      address: '谷城县城关镇旺恒广场',
+      coordinates: { latitude: 32.2550, longitude: 111.6450 },
+      time: '09:30',
+    },
+    tags: ['mountain', 'photo', 'adventure', 'leisure'],
+    elevation: {
+      min: 280,
+      max: 1200,
+      gain: 920,
+    },
+    adventureAreas: [
+      {
+        name: '八里荒废弃坡道',
+        type: 'offroad_park',
+        description: '之前规划滑雪场遗留的非铺装坡道，适合巡航车轻度越野冲坡体验，登顶后云雾缭绕，视野绝佳',
+        coordinates: { latitude: 32.1520, longitude: 111.4920 },
+        difficulty: 'medium',
+      },
+    ],
+    roadCondition: '全程以柏油路为主，八里荒冲坡段为非铺装路面（轻度越野），两河口段为山区小路但路况良好，返回段 241 国道为高等级沥青路。',
+    bestSeason: '5-10 月（夏季避暑绝佳，秋季层林尽染，冬季可遇雾凇）',
+    highlights: [
+      '襄阳最美公路"赵湾天路"，媲美 318 国道',
+      '海拔 1200 米高山云雾，视野绝佳',
+      '非铺装坡道，巡航车轻度越野体验',
+      '渔坪村两河口区域，贵州 + 秦岭结合体',
+      '南河沿岸风光，河水碧绿山体雄伟',
+      '241 国道高等级沥青路，骑行舒适',
+    ],
     spots: [
       {
-        id: 's3-1',
-        name: '隆中入口农家乐',
+        id: 's0-1',
+        name: '旺恒广场（集合点）',
+        type: 'photo',
+        coordinates: { latitude: 32.2550, longitude: 111.6450 },
+        description: '早上 9:30 集合，县城地标，停车方便',
+        tags: ['集合', '停车'],
+      },
+      {
+        id: 's0-2',
+        name: '盛康镇中心超市',
         type: 'food',
-        coordinates: { latitude: 32.0250, longitude: 112.0650 },
-        description: '景区门口第一家，招牌卧龙农家菜',
-        tags: ['农家菜', '近景区'],
+        coordinates: { latitude: 32.2160, longitude: 111.5900 },
+        description: '补给站，采购饮料、食物、水',
+        tags: ['补给', '超市'],
       },
       {
-        id: 's3-2',
-        name: '隆中山顶',
-        type: 'drone',
-        coordinates: { latitude: 32.0150, longitude: 112.0550 },
-        description: '俯瞰山谷，航拍绝美',
-        tags: ['航拍', '山顶'],
-      },
-      {
-        id: 's3-3',
-        name: '古隆中牌坊',
-        type: 'photo',
-        coordinates: { latitude: 32.0220, longitude: 112.0600 },
-        description: '标志性打卡点',
-        tags: ['打卡', '牌坊'],
-      },
-      {
-        id: 's3-4',
-        name: '三顾堂',
+        id: 's0-3',
+        name: '谷栗路观景台',
         type: 'scenic',
-        coordinates: { latitude: 32.0200, longitude: 112.0580 },
-        description: '刘备三顾茅庐发生地',
-        tags: ['历史', '三国'],
+        coordinates: { latitude: 32.1780, longitude: 111.5350 },
+        description: '政府修建的城墙坨子观景台，登顶远眺，山谷风光尽收眼底',
+        tags: ['观景', '拍照'],
       },
-    ],
-  },
-  {
-    id: '4',
-    name: '唐城景区骑行',
-    description: '穿越盛唐风光，灯光璀璨，适合拍照',
-    region: 'xiangcheng',
-    path: [
-      { latitude: 32.0603, longitude: 112.1401 },
-      { latitude: 32.0500, longitude: 112.1200 },
-      { latitude: 32.0450, longitude: 112.1150 },
-    ],
-    difficulty: 'easy',
-    distance: 15,
-    duration: 60,
-    spots: [
       {
-        id: 's4-1',
-        name: '唐城朱雀门',
+        id: 's0-4',
+        name: '赵湾天路起点',
         type: 'photo',
-        coordinates: { latitude: 32.0470, longitude: 112.1180 },
-        description: '最佳拍摄点',
-        tags: ['打卡', '古风'],
+        coordinates: { latitude: 32.1620, longitude: 111.5050 },
+        description: '襄阳最美公路起点，打卡留念',
+        tags: ['打卡', '天路'],
       },
       {
-        id: 's4-2',
-        name: '景区停车场',
+        id: 's0-5',
+        name: '八里荒废弃坡道',
+        type: 'adventure',
+        coordinates: { latitude: 32.1520, longitude: 111.4920 },
+        description: '滑雪场规划时遗留的非铺装坡道，适合巡航车轻度越野冲坡，登顶后云雾缭绕，非常爽',
+        tags: ['越野', '冲坡', '探险', '云雾'],
+      },
+      {
+        id: 's0-6',
+        name: '八里荒山顶',
         type: 'scenic',
-        coordinates: { latitude: 32.0460, longitude: 112.1160 },
-        description: '有专门的摩托车停车区',
-        tags: ['停车', '方便'],
+        coordinates: { latitude: 32.1480, longitude: 111.4880 },
+        description: '海拔较高，云雾飘飘，视野开阔，游玩拍照',
+        tags: ['云雾', '摄影', '观景'],
       },
       {
-        id: 's4-3',
-        name: '胡玉楼',
-        type: 'photo',
-        coordinates: { latitude: 32.0465, longitude: 112.1170 },
-        description: '《妖猫传》取景地',
-        tags: ['影视', '打卡'],
-      },
-      {
-        id: 's4-4',
-        name: '唐城奶茶店',
+        id: 's0-7',
+        name: '竹缘民宿',
         type: 'coffee',
-        coordinates: { latitude: 32.0475, longitude: 112.1185 },
-        description: '古风主题奶茶店',
-        tags: ['饮品', '休息'],
-      },
-    ],
-  },
-  {
-    id: '5',
-    name: '鹿门山之路',
-    description: '前往鹿门寺，山路有挑战性，风景绝美',
-    region: 'yicheng',
-    path: [
-      { latitude: 32.0603, longitude: 112.1401 },
-      { latitude: 32.0800, longitude: 112.1000 },
-      { latitude: 32.1000, longitude: 112.0800 },
-    ],
-    difficulty: 'hard',
-    distance: 50,
-    duration: 180,
-    spots: [
-      {
-        id: 's5-1',
-        name: '鹿门山观景台',
-        type: 'photo',
-        coordinates: { latitude: 32.0950, longitude: 112.0850 },
-        description: '山路最高点，视野绝佳',
-        tags: ['俯拍', '山路'],
+        coordinates: { latitude: 32.1380, longitude: 111.4780 },
+        description: '路过打卡，山间特色民宿',
+        tags: ['民宿', '路过'],
       },
       {
-        id: 's5-2',
-        name: '山间咖啡小屋',
-        type: 'coffee',
-        coordinates: { latitude: 32.0880, longitude: 112.0900 },
-        description: '骑行累了来杯咖啡休息',
-        tags: ['咖啡', '休息'],
-      },
-      {
-        id: 's5-3',
-        name: '林场航拍点',
-        type: 'drone',
-        coordinates: { latitude: 32.0980, longitude: 112.0820 },
-        description: '林场色彩丰富，航拍很美',
-        tags: ['航拍', '森林'],
-      },
-      {
-        id: 's5-4',
-        name: '鹿门寺',
+        id: 's0-8',
+        name: '赵湾乡',
         type: 'scenic',
-        coordinates: { latitude: 32.1000, longitude: 112.0800 },
-        description: '千年古刹，历史文化悠久',
-        tags: ['历史', '古刹'],
+        coordinates: { latitude: 32.1320, longitude: 111.4680 },
+        description: '赵湾乡集镇，可稍作休息',
+        tags: ['乡镇', '休息'],
       },
       {
-        id: 's5-5',
-        name: '山顶草坪',
-        type: 'camp',
-        coordinates: { latitude: 32.1010, longitude: 112.0790 },
-        description: '可露营休息，夜晚星空很美',
-        tags: ['露营', '星空'],
+        id: 's0-9',
+        name: '渔坪村',
+        type: 'scenic',
+        coordinates: { latitude: 32.1080, longitude: 111.4320 },
+        description: '两河口区域，南河沿岸风光，河水碧绿，山体雄伟，风光媲美贵州 + 秦岭结合体',
+        tags: ['风光', '河流', '摄影'],
+      },
+      {
+        id: 's0-10',
+        name: '两河口观景台',
+        type: 'scenic',
+        coordinates: { latitude: 32.1020, longitude: 111.4220 },
+        description: '南河沿岸原生态山水，溪水蜿蜒，奇峰耸立，可露营观星',
+        tags: ['露营', '摄影', '原生态'],
+      },
+      {
+        id: 's0-11',
+        name: '紫金镇',
+        type: 'food',
+        coordinates: { latitude: 32.1280, longitude: 111.4550 },
+        description: '途经小镇，可补充补给',
+        tags: ['补给', '路过'],
+      },
+      {
+        id: 's0-12',
+        name: '石花镇',
+        type: 'food',
+        coordinates: { latitude: 32.1680, longitude: 111.5280 },
+        description: '石花镇，可品尝当地美食',
+        tags: ['美食', '路过'],
       },
     ],
   },
@@ -282,6 +241,7 @@ export const mockRoutes: RideRoute[] = [
     id: '6',
     name: '樱花谷环线',
     description: '春季限定！谷城樱花谷景区环线，漫山遍野樱花盛开，拍照绝佳。高等级沥青路，坡度平缓，适合新手。',
+    shortDescription: '春季限定！樱花谷景区环线，漫山遍野樱花盛开，高等级沥青路适合新手',
     region: 'gucheng',
     path: [
       { latitude: 32.2580, longitude: 111.6520 },
@@ -294,7 +254,6 @@ export const mockRoutes: RideRoute[] = [
     difficulty: 'easy',
     distance: 28,
     duration: 120,
-    bestSeason: ['春'],
     spots: [
       {
         id: 's6-1',
@@ -309,8 +268,8 @@ export const mockRoutes: RideRoute[] = [
         name: '樱花观景台',
         type: 'scenic',
         coordinates: { latitude: 32.2420, longitude: 111.6650 },
-        description: '俯瞰整片樱花林，航拍绝佳',
-        tags: ['观景', '航拍'],
+        description: '俯瞰整片樱花林，拍照绝佳',
+        tags: ['观景', '樱花'],
       },
       {
         id: 's6-3',
@@ -343,6 +302,7 @@ export const mockRoutes: RideRoute[] = [
     id: '7',
     name: '五山茶园品路线',
     description: '谷城五山镇高山云雾茶产区，连绵茶园风光，可体验采茶、品茶。山路蜿蜒但路况极好，适合中级骑手。',
+    shortDescription: '五山镇高山云雾茶产区，连绵茶园风光，可体验采茶品茶，山路蜿蜒路况好',
     region: 'gucheng',
     path: [
       { latitude: 32.2850, longitude: 111.5680 },
@@ -355,7 +315,6 @@ export const mockRoutes: RideRoute[] = [
     difficulty: 'medium',
     distance: 35,
     duration: 150,
-    bestSeason: ['春', '秋'],
     spots: [
       {
         id: 's7-1',
@@ -384,10 +343,10 @@ export const mockRoutes: RideRoute[] = [
       {
         id: 's7-4',
         name: '山顶茶田',
-        type: 'drone',
+        type: 'scenic',
         coordinates: { latitude: 32.3130, longitude: 111.5600 },
-        description: '航拍茶园最佳位置',
-        tags: ['航拍', '山顶'],
+        description: '茶园最佳观景位置',
+        tags: ['观景', '山顶'],
       },
       {
         id: 's7-5',
@@ -401,80 +360,10 @@ export const mockRoutes: RideRoute[] = [
   },
 
   {
-    id: '8',
-    name: '赵湾天路挑战线',
-    description: '谷城赵湾乡高山公路，海拔落差大，风景壮丽。连续弯道有驾驶乐趣，适合进阶骑手挑战。',
-    region: 'gucheng',
-    path: [
-      { latitude: 32.1850, longitude: 111.4520 },
-      { latitude: 32.1720, longitude: 111.4380 },
-      { latitude: 32.1580, longitude: 111.4250 },
-      { latitude: 32.1450, longitude: 111.4120 },
-      { latitude: 32.1320, longitude: 111.3980 },
-      { latitude: 32.1480, longitude: 111.3850 },
-      { latitude: 32.1680, longitude: 111.4050 },
-      { latitude: 32.1850, longitude: 111.4520 },
-    ],
-    difficulty: 'hard',
-    distance: 52,
-    duration: 200,
-    bestSeason: ['春', '夏', '秋'],
-    spots: [
-      {
-        id: 's8-1',
-        name: '赵湾天路起点',
-        type: 'photo',
-        coordinates: { latitude: 32.1820, longitude: 111.4500 },
-        description: '标志性起点，打卡拍照',
-        tags: ['打卡', '起点'],
-      },
-      {
-        id: 's8-2',
-        name: '观景平台',
-        type: 'scenic',
-        coordinates: { latitude: 32.1650, longitude: 111.4200 },
-        description: '俯瞰山谷，视野开阔',
-        tags: ['观景', '山谷'],
-      },
-      {
-        id: 's8-3',
-        name: '发卡弯打卡点',
-        type: 'photo',
-        coordinates: { latitude: 32.1520, longitude: 111.4100 },
-        description: '连续发卡弯，骑行乐趣',
-        tags: ['弯道', '挑战'],
-      },
-      {
-        id: 's8-4',
-        name: '山顶信号塔',
-        type: 'drone',
-        coordinates: { latitude: 32.1400, longitude: 111.3950 },
-        description: '制高点，航拍全景',
-        tags: ['航拍', '山顶'],
-      },
-      {
-        id: 's8-5',
-        name: '山间小溪',
-        type: 'scenic',
-        coordinates: { latitude: 32.1550, longitude: 111.3900 },
-        description: '清澈溪水，可休息拍照',
-        tags: ['溪流', '休闲'],
-      },
-      {
-        id: 's8-6',
-        name: '赵湾农家乐',
-        type: 'food',
-        coordinates: { latitude: 32.1750, longitude: 111.4100 },
-        description: '地道山村菜，土鸡、腊肉',
-        tags: ['农家菜', '山村'],
-      },
-    ],
-  },
-
-  {
     id: '9',
     name: '薤山森林公园线',
     description: '谷城薤山省级森林公园，森林覆盖率 95%，天然氧吧。夏季避暑胜地，山路平缓适合休闲骑。',
+    shortDescription: '薤山省级森林公园，森林覆盖率 95% 天然氧吧，夏季避暑胜地，山路平缓',
     region: 'gucheng',
     path: [
       { latitude: 32.3280, longitude: 111.3680 },
@@ -487,7 +376,6 @@ export const mockRoutes: RideRoute[] = [
     difficulty: 'easy',
     distance: 32,
     duration: 140,
-    bestSeason: ['夏', '秋'],
     spots: [
       {
         id: 's9-1',
@@ -536,6 +424,7 @@ export const mockRoutes: RideRoute[] = [
     id: '10',
     name: '庙滩田园风光线',
     description: '谷城庙滩镇田园风光，平坦道路穿越农田村庄，体验乡村慢生活。适合家庭休闲骑、新手入门。',
+    shortDescription: '庙滩镇田园风光，平坦道路穿越农田村庄，体验乡村慢生活，适合家庭休闲骑',
     region: 'gucheng',
     path: [
       { latitude: 32.1580, longitude: 111.7250 },
@@ -548,7 +437,6 @@ export const mockRoutes: RideRoute[] = [
     difficulty: 'easy',
     distance: 22,
     duration: 90,
-    bestSeason: ['春', '夏', '秋'],
     spots: [
       {
         id: 's10-1',

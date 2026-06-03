@@ -11,8 +11,8 @@ export { ACTIVITY_TAG_CONFIG, RIDE_TYPE_CONFIG } from './activity'
 export type { BannerData } from './banner'
 
 // 地图模块
-export type { CheckInSpot, Coordinate as MapCoordinate, MapMarker, RegionType, RideRoute, RouteDifficulty, RouteFilter, SpotType } from './map'
-export { DIFFICULTY_CONFIG, REGION_CONFIG, SPOT_TYPE_CONFIG } from './map'
+export type { AdventureArea, CheckInSpot, Coordinate as MapCoordinate, ElevationInfo, MapMarker, MeetupPoint, RegionType, RideRoute, RouteDifficulty, RouteFilter, RouteSegment, RouteTag, SpotType } from './map'
+export { DIFFICULTY_CONFIG, REGION_CONFIG, ROUTE_TAG_CONFIG, SPOT_TYPE_CONFIG } from './map'
 
 // 店铺模块（已移除）
 // export type { Shop, ShopType } from './shop'

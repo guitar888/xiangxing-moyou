@@ -25,6 +25,7 @@ declare module 'vue' {
     HomeQuickEntry: typeof import('./components/home/QuickEntry.vue')['default']
     HomeRideDataCard: typeof import('./components/home/RideDataCard.vue')['default']
     MapRouteCard: typeof import('./components/map/RouteCard.vue')['default']
+    MapRouteDetail: typeof import('./components/map/RouteDetail.vue')['default']
     MapSpotCard: typeof import('./components/map/SpotCard.vue')['default']
     MapSpotSheet: typeof import('./components/map/SpotSheet.vue')['default']
     PrivacyPopup: typeof import('./components/PrivacyPopup.vue')['default']

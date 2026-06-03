@@ -8,32 +8,6 @@ import type { CheckInSpot, Coordinate, RideRecord, RideRoute, SpotType } from '@
 import { POSTER_OPEN_EVENT, rideEvents } from '@/composables/rideEvents'
 import { DIFFICULTY_CONFIG, REGION_CONFIG, SPOT_TYPE_CONFIG } from '@/types'
 
-// 辅助函数：获取打卡点类型配置
-function getSpotTypeConfigForHot(type: SpotType) {
-  return SPOT_TYPE_CONFIG[type] || { label: type, icon: 'i-carbon:location', color: '#8D99AE', bgColor: 'rgba(141, 153, 174, 0.15)' }
-}
-
-// 热门卡片统计打卡点类型
-function getHotSpotTypeStats(route: RideRoute) {
-  const stats: Record<SpotType, number> = {} as Record<SpotType, number>
-  route.spots?.forEach((spot) => {
-    const type = spot.type as SpotType
-    stats[type] = (stats[type] || 0) + 1
-  })
-  return Object.entries(stats).map(([type, count]) => ({
-    type: type as SpotType,
-    count,
-    ...getSpotTypeConfigForHot(type as SpotType),
-  })).slice(0, 4)
-}
-
-// 热门卡片获取区域标签
-function getHotRegionLabel(region?: string) {
-  if (!region)
-    return ''
-  return REGION_CONFIG[region as keyof typeof REGION_CONFIG]?.label || ''
-}
-
 definePage({
   name: 'map',
   layout: 'tabbar',
@@ -62,18 +36,24 @@ const {
   selectedRegion,
   isRiding,
   formattedDuration,
-  hotRoutes,
   toggleSpotType,
   setRegion,
   clearFilters,
   confirmStartRide,
   confirmEndRide,
-  handleRouteSelect,
+  handleRouteSelect: handleRouteSelectBase,
   handleSpotClose,
   markers,
   handleMapMarkertap,
   loadRoutes,
 } = useMapData()
+
+// 包装 handleRouteSelect，添加打开详情弹窗逻辑
+function handleRouteSelect(route: RideRoute) {
+  handleRouteSelectBase(route)
+  currentRouteDetail.value = route
+  showRouteDetail.value = true
+}
 
 // ================================================
 // 海报弹窗（本地状态）
@@ -112,9 +92,17 @@ onUnmounted(() => {
 
 const { openMapNavigation } = useMapNavigation()
 
-function handleNavigateToRoute(route: RideRoute | null) {
-  if (!route?.spots?.length)
-    return
+// 路线详情弹窗
+const showRouteDetail = ref(false)
+const currentRouteDetail = ref<RideRoute | null>(null)
+
+function handleCloseRouteDetail() {
+  showRouteDetail.value = false
+  currentRouteDetail.value = null
+}
+
+function handleNavigateFromDetail(route: RideRoute) {
+  showRouteDetail.value = false
   const firstSpot = route.spots[0]
   openMapNavigation({
     latitude: firstSpot.coordinates.latitude,
@@ -313,7 +301,7 @@ function onMapMarkerTap(e: any) {
             </text>
           </view>
           <view class="flex items-center gap-[6rpx]">
-            <text class="i-carbon:drone text-[20rpx] text-white/80" />
+            <text class="i-carbon:map text-[20rpx] text-white/80" />
             <text class="text-[18rpx] text-white/80">
               {{ markers?.length || 0 }}个打卡点
             </text>
@@ -343,112 +331,6 @@ function onMapMarkerTap(e: any) {
         </view>
       </view>
       <!-- #endif -->
-
-      <!-- 热门路线推荐（顶部横向小卡片） -->
-      <view class="mt-[16rpx] px-[24rpx]">
-        <view class="mb-[10rpx] flex items-center justify-between">
-          <text class="flex items-center gap-[6rpx] text-[28rpx] text-white font-600">
-            <text class="i-carbon:fire text-[24rpx] text-primary" />
-            热门推荐
-          </text>
-        </view>
-        <!-- #ifdef H5 -->
-        <view class="overflow-x-auto whitespace-nowrap pb-[4rpx] [&::-webkit-scrollbar]:hidden">
-          <view
-            v-for="route in hotRoutes"
-            :key="route.id"
-            class="mr-[16rpx] inline-block w-[280rpx] overflow-hidden border border-white/5 rounded-[20rpx] bg-card p-[16rpx] align-top shadow-lg"
-            @click="handleRouteSelect(route)"
-          >
-            <view class="mb-[6rpx] flex items-start justify-between">
-              <text class="line-clamp-1 flex-1 text-[26rpx] text-white font-600">
-                {{ route.name }}
-              </text>
-              <view
-                class="ml-[8rpx] flex-shrink-0 rounded-[8rpx] px-[10rpx] py-[4rpx] text-[16rpx] font-500"
-                :style="{ backgroundColor: DIFFICULTY_CONFIG[route.difficulty]?.bgColor, color: DIFFICULTY_CONFIG[route.difficulty]?.color }"
-              >
-                {{ DIFFICULTY_CONFIG[route.difficulty]?.label }}
-              </view>
-            </view>
-            <view v-if="getHotRegionLabel(route.region)" class="mb-[8rpx] flex items-center gap-[4rpx]">
-              <text class="i-carbon:location text-[16rpx] text-gray" />
-              <text class="text-[16rpx] text-gray">
-                {{ getHotRegionLabel(route.region) }}
-              </text>
-            </view>
-            <view class="mb-[10rpx] flex flex-wrap gap-[6rpx]">
-              <view
-                v-for="stat in getHotSpotTypeStats(route)"
-                :key="stat.type"
-                class="flex items-center gap-[2rpx] rounded-[6rpx] px-[8rpx] py-[3rpx]"
-                :style="{ backgroundColor: stat.bgColor }"
-              >
-                <text :class="stat.icon" class="text-[14rpx]" :style="{ color: stat.color }" />
-              </view>
-            </view>
-            <view class="w-full flex justify-center">
-              <wd-button
-                type="primary"
-                size="small"
-                custom-class="w-[160rpx] rounded-[18rpx] font-600"
-                @click.stop="handleNavigateToRoute(route)"
-              >
-                导航
-              </wd-button>
-            </view>
-          </view>
-        </view>
-        <!-- #endif -->
-        <!-- #ifndef H5 -->
-        <view class="min-h-[200rpx] flex gap-[16rpx] overflow-x-auto whitespace-nowrap pb-[4rpx]">
-          <view
-            v-for="route in hotRoutes"
-            :key="route.id"
-            class="w-[280rpx] flex-shrink-0 overflow-hidden border border-white/5 rounded-[20rpx] bg-card p-[16rpx] shadow-lg"
-            @click="handleRouteSelect(route)"
-          >
-            <view class="mb-[6rpx] flex items-start justify-between">
-              <text class="line-clamp-1 flex-1 text-[26rpx] text-white font-600">
-                {{ route.name }}
-              </text>
-              <view
-                class="ml-[8rpx] flex-shrink-0 rounded-[8rpx] px-[10rpx] py-[4rpx] text-[16rpx] font-500"
-                :style="{ backgroundColor: DIFFICULTY_CONFIG[route.difficulty]?.bgColor, color: DIFFICULTY_CONFIG[route.difficulty]?.color }"
-              >
-                {{ DIFFICULTY_CONFIG[route.difficulty]?.label }}
-              </view>
-            </view>
-            <view v-if="getHotRegionLabel(route.region)" class="mb-[8rpx] flex items-center gap-[4rpx]">
-              <text class="i-carbon:location text-[16rpx] text-gray" />
-              <text class="text-[16rpx] text-gray">
-                {{ getHotRegionLabel(route.region) }}
-              </text>
-            </view>
-            <view class="mb-[10rpx] flex flex-wrap gap-[6rpx]">
-              <view
-                v-for="stat in getHotSpotTypeStats(route)"
-                :key="stat.type"
-                class="flex items-center gap-[2rpx] rounded-[6rpx] px-[8rpx] py-[3rpx]"
-                :style="{ backgroundColor: stat.bgColor }"
-              >
-                <text :class="stat.icon" class="text-[14rpx]" :style="{ color: stat.color }" />
-              </view>
-            </view>
-            <view class="w-full flex justify-center">
-              <wd-button
-                type="primary"
-                size="small"
-                custom-class="w-[160rpx] rounded-[18rpx] font-600"
-                @click.stop="handleNavigateToRoute(route)"
-              >
-                导航
-              </wd-button>
-            </view>
-          </view>
-        </view>
-        <!-- #endif -->
-      </view>
 
       <!-- 筛选入口按钮 -->
       <view class="mt-[16rpx] flex gap-[16rpx] px-[24rpx]">
@@ -552,7 +434,6 @@ function onMapMarkerTap(e: any) {
             :route="route"
             :is-selected="currentRoute?.id === route.id"
             @select="handleRouteSelect"
-            @navigate="handleNavigateToRoute"
           />
         </view>
 
@@ -574,6 +455,14 @@ function onMapMarkerTap(e: any) {
         :spot="currentSpot"
         @close="handleSpotClose"
         @navigate="handleNavigateToSpot"
+      />
+
+      <!-- 路线详情弹窗 -->
+      <map-RouteDetail
+        v-model="showRouteDetail"
+        :route="currentRouteDetail"
+        @close="handleCloseRouteDetail"
+        @navigate="handleNavigateFromDetail"
       />
 
       <!-- 海报弹窗 -->
