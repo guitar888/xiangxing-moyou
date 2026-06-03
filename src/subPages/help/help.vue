@@ -106,7 +106,7 @@ const helpSections = [
       },
       {
         question: '遇到问题如何联系？',
-        answer: '在"我的"页面点击"关于我们"，可查看管理员微信号。添加微信后直接与开发者沟通反馈。',
+        answer: '在"我的"页面点击"关于我"，可查看管理员微信号。添加微信后直接与开发者沟通反馈。',
       },
     ],
   },
@@ -165,7 +165,7 @@ function toggleItem(index: number) {
       <!-- 底部提示 -->
       <view class="py-[40rpx]">
         <text class="block text-center text-[18rpx] text-gray">
-          如有其他问题，请在"关于我们"中添加管理员微信联系
+          如有其他问题，请在"关于我"中添加管理员微信联系
         </text>
       </view>
     </view>

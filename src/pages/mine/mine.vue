@@ -54,7 +54,7 @@ const features = computed(() => [
   },
   {
     id: 'about',
-    name: '关于我们',
+    name: '关于我',
     icon: 'i-carbon:cafe',
     show: true,
     action: 'about',
