@@ -293,7 +293,7 @@ function onMapMarkerTap(e: any) {
           :show-location="true"
           @markertap="onMapMarkerTap"
         />
-        <view class="flex items-center justify-between bg-[#1a1a2e]/95 px-[16rpx] py-[12rpx] backdrop-blur-md">
+        <view class="flex items-center justify-between bg-card px-[16rpx] py-[12rpx]">
           <view class="flex items-center gap-[8rpx]">
             <text class="i-carbon:location text-[22rpx] text-white" />
             <text class="text-[20rpx] text-white font-500">
@@ -321,7 +321,7 @@ function onMapMarkerTap(e: any) {
             小程序内可查看完整地图
           </text>
         </view>
-        <view class="flex items-center justify-between border-t border-white/10 bg-[#1a1a2e]/95 px-[16rpx] py-[12rpx] backdrop-blur-md">
+        <view class="flex items-center justify-between border-t border-white/10 bg-card px-[16rpx] py-[12rpx]">
           <view class="flex items-center gap-[8rpx]">
             <text class="i-carbon:information text-[22rpx] text-white" />
             <text class="text-[20rpx] text-white font-500">

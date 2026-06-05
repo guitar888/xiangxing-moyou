@@ -3,8 +3,6 @@ definePage({
   name: 'help',
   style: {
     navigationBarTitleText: '帮助中心',
-    navigationBarBackgroundColor: '#121212',
-    navigationBarTextStyle: 'white',
   },
 })
 
@@ -139,7 +137,7 @@ function toggleItem(index: number) {
             class="border-b border-white/5 last:border-b-0"
           >
             <view
-              class="flex items-center justify-between p-[24rpx] active:bg-white/5"
+              class="flex items-center justify-between p-[24rpx] active:bg-black/5"
               @click="toggleItem(sIndex * 100 + iIndex)"
             >
               <text class="text-[24rpx] text-white">

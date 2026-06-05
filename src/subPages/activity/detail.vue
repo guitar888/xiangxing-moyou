@@ -6,8 +6,6 @@ definePage({
   name: 'activityDetail',
   style: {
     navigationBarTitleText: '活动详情',
-    navigationBarBackgroundColor: '#121212',
-    navigationBarTextStyle: 'white'
   },
 })
 
@@ -56,7 +54,7 @@ function handleShare() {
 </script>
 
 <template>
-  <view class="min-h-screen bg-[#121212] pb-[120rpx]">
+  <view class="min-h-screen bg-base pb-[120rpx]">
     <template v-if="detail">
       <!-- 封面图 -->
       <view class="relative h-[600rpx] w-full">
@@ -244,10 +242,10 @@ function handleShare() {
     </view>
 
     <!-- 底部按钮 -->
-    <view class="fixed bottom-[0] left-[0] right-[0] z-50 border-t border-[#333] bg-[#1a1a1a] p-[24rpx]">
+    <view class="fixed bottom-[0] left-[0] right-[0] z-50 border-t border-border bg-card p-[24rpx]">
       <wd-button
         custom-class="w-full"
-        type="success"
+        type="primary"
         size="large"
         @click="handleShare"
       >

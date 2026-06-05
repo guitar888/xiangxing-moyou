@@ -75,16 +75,13 @@ const adminInfo = {
 
 现在时间完全由自己掌控：
 想写代码就写代码，想拍照就拍照，
-偶尔接点小单，主要看心情和档期😎
+  偶尔接点小单，主要看心情和档期😎
 
-左手拧油门（机动车），右脚踩踏板（人动车），
-双手敲键盘（保持手感）。
+  左手拧油门（机动车），右脚踩踏板（人动车），
+  双手敲键盘（保持手感）。
 
-承接：软件开发 | 活动跟拍 | 视频剪辑
-（欢迎撩我，价格好商量~）
-
-无论你是摩友、骑友还是甲方，
-只要爱轮子、爱生活、爱折腾，都是好朋友~ 🏍️🚴📷`
+  无论你是摩友、骑友还是甲方，
+  只要爱轮子、爱生活、爱折腾，都是好朋友~ 🏍️🚴📷`
 }
 
 function copyWechatId() {
@@ -145,13 +142,17 @@ function copyWechatId() {
           <!-- 座驾信息 -->
           <view class="mt-[16rpx] border-t border-white/10 pt-[16rpx] space-y-[8rpx]">
             <view class="flex items-center gap-[12rpx]">
-              <text class="i-carbon:motorcycle text-[20rpx] text-primary" />
+              <text class="text-[20rpx]">
+                🏍️
+              </text>
               <text class="text-[20rpx] text-white/80">
                 {{ adminInfo.motoInfo }}
               </text>
             </view>
             <view class="flex items-center gap-[12rpx]">
-              <text class="i-carbon:directions-bike text-[20rpx] text-primary" />
+              <text class="text-[20rpx]">
+                🚴
+              </text>
               <text class="text-[20rpx] text-white/80">
                 {{ adminInfo.bikeInfo }}
               </text>
@@ -191,11 +192,13 @@ function copyWechatId() {
         <view class="mb-[24rpx] border border-primary/20 rounded-[24rpx] from-primary/10 via-primary/5 to-transparent bg-gradient-to-br p-[32rpx]">
           <!-- 摩托车骑行时长 -->
           <view class="mb-[24rpx] flex items-center justify-between">
-            <view class="flex items-center gap-[12rpx]">
-              <view class="h-[48rpx] w-[48rpx] flex items-center justify-center rounded-[12rpx] bg-primary/20">
-                <text class="i-carbon:motorcycle text-[28rpx] text-white" />
-              </view>
-              <view>
+              <view class="flex items-center gap-[12rpx]">
+                <view class="h-[48rpx] w-[48rpx] flex items-center justify-center rounded-[12rpx] bg-primary/20">
+                  <text class="text-[28rpx] text-white">
+                    🏍️
+                  </text>
+                </view>
+                <view>
                 <text class="block text-[20rpx] text-white/70">
                   摩托车已陪伴
                 </text>
@@ -218,11 +221,13 @@ function copyWechatId() {
 
           <!-- 自行车入坑天数 -->
           <view class="mb-[24rpx] border-t border-white/10 pt-[20rpx] flex items-center justify-between">
-            <view class="flex items-center gap-[12rpx]">
-              <view class="h-[48rpx] w-[48rpx] flex items-center justify-center rounded-[12rpx] bg-primary/20">
-                <text class="i-carbon:directions-bike text-[28rpx] text-white" />
-              </view>
-              <view>
+              <view class="flex items-center gap-[12rpx]">
+                <view class="h-[48rpx] w-[48rpx] flex items-center justify-center rounded-[12rpx] bg-primary/20">
+                  <text class="text-[28rpx] text-white">
+                    🚴
+                  </text>
+                </view>
+                <view>
                 <text class="block text-[20rpx] text-white/70">
                   自行车入坑
                 </text>
@@ -295,7 +300,9 @@ function copyWechatId() {
           <!-- 幽默文案 -->
           <view class="mt-[20rpx] border-t border-white/10 pt-[20rpx]">
             <view class="flex items-center gap-[8rpx]">
-              <text class="i-carbon:face-cool text-[24rpx] text-primary" />
+              <text class="text-[24rpx]">
+                😎
+              </text>
               <text class="text-[20rpx] text-white/80 italic">
                 {{ adminInfo.humorousMessage }}
               </text>
@@ -304,7 +311,7 @@ function copyWechatId() {
         </view>
 
         <!-- 个人签名 -->
-        <view class="bg-bg-hover mb-[24rpx] rounded-[24rpx] p-[32rpx]">
+        <view class="mb-[24rpx] rounded-[24rpx] p-[32rpx]" :style="{ background: 'var(--wot-color-bg-card)' }">
           <view class="mb-[20rpx] flex items-center gap-[12rpx]">
             <view class="h-[48rpx] w-[48rpx] flex items-center justify-center rounded-[12rpx] bg-primary/20">
               <text class="text-[28rpx]">
@@ -321,7 +328,7 @@ function copyWechatId() {
         </view>
 
         <!-- 微信号 -->
-        <view class="bg-bg-hover rounded-[20rpx] p-[28rpx]">
+        <view class="rounded-[20rpx] p-[28rpx]" :style="{ background: 'var(--wot-color-bg-card)' }">
           <view class="flex items-center justify-between">
             <view class="flex items-center gap-[16rpx]">
               <view class="h-[56rpx] w-[56rpx] flex items-center justify-center rounded-[14rpx] bg-primary/20">

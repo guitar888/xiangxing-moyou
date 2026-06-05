@@ -2,9 +2,7 @@
 definePage({
   name: 'tools',
   style: {
-    navigationBarTitleText: '工具合集',
-    navigationBarBackgroundColor: '#121212',
-    navigationBarTextStyle: 'white'
+    navigationBarTitleText: '骑行工具',
   },
 })
 </script>

@@ -2,9 +2,7 @@
 definePage({
   name: 'safety',
   style: {
-    navigationBarTitleText: '骑行安全',
-    navigationBarBackgroundColor: '#121212',
-    navigationBarTextStyle: 'white'
+    navigationBarTitleText: '安全知识',
   },
 })
 </script>

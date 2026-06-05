@@ -8,9 +8,7 @@ import type { TrafficPolicy } from '@/types'
 definePage({
   name: 'traffic',
   style: {
-    navigationBarTitleText: '禁摩限行',
-    navigationBarBackgroundColor: '#121212',
-    navigationBarTextStyle: 'white'
+    navigationBarTitleText: '交通信息',
   },
 })
 

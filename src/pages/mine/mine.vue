@@ -211,7 +211,7 @@ function handleClearData() {
           <view
             v-for="(feature, index) in features.filter(f => f.show)"
             :key="feature.id"
-            class="flex items-center justify-between p-[28rpx] transition-all duration-100 active:bg-white/5"
+            class="flex items-center justify-between p-[28rpx] transition-all duration-100 active:bg-black/5"
             :style="index < features.filter(f => f.show).length - 1 ? { borderBottom: '1rpx solid rgba(255,255,255,0.1)' } : {}"
             @click="handleFeatureClick(feature)"
           >

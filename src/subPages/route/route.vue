@@ -2,9 +2,7 @@
 definePage({
   name: 'route',
   style: {
-    navigationBarTitleText: '经典线路',
-    navigationBarBackgroundColor: '#121212',
-    navigationBarTextStyle: 'white'
+    navigationBarTitleText: '路线详情',
   },
 })
 </script>

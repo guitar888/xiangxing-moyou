@@ -6,8 +6,6 @@ definePage({
   layout: 'default',
   style: {
     navigationBarTitleText: 'Agent Skills',
-    navigationBarBackgroundColor: '#f9fafb',
-    navigationBarTextStyle: 'black'
   },
 })
 

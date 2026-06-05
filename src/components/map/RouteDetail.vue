@@ -77,10 +77,11 @@ const regionLabel = computed(() => {
     :model-value="visible"
     position="bottom"
     :close-on-click-modal="true"
-    custom-class="rounded-t-[24rpx]"
+    root-portal
+    custom-class="rounded-t-[24rpx] bg-base"
     @update:model-value="handleClose"
   >
-    <view v-if="route" class="max-h-[85vh] overflow-y-auto bg-[#0f0f1a] px-[24rpx] pb-[24rpx] pt-[20rpx]">
+    <view v-if="route" class="max-h-[75vh] overflow-y-auto bg-base px-[24rpx] pb-[100rpx] pt-[20rpx]">
       <!-- 关闭指示条 -->
       <view class="mx-auto mb-[16rpx] h-[8rpx] w-[80rpx] rounded-full bg-white/20" @click="handleClose" />
 
@@ -144,7 +145,7 @@ const regionLabel = computed(() => {
       </view>
 
       <!-- 路线描述 -->
-      <view class="mb-[16rpx] rounded-[12rpx] bg-card px-[16rpx] py-[12rpx]">
+      <view class="mb-[16rpx] rounded-[12rpx] border border-white/10 bg-card px-[16rpx] py-[12rpx]">
         <view class="mb-[8rpx] flex items-center gap-[8rpx]">
           <text class="i-carbon:information text-[20rpx] text-primary" />
           <text class="text-[20rpx] text-white font-600">路线说明</text>
@@ -155,7 +156,7 @@ const regionLabel = computed(() => {
       </view>
 
       <!-- 核心亮点 -->
-      <view v-if="route.highlights && route.highlights.length > 0" class="mb-[16rpx] rounded-[12rpx] bg-card px-[16rpx] py-[12rpx]">
+      <view v-if="route.highlights && route.highlights.length > 0" class="mb-[16rpx] rounded-[12rpx] border border-white/10 bg-card px-[16rpx] py-[12rpx]">
         <view class="mb-[10rpx] flex items-center gap-[8rpx]">
           <text class="i-carbon:star text-[20rpx] text-primary" />
           <text class="text-[20rpx] text-white font-600">推荐理由</text>
@@ -169,7 +170,7 @@ const regionLabel = computed(() => {
       </view>
 
       <!-- 路况信息 -->
-      <view v-if="route.roadCondition" class="mb-[16rpx] rounded-[12rpx] bg-card px-[16rpx] py-[12rpx]">
+      <view v-if="route.roadCondition" class="mb-[16rpx] rounded-[12rpx] border border-white/10 bg-card px-[16rpx] py-[12rpx]">
         <view class="mb-[8rpx] flex items-center gap-[8rpx]">
           <text class="i-carbon:road text-[20rpx] text-primary" />
           <text class="text-[20rpx] text-white font-600">路况信息</text>
@@ -180,7 +181,7 @@ const regionLabel = computed(() => {
       </view>
 
       <!-- 最佳季节 -->
-      <view v-if="route.bestSeason" class="mb-[16rpx] rounded-[12rpx] bg-card px-[16rpx] py-[12rpx]">
+      <view v-if="route.bestSeason" class="mb-[16rpx] rounded-[12rpx] border border-white/10 bg-card px-[16rpx] py-[12rpx]">
         <view class="mb-[8rpx] flex items-center gap-[8rpx]">
           <text class="i-carbon:calendar text-[20rpx] text-primary" />
           <text class="text-[20rpx] text-white font-600">最佳季节</text>
@@ -191,13 +192,13 @@ const regionLabel = computed(() => {
       </view>
 
       <!-- 路线分段信息（对接 Bmob 用） -->
-      <view v-if="route.segments && route.segments.length > 0" class="mb-[16rpx] rounded-[12rpx] bg-card px-[16rpx] py-[12rpx]">
+      <view v-if="route.segments && route.segments.length > 0" class="mb-[16rpx] rounded-[12rpx] border border-white/10 bg-card px-[16rpx] py-[12rpx]">
         <view class="mb-[10rpx] flex items-center gap-[8rpx]">
           <text class="i-carbon:road text-[20rpx] text-primary" />
           <text class="text-[20rpx] text-white font-600">路线分段</text>
         </view>
         <view class="space-y-[12rpx]">
-          <view v-for="(segment, index) in route.segments" :key="index" class="rounded-[8rpx] bg-white/5 px-[12rpx] py-[10rpx]">
+          <view v-for="(segment, index) in route.segments" :key="index" class="rounded-[8rpx] border border-white/10 bg-card px-[12rpx] py-[10rpx]">
             <view class="mb-[6rpx] flex items-center justify-between">
               <view class="flex items-center gap-[6rpx]">
                 <view class="flex h-[24rpx] w-[24rpx] items-center justify-center rounded-full bg-primary text-[14rpx] text-white font-700">
@@ -227,12 +228,12 @@ const regionLabel = computed(() => {
       </view>
 
       <!-- 探险区域 -->
-      <view v-if="route.adventureAreas && route.adventureAreas.length > 0" class="mb-[16rpx] rounded-[12rpx] bg-card px-[16rpx] py-[12rpx]">
+      <view v-if="route.adventureAreas && route.adventureAreas.length > 0" class="mb-[16rpx] rounded-[12rpx] border border-white/10 bg-card px-[16rpx] py-[12rpx]">
         <view class="mb-[10rpx] flex items-center gap-[8rpx]">
           <text class="i-carbon:mountain text-[20rpx]" :style="{ color: '#FF4757' }" />
           <text class="text-[20rpx] text-white font-600">探险区域</text>
         </view>
-        <view v-for="area in route.adventureAreas" :key="area.name" class="mb-[10rpx] rounded-[8rpx] bg-[rgba(255,71,87,0.1)] px-[12rpx] py-[10rpx]">
+        <view v-for="area in route.adventureAreas" :key="area.name" class="mb-[10rpx] rounded-[8rpx] border border-white/10 bg-card px-[12rpx] py-[10rpx]">
           <view class="mb-[6rpx] flex items-center justify-between">
             <text class="text-[18rpx] text-white font-600">{{ area.name }}</text>
             <view v-if="area.difficulty" class="rounded-[4rpx] px-[8rpx] py-[2rpx] text-[14rpx]" :style="{ backgroundColor: DIFFICULTY_CONFIG[area.difficulty].bgColor, color: DIFFICULTY_CONFIG[area.difficulty].color }">
@@ -244,13 +245,13 @@ const regionLabel = computed(() => {
       </view>
 
       <!-- 沿途打卡点 -->
-      <view v-if="route.spots && route.spots.length > 0" class="mb-[20rpx] rounded-[12rpx] bg-card px-[16rpx] py-[12rpx]">
+      <view v-if="route.spots && route.spots.length > 0" class="mb-[20rpx] rounded-[12rpx] border border-white/10 bg-card px-[16rpx] py-[12rpx]">
         <view class="mb-[10rpx] flex items-center gap-[8rpx]">
           <text class="i-carbon:location text-[20rpx] text-primary" />
           <text class="text-[20rpx] text-white font-600">沿途打卡点（{{ route.spots.length }}）</text>
         </view>
         <view class="space-y-[10rpx]">
-          <view v-for="spot in route.spots" :key="spot.id" class="flex items-start gap-[10rpx] rounded-[8rpx] bg-white/5 px-[12rpx] py-[10rpx]">
+          <view v-for="spot in route.spots" :key="spot.id" class="flex items-start gap-[10rpx] rounded-[8rpx] border border-white/10 bg-card px-[12rpx] py-[10rpx]">
             <view class="mt-[4rpx] h-[16rpx] w-[16rpx] rounded-full" :style="{ backgroundColor: SPOT_TYPE_CONFIG[spot.type as SpotType].color }" />
             <view class="flex-1">
               <view class="mb-[4rpx] flex items-center justify-between">
@@ -269,7 +270,7 @@ const regionLabel = computed(() => {
       </view>
 
       <!-- 导航按钮 -->
-      <view class="flex items-center justify-center">
+      <view class="mt-[12rpx] flex items-center justify-center pb-[60rpx]">
         <wd-button
           type="primary"
           size="large"
