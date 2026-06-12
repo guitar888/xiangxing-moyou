@@ -5,11 +5,9 @@
  */
 import type { RecordFilter, RideRecord } from '@/types'
 import { EXPAND_MONTH_EVENT, POSTER_OPEN_EVENT, RECORD_UPDATED_EVENT, rideEvents } from '@/composables/rideEvents'
-import RideLineChart from '@/subEcharts/echarts/components/RideLineChart.vue'
 
 defineOptions({
   componentPlaceholder: {
-    RideLineChart: 'view'
   },
 })
 
@@ -249,7 +247,10 @@ onUnmounted(() => {
             <text class="i-carbon:trending-up text-[24rpx] text-primary" />
             骑行趋势
           </text>
-          <RideLineChart :data="monthlyStats" />
+          <!-- 图表区域待实现 -->
+          <view class="h-[400rpx] flex items-center justify-center bg-card/50 rounded-[16rpx] border border-white/10">
+            <text class="text-gray/60">图表功能开发中</text>
+          </view>
         </view>
       </view>
 

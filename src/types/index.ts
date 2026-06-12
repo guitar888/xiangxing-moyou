@@ -21,5 +21,4 @@ export { DIFFICULTY_CONFIG, REGION_CONFIG, ROUTE_TAG_CONFIG, SPOT_TYPE_CONFIG } 
 // 骑行模块
 export type { ActiveRide, Coordinate, MonthlyStats, QuickEntry, RecordFilter, RideData, RideRecord, RideStats, RideStatus } from './ride'
 
-// 交通模块
-export type { RestrictedArea, TimeRestriction, TrafficPolicy } from './traffic'
+

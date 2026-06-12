@@ -4,9 +4,8 @@
  * 合规优先：路线信息由摩友分享，骑行记录仅本地存储
  * 全端兼容：无地图Key依赖，导航跳转第三方APP
  */
-import type { CheckInSpot, Coordinate, RideRecord, RideRoute, SpotType } from '@/types'
+import type { CheckInSpot, Coordinate, RideRecord, RideRoute } from '@/types'
 import { POSTER_OPEN_EVENT, rideEvents } from '@/composables/rideEvents'
-import { DIFFICULTY_CONFIG, REGION_CONFIG, SPOT_TYPE_CONFIG } from '@/types'
 
 definePage({
   name: 'map',
@@ -32,20 +31,14 @@ const {
   currentRoute,
   currentSpot,
   loading,
-  selectedSpotTypes,
-  selectedRegion,
   isRiding,
   formattedDuration,
-  toggleSpotType,
-  setRegion,
-  clearFilters,
   confirmStartRide,
   confirmEndRide,
   handleRouteSelect: handleRouteSelectBase,
   handleSpotClose,
   markers,
   handleMapMarkertap,
-  loadRoutes,
 } = useMapData()
 
 // 包装 handleRouteSelect，添加打开详情弹窗逻辑
@@ -123,59 +116,7 @@ function handleNavigateToSpot(spot: CheckInSpot | null) {
   })
 }
 
-// ================================================
-// 筛选弹窗控制
-// ================================================
 
-const showTypeFilter = ref(false)
-const showRegionFilter = ref(false)
-
-// 是否有类型筛选
-const hasTypeFilter = computed(() => selectedSpotTypes.value.length > 0)
-// 是否有区域筛选
-const hasRegionFilter = computed(() => !!selectedRegion.value && selectedRegion.value !== 'all')
-
-// 打开类型筛选弹窗
-function openTypeFilter() {
-  showTypeFilter.value = true
-}
-
-// 打开区域筛选弹窗
-function openRegionFilter() {
-  showRegionFilter.value = true
-}
-
-// 确认类型筛选
-function confirmTypeFilter() {
-  showTypeFilter.value = false
-}
-
-// 确认区域筛选
-function confirmRegionFilter() {
-  showRegionFilter.value = false
-}
-
-// 更新类型筛选值
-function updateTypeFilterValues(values: string[]) {
-  selectedSpotTypes.value.splice(0, selectedSpotTypes.value.length, ...values as SpotType[])
-  loadRoutes()
-}
-
-// 实时更新类型筛选
-function changeTypeFilter(values: string[]) {
-  selectedSpotTypes.value.splice(0, selectedSpotTypes.value.length, ...values as SpotType[])
-  loadRoutes()
-}
-
-// 更新区域筛选值
-function updateRegionFilterValues(values: string[]) {
-  selectedRegion.value = values[0] || 'all'
-  loadRoutes()
-}
-
-// ================================================
-// 地图相关
-// ================================================
 
 // 地图中心点（襄阳市区中心）
 const mapCenter = ref<Coordinate>({
@@ -332,78 +273,7 @@ function onMapMarkerTap(e: any) {
       </view>
       <!-- #endif -->
 
-      <!-- 筛选入口按钮 -->
-      <view class="mt-[16rpx] flex gap-[16rpx] px-[24rpx]">
-        <!-- 类型筛选 -->
-        <view class="relative flex-1" @click="openTypeFilter">
-          <wd-button
-            type="info"
-            size="medium"
-            custom-class="w-full rounded-[20rpx] font-500 border border-white/10"
-          >
-            <view class="flex items-center justify-center gap-[8rpx]">
-              <text class="i-carbon:tag text-[24rpx]" />
-              <text class="text-[24rpx]">
-                类型筛选
-              </text>
-              <text v-if="hasTypeFilter" class="i-carbon:checkmark text-[20rpx] text-success" />
-            </view>
-          </wd-button>
-          <view
-            v-if="hasTypeFilter"
-            class="absolute h-[28rpx] w-[28rpx] flex items-center justify-center rounded-full bg-red-500 -right-[8rpx] -top-[8rpx]"
-          >
-            <text class="text-[16rpx] text-white font-600">
-              {{ selectedSpotTypes.length }}
-            </text>
-          </view>
-        </view>
-        <!-- 区域筛选 -->
-        <view class="relative flex-1" @click="openRegionFilter">
-          <wd-button
-            type="info"
-            size="medium"
-            custom-class="w-full rounded-[20rpx] font-500 border border-white/10"
-          >
-            <view class="flex items-center justify-center gap-[8rpx]">
-              <text class="i-carbon:map text-[24rpx]" />
-              <text class="text-[24rpx]">
-                区域筛选
-              </text>
-              <text v-if="hasRegionFilter" class="i-carbon:checkmark text-[20rpx] text-success" />
-            </view>
-          </wd-button>
-          <view
-            v-if="hasRegionFilter"
-            class="absolute h-[28rpx] w-[28rpx] flex items-center justify-center rounded-full bg-red-500 -right-[8rpx] -top-[8rpx]"
-          >
-            <text class="text-[16rpx] text-white font-600">
-              1
-            </text>
-          </view>
-        </view>
-      </view>
 
-      <!-- 类型筛选弹窗 -->
-      <common-FilterPopup
-        v-model="showTypeFilter"
-        type="type"
-        :active-values="selectedSpotTypes"
-        @change="changeTypeFilter"
-        @clear="clearFilters"
-        @confirm="confirmTypeFilter"
-      />
-
-      <!-- 区域筛选弹窗 -->
-      <common-FilterPopup
-        v-model="showRegionFilter"
-        type="region"
-        :active-values="[selectedRegion]"
-        single
-        @confirm="confirmRegionFilter"
-        @clear="clearFilters"
-        @confirm-values="updateRegionFilterValues"
-      />
 
       <!-- 路线列表 -->
       <view class="mt-[14rpx] flex-1 px-[24rpx] pb-[20rpx]">
@@ -412,20 +282,6 @@ function onMapMarkerTap(e: any) {
             <text class="i-carbon:list text-[24rpx] text-primary" />
             路线列表
           </text>
-          <wd-button
-            v-if="selectedSpotTypes.length > 0 || selectedRegion"
-            type="info"
-            size="small"
-            custom-class="rounded-[18rpx] font-500"
-            @click="clearFilters"
-          >
-            <view class="flex items-center gap-[4rpx]">
-              <text class="i-carbon:close text-[18rpx]" />
-              <text class="text-[18rpx]">
-                清除
-              </text>
-            </view>
-          </wd-button>
         </view>
         <view class="flex flex-col gap-[12rpx]">
           <map-RouteCard
