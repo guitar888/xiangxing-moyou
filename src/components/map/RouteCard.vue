@@ -129,7 +129,7 @@ const routeTags = computed(() => {
         </view>
         <view class="flex flex-wrap items-center gap-[12rpx] text-[20rpx] text-gray">
           <view class="flex items-center gap-[4rpx]">
-            <text class="i-carbon:distance text-[18rpx]" />
+            <text class="i-carbon:ruler text-[18rpx]" />
             <text>{{ route.distance }}km</text>
           </view>
           <view class="flex items-center gap-[4rpx]">
@@ -195,7 +195,7 @@ const routeTags = computed(() => {
           v-if="highlightsCount.scenic > 0"
           class="flex items-center gap-[6rpx] rounded-[12rpx] bg-[rgba(46,213,115,0.15)] px-[14rpx] py-[6rpx]"
         >
-          <text class="i-carbon:map-marker text-[18rpx]" :style="{ color: '#2ED573' }" />
+          <text class="i-carbon:location text-[18rpx]" :style="{ color: '#2ED573' }" />
           <text class="text-[18rpx] font-500" :style="{ color: '#2ED573' }">
             {{ highlightsCount.scenic }}个打卡点
           </text>

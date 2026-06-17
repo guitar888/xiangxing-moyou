@@ -30,7 +30,6 @@ declare module 'vue' {
     RideRidePoster: typeof import('./components/ride/RidePoster.vue')['default']
     RideRideRecordCard: typeof import('./components/ride/RideRecordCard.vue')['default']
     RideRideStatsCard: typeof import('./components/ride/RideStatsCard.vue')['default']
-    UniEcharts: typeof import('uni-echarts')['default']
     WdButton: typeof import('wot-design-uni/components/wd-button/wd-button.vue')['default']
     WdConfigProvider: typeof import('wot-design-uni/components/wd-config-provider/wd-config-provider.vue')['default']
     WdGap: typeof import('wot-design-uni/components/wd-gap/wd-gap.vue')['default']

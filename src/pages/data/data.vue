@@ -244,7 +244,7 @@ onUnmounted(() => {
       <view class="mt-[16rpx] px-[24rpx]">
         <view class="border border-white/10 rounded-[16rpx] bg-card p-[20rpx] shadow-lg">
           <text class="mb-[16rpx] block flex items-center gap-[8rpx] text-[24rpx] text-white font-600">
-            <text class="i-carbon:trending-up text-[24rpx] text-primary" />
+            <text class="i-carbon:chart-line text-[24rpx] text-primary" />
             骑行趋势
           </text>
           <!-- 图表区域待实现 -->
@@ -274,7 +274,7 @@ onUnmounted(() => {
       <view class="mt-[16rpx] flex-1 px-[24rpx] pb-[20rpx]">
         <view class="mb-[16rpx] flex items-center justify-between">
           <text class="flex items-center gap-[6rpx] text-[28rpx] text-white font-600">
-            <text class="i-carbon:history text-[24rpx] text-primary" />
+            <text class="i-carbon:notebook text-[24rpx] text-primary" />
             骑行记录
           </text>
           <text class="text-[22rpx] text-gray">

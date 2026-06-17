@@ -161,12 +161,12 @@ export const SPOT_TYPE_CONFIG: Record<SpotType, { label: string, icon: string, c
  */
 export const ROUTE_TAG_CONFIG: Record<RouteTag, { label: string, icon: string, color: string }> = {
   mountain: { label: '山路', icon: 'i-carbon:mountain', color: '#8D99AE' },
-  coastal: { label: '沿江', icon: 'i-carbon:water', color: '#3385FF' },
+  coastal: { label: '沿江', icon: 'i-carbon:wave-direction', color: '#3385FF' },
   forest: { label: '森林', icon: 'i-carbon:palm-tree', color: '#2ED573' },
-  countryside: { label: '田园', icon: 'i-carbon:flower', color: '#FF7A00' },
+  countryside: { label: '田园', icon: 'i-carbon:sprout', color: '#FF7A00' },
   photo: { label: '摄影', icon: 'i-carbon:camera', color: '#3385FF' },
   adventure: { label: '探险', icon: 'i-carbon:mountain', color: '#FF4757' },
-  leisure: { label: '休闲', icon: 'i-carbon:relax', color: '#2ED573' },
+  leisure: { label: '休闲', icon: 'i-carbon:pause', color: '#2ED573' },
   challenge: { label: '挑战', icon: 'i-carbon:flag', color: '#FF4757' },
   camping: { label: '露营', icon: 'i-carbon:military-camp', color: '#F9CA24' },
   offroad: { label: '越野', icon: 'i-carbon:road', color: '#FF7A00' }

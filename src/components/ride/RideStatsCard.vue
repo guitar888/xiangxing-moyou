@@ -60,7 +60,7 @@ const { toHours } = useRideStats()
     <!-- 平均数据 -->
     <view class="mt-[20rpx] flex justify-around border-t border-base pt-[20rpx]">
       <view class="flex items-center gap-[8rpx]">
-        <text class="i-carbon:delta text-[24rpx] text-primary" />
+        <text class="i-carbon:growth text-[24rpx] text-primary" />
         <text class="text-[22rpx] text-gray">
           均距
         </text>
@@ -69,7 +69,7 @@ const { toHours } = useRideStats()
         </text>
       </view>
       <view class="flex items-center gap-[8rpx]">
-        <text class="i-carbon:speedometer text-[24rpx] text-primary" />
+        <text class="i-carbon:dashboard text-[24rpx] text-primary" />
         <text class="text-[22rpx] text-gray">
           均速
         </text>

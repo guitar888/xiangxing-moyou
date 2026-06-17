@@ -103,7 +103,7 @@ const regionLabel = computed(() => {
         <!-- 基础信息 -->
         <view class="flex flex-wrap gap-[16rpx] text-[22rpx] text-white/80">
           <view class="flex items-center gap-[6rpx]">
-            <text class="i-carbon:distance text-[20rpx]" />
+            <text class="i-carbon:ruler text-[20rpx]" />
             <text>{{ route.distance }}km</text>
           </view>
           <view class="flex items-center gap-[6rpx]">

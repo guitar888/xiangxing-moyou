@@ -93,7 +93,7 @@ const lastUpdate = '2026年5月19日'
       <!-- 声明 -->
       <view class="mb-[24rpx] border border-white/10 rounded-[16rpx] p-[20rpx]" :style="{ background: 'rgba(46, 213, 115, 0.08)' }">
         <view class="flex items-start gap-[12rpx]">
-          <text class="i-carbon:shield mt-[4rpx] text-[36rpx] text-primary" />
+          <text class="i-carbon:security mt-[4rpx] text-[36rpx] text-primary" />
           <view>
             <text class="text-[26rpx] text-white font-600">
               数据安全承诺

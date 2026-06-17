@@ -193,7 +193,7 @@ function handleShare() {
             </view>
           </view>
           <view v-if="detail.route" class="flex items-start gap-[12rpx]">
-            <text class="i-carbon:route mt-[4rpx] text-[24rpx] text-primary" />
+            <text class="i-carbon:compass mt-[4rpx] text-[24rpx] text-primary" />
             <view>
               <text class="block text-[22rpx] text-gray">
                 活动路线

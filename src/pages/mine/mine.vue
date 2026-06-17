@@ -178,7 +178,7 @@ function handleClearData() {
 
           <view class="grid grid-cols-2 mt-[20rpx] gap-[16rpx] border-t border-white/10 pt-[20rpx]">
             <view class="flex items-center gap-[8rpx]">
-              <text class="i-carbon:delta text-[20rpx] text-primary" />
+              <text class="i-carbon:growth text-[20rpx] text-primary" />
               <text class="text-[20rpx] text-gray">
                 均距
               </text>
@@ -187,7 +187,7 @@ function handleClearData() {
               </text>
             </view>
             <view class="flex items-center gap-[8rpx]">
-              <text class="i-carbon:speedometer text-[20rpx] text-primary" />
+              <text class="i-carbon:dashboard text-[20rpx] text-primary" />
               <text class="text-[20rpx] text-gray">
                 均速
               </text>
@@ -201,7 +201,7 @@ function handleClearData() {
 
       <view class="mt-[24rpx] px-[24rpx]">
         <view class="mb-[16rpx] flex items-center gap-[8rpx]">
-          <text class="i-carbon:app-launcher text-[24rpx] text-primary" />
+          <text class="i-carbon:apps text-[24rpx] text-primary" />
           <text class="text-[26rpx] text-white font-600">
             功能中心
           </text>
